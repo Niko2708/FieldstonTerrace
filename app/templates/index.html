@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}HomePage{% endblock %}
+
+{% block custom_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="parent" id="ApartmentEntrance" style="background-image: url('../static/img/apartment.jpg');">
+        <div class="child" contenteditable>
+            <h1 class="titles">Fieldston Towers</h1>
+            <h2 class="titles">Apartments for rent in new york city</h2>
+            <button type="button" class="btn btn-secondary btn-lg buttons">
+                View Apartments <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <section class="container-fluid background-blue topSpace">
+        <div class="container">
+            <h2 class="titles">Fieldston Towers</h2>
+            <p class="descriptions">
+                Welcome to Fieldston Towers, located in the northwestern part of the Bronx. Fieldston Towers is
+                ideal
+                for those seeking the excitement of living in New York City and the comfort of living near nature.
+                Across
+                the street is Van Courtland Park, the third-largest park in NYC, with athletic fields, trails, and a
+                public
+                golf course. To the west is Wave Hill, a public garden with views of the Hudson River and the
+                Palisades.<br/><br/>
+
+                Fieldston is purely residential with some shops and restaurants a short walk away along Riverdale
+                and Johnson Avenues.
+                It has some of the best public and private schools that beat citywide averages. Transportation to
+                Manhattan is simple,
+                with the number 1 subway line starting at Cortland Park-242nd, several express bus lines, and the
+                Metro-North Railroad
+                trains stopping at the Riverdale section on the Hudson Line. Located in Fieldston are public and
+                private schools that
+                beat citywide averages..<br/><br/>
+
+                Fieldston Towers is the place where nature and city life meet. Our community is close to everything,
+                making it convenient
+                for every lifestyle. We offer 1, 2, and 3 bedroom floor plans to meet all of your needs. Call or
+                email us today to check to
+                schedule a tour!<br/><br/>
+            </p>
+
+            <button type="button" class="btn btn-secondary btn-lg buttons">
+                <a herf="#">Available Apartments <i class="fas fa-chevron-right"></i></a>
+            </button>
+        </div>
+    </section>
+
+    <section class="container-fluid topSpace background-grey">
+        <div class="container">
+            <ul class="nav row" id="mySub">
+                <li class="nav-item col s6">
+                    <a class="active nav-link nav-option-link" data-toggle="tab" href="#amenities">Apartment
+                        Amenities</a>
+                </li>
+                <li class="nav-item col">
+                    <a class="nav-link nav-option-link" data-toggle="tab" href="#menu1">Fieldston Neighborhood</a>
+                </li>
+            </ul>
+
+            <script>
+                    var header = document.getElementById("mySub");
+                    var items = header.getElementsByClassName("nav-item");
+                    for (var i = 0; i < items.length; i++) {
+                        items[i].addEventListener("click", function () {
+                            var current = document.getElementsByClassName("active");
+                            current[0].className = current[0].className.replace(" active", "");
+                            this.className += " active";
+                        });
+                    }
+
+            </script>
+
+            <div class="tab-content">
+                <div id="amenities" class="tab-pane active">
+                    <table class="amenitiesTable">
+                        <tr>
+                            <td class="amenitieCell">Pet Friendly</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell">Live-in Super</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell"> Community Room</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell">Community Backyard</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell">Balcony</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell">Parking Avaliable</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell">Laundry in Building</td>
+                        </tr>
+                        <tr>
+                            <td class="amenitieCell">Bike Room</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                    <div class="row container">
+                        <div class="col s12 m4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ url_for('static', filename='img/waveHill.jpg') }}"
+                                     alt="Wave Hill">
+                                <div class="card-body">
+                                    <h5 class="card-title">Big Cottonwood Canyon</h5>
+                                    <p class="card-text">
+                                        Big Cottonwood Canyon is a canyon in the Wasatch Range 12 miles southeast of
+                                        Salt Lake City in the U.S. state of Utah. The 15-mile-long canyon provides
+                                        hiking, biking, picnicking, rock-climbing, camping and fishing in the summer.
+                                        Its two ski resorts, Brighton and Solitude, are popular among skiers and
+                                        snowboarders.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ url_for('static', filename='img/crossCounty.jpg') }}"
+                                     alt="Cross Country">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cross County Plaza</h5>
+                                    <p class="card-text">
+                                        This open 240,000 square-foot structure has in excess of 500,000 books and
+                                        different materials. It reflects and connects with the city's creative energy
+                                        and goals. A six-story bending, walkable divider grasps the general population
+                                        court, with shops and administrations at ground level, perusing exhibitions
+                                        above, and a 300-situate assembly room.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ url_for('static', filename='img/BronxZoo.jpg') }}"
+                                     alt="Bronx Zoo">
+                                <div class="card-body">
+                                    <h5 class="card-title">Bronx Zoo</h5>
+                                    <p class="card-text">
+                                        Trolley Square is a partially enclosed shopping center located in Salt Lake
+                                        City,
+                                        Utah, United States. It is considered to be a trendy high-end center. The
+                                        center
+                                        is near downtown Salt Lake City and the UTA TRAX light-rail system.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid background-blue">
+        <div class="container topSpace" id="policy">
+            <div class="row">
+                <div class="col s12 m6">
+                    <h2 class="titles">Pet Friendly</h2>
+                    <p class="descriptions">
+                        Life is better when you have pets! Conveniently located near beautiful parks and trails
+                        Fieldston Towers
+                        is the perfect place for you and your pets to have a healthy and active lifestyle.
+                        For many of us, our pets are family. Fieldston Towers is a pet-friendly apartment complex and
+                        invites
+                        you and your family to enjoy living in this peaceful community where everyone’s needs are met,
+                        including your pets.
+                    </p>
+                    <button type="button" class="btn btn-secondary btn-lg buttons">
+                        <a herf="{{ url_for('documents') }}">Our Pet Policy <i class="fas fa-chevron-right"></i></a>
+                    </button>
+                </div>
+                <div class="col s12 m6">
+                    <h2 class="titles">Apartments</h2>
+                    <p class="descriptions">
+                        Every apartment at Fieldston Towers offers the space and comforting qualities you need to
+                        make your apartment the home you’ve always desired. Our modern 1, 2, & 3 Bedroom apartments give
+                        you
+                        the ability to choose from a variety of floor plans that will surely meet your highest
+                        expectations.
+                        The amenities offered at Fieldston Towers provide residents with all the necessities of easy
+                        living and floor plans for every lifestyle
+                    </p>
+                    <button type="button" class="btn btn-secondary btn-lg buttons">
+                        <a herf="{{ url_for('amenities') }}">View Amenities <i class="fas fa-chevron-right"></i></a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+{% endblock %}

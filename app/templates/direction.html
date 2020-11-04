@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block custom_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/direction.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Download File</h1>
+    <div class="container">
+        <a href="/get-pdf/FBC_House_Rules.pdf">
+            <button class='btn btn-default'>Download</button>
+        </a>
+    </div>
+{% endblock %}

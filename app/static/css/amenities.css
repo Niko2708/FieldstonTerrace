@@ -1,0 +1,66 @@
+.parent {
+    display: grid;
+    place-items: center;
+    resize: both;
+    overflow: auto;
+    min-height: 480px;
+    /* Create the parallax scrolling effect */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.opacity-medium {
+    height: 100%;
+    width: 100%;
+    opacity: .55;
+    top: 0;
+    left: 0;
+}
+
+.child {
+    text-align: center;
+}
+
+.amenitiesTable {
+    width: 100%;
+}
+
+.amenitieCell {
+    color: #212121;
+    font-size: 15px;
+    font-family: "Open Sans", sans-serif;
+    padding: 10px 0;
+    line-height: 1.5rem;
+    border-bottom: 1.5px solid #e0e0e0;
+}
+
+.lastCell{
+    color: #212121;
+    font-size: 15px;
+    font-family: "Open Sans", sans-serif;
+    padding: 10px 0;
+    line-height: 1.5rem;
+}
+
+#bottom {
+    color: #212121;
+    font-size: 15px;
+    font-family: "Open Sans", sans-serif;
+    padding: 10px 0;
+    line-height: 1.5rem;
+}
+
+i {
+    color: green;
+}
+
+#amenitiesDescription {
+    line-height: 30px;
+    font-size: 16px;
+    margin: 0 0 25px;
+}
+
+.textColor{
+    color: black;
+}

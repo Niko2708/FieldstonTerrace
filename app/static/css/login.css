@@ -1,0 +1,13 @@
+#loginCard{
+    width:25rem;
+    left: 35%;
+}
+
+#submit{
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 37px;
+    font-size: 1.3em;
+    font-weight: 400;
+}

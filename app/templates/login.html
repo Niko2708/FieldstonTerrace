@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block custom_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main class="topSpace container" >
+        <div class="card" id="loginCard">
+            <div class="card-body">
+                <h1 style="text-align: center">Fieldston Towers</h1>
+                <h5 style="text-align: center">Sign In</h5>
+                <form action="" method="POST">
+                    {{ form.csrf_token() }}
+                    <p>
+                        <h5>{{ form.username.label }}</h5>
+                        {{ form.username(size=32) }}<br>
+
+                    </p>
+                    <p>
+                        <h5>{{ form.password.label }}</h5>
+                        {{ form.password(size=32) }}<br>
+                    </p>
+                    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                    <p id="submit">{{ form.submit() }}</p>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}

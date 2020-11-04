@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance{% endblock %}
+
+{% block custom_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/maintenance.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="background-grey">
+    <div class="container topSpace">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="card container">
+                <div class="card-body">
+                    <h1>Maintenance Form</h1>
+                    <h5>Maintenance Title</h5>
+                    <p>{{ form.title(class="single-line") }}</p>
+
+                    <h5> Description</h5>
+                    <p>{{ form.body(id='textArea') }}</p>
+
+                    <div class="card">
+                        <div clas="card-body">
+                            <p>Day the maintenance work will occur</p>
+                            <p>Event Start:</p>
+                            <p>{{ form.dateOfEvent}}</p>
+                            <p>Timeframe the maintenance will occur</p>
+                            <div class="row">
+                                <p>Start Time: {{ form.start_at }}</p>
+                                <p>End Time: {{ form.end_at }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>{{ form.submit() }}</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}s

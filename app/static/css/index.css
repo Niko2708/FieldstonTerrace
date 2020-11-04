@@ -1,0 +1,111 @@
+.parent {
+  display: grid;
+  place-items: center;
+  resize: both;
+  overflow: auto;
+}
+
+.child {
+  text-align: center;
+}
+
+#ApartmentEntrance {
+    min-height: 850px;
+
+     /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.test:hover {
+    background-color: black;
+}
+
+.descriptions {
+    color:white;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    font-family: 'Open Sans', sans-serif;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+i{
+    font-size: 18px;
+}
+
+.buttons{
+    background-color: #263238;
+    font-family: 'Open Sans',sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 400;
+    color: white;
+}
+
+.nav-option-link{
+    text-align: center;
+    color: #212121;
+    text-transform: uppercase;
+    font-family: "Open Sans", sans-serif;
+}
+
+a.active{
+    color: #659dbd;
+    border-bottom: 2px solid #659dbd;
+    margin-bottom: 8px;
+}
+
+.amenitiesTable{
+    background-color: #fff;
+    width: 100%;
+    border: 1.5px solid #e0e0e0;
+}
+
+.amenitieCell{
+    color:#212121;
+    font-size: 15px;
+    font-family:"Open Sans", sans-serif ;
+    padding: 10px 20px;
+    line-height: 1.5rem;
+    border-bottom: 1.5px solid #e0e0e0;
+}
+
+.card {
+    margin: .5rem 0 1rem 0;
+}
+
+.card-title{
+    padding:20px;
+    font-size: 24px;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.card-img-top{
+    max-height: 222px;
+}
+
+.parallax {
+    /* Set a specific height */
+    min-height: 500px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.centered{
+    text-align: center;
+    align-items: center;
+    display:flex;
+    justify-content: center;
+}

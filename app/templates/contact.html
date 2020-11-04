@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block custom_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main class="background-grey">
+        <section class="container topSpace" id="contact">
+            <div class="card">
+                <h1>Contact Us</h1>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5>{{ form.firstName.label }}</h5>
+                                <p>{{ form.firstName(class='single-line') }}</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <h5>{{ form.lastName.label }}</h5>
+                            <p>{{ form.lastName(class='single-line') }}</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h5>{{ form.email.label }}</h5>
+                            <p>{{ form.email(class='single-line') }}</p>
+                        </div>
+
+                         <div>
+                            <h5>{{ form.phone.label }}</h5>
+                            <p>{{ form.phone(class='single-line') }}</p>
+                        </div>
+
+                        <div>
+                            <h5>{{ form.message.label }}</h5>
+                            <p>{{ form.message(id='textArea') }}</p>
+                        </div>
+                        {{ form.subscribe() }}
+                        {{ form.submit() }}
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

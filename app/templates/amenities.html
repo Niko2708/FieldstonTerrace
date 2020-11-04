@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Amenities{% endblock %}
+
+{% block custom_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/amenities.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <section class="parent opacity-medium" style="background-image: url('../static/img/amenitiesTable.jpg');">
+            <div class="child" contenteditable>
+                <h1 class="titles textColor">Amenities & Features</h1>
+                <p>Fieldston Towers in NYC,NY</p>
+            </div>
+        </section>
+
+        <section class="container-fluid background-grey topSpace">
+            <div class="container">
+                <p>
+                    More like your own home than any apartment you've ever seen! Welcome home to Sandpiper, where we
+                    have something for everyone!
+                    From new phase to our established residences, our community boasts many floorplans and price ranges
+                    for you to choose from.
+                    Enjoy living on one level, with no neighbors above or below you. And best of all, you'll love our
+                    wonderful location!
+                </p>
+            </div>
+        </section>
+
+        <section class="background-blue container-fluid topSpace">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12">
+                        <h5 class="titles textColor">Community Features</h5>
+                        <table class="amenitiesTable">
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Pet Friendly</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Live-in Super</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Community Room</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Community Backyard</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Parking Avaliable</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Laundry in Building</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Bike Room</td>
+                            </tr>
+                            <tr>
+                                <td class="lastCell"><i class="fas fa-check"></i> Storage Room</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <img src="{{ url_for('static', filename='img/community.jpg') }}" alt="Community picture">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="background-grey container-fluid topSpace">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12">
+                        <h5 class="titles textColor">Apartment Features</h5>
+                        <table class="amenitiesTable">
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Hardwood Floors</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Stainless Appliances</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Ceramic floor tiles(Kitchen)/td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Walk in Closet</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Balcony in Select Homes</td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Dishwasher </td>
+                            </tr>
+                            <tr>
+                                <td class="amenitieCell"><i class="fas fa-check"></i> Air Conditioning</td>
+                            </tr>
+                            <tr>
+                                <td class="lastCell"><i class="fas fa-check"></i> Microwave</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <img src="{{ url_for('static', filename='img/table.jpg') }}" alt="apartment picture">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+{% endblock %}
