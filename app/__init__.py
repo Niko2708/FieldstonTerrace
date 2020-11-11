@@ -23,8 +23,6 @@ app.config["PDF_UPLOADS"] = "/Users/Family/PycharmProjects/FieldstonProject/app/
 app.config["ALLOWED_EXTENSIONS"] = ["PDF"]
 app.config["MAX_CONTENT_LENGTH"] = 50 * 1024 *10224
 
-from app import routes, models
-
 #email server
 if not app.debug:
     if app.config['MAIL_SERVER']:
@@ -41,3 +39,5 @@ if not app.debug:
             credentials=auth, secure=secure)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
+
+from app import routes, models
