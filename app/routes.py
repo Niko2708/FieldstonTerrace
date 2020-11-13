@@ -33,7 +33,7 @@ def documents():
     return render_template('documents.html')
 
 
-@app.route("/get-pdf/<filename>", methods=['GET'])
+@app.route("/get-pdf/<filename>")
 def get_pdf(filename):
     try:
         return send_from_directory(app.config["CLIENT_PDF"], filename=filename, as_attachment=True)
