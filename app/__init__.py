@@ -22,7 +22,7 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 #for downloadable files
-app.config["CLIENT_PDF"] = "/Users/Family/Desktop/FieldstonTerrace/app/static/pdf"
+app.config["CLIENT_PDF"] = "static/pdf"
 app.config["PDF_UPLOADS"] = "/Users/Family/PycharmProjects/FieldstonProject/app/static/applicationSubmissions"
 app.config["ALLOWED_EXTENSIONS"] = ["PDF"]
 app.config["MAX_CONTENT_LENGTH"] = 50 * 1024 *10224

@@ -7,99 +7,15 @@
 {% endblock %}
 
 {% block content %}
-    <main>
-        <section class="background-grey container-fluid">
-            <div class="container">
-                <h3 class="titles topSpace"> Apartments for rent in New York City, NY</h3>
-                <p class="topSpace">
-                    Braxton at Trolley Square has the ultimate combination of convenience, simplicity, and excitement.
-                    Our location makes us a central cornerstone of Salt Lake City activities, and entertainment. Our
-                    neighborhood is conveniently located close to many public transportation routes, so you can hop on
-                    the UTA TRAX Light Rail whenever you want to explore the incredible Salt Lake City. Located near
-                    multiple large employers such as Zions Bank, Wells Fargo, and Goldman Sachs, this location is
-                    perfectly convenient. With close access to both I-15, and I-215 you'll be able to arrive at your
-                    destinations at a rapid pace.
+<main>
+    <h1>My Google map</h1>
+    <div id="map"></div>
+    <button onclick="actMarkers()">act</button>
+    <button onclick="cultureMarkers()">cul</button>
 
-                    Salt Lake City is home to many marvelous attractions. Enjoy eating at some of the most prestige, and
-                    delicious restaurants such as Rodizio Grill. Find yourself at the hub of one of the most incredible
-                    views of nature, hiking Ensign Peak, or watching the sunrise over Big Cottonwood Canyon. There is so
-                    much to love about this area, and we can't wait to see you explore all of the wonderful attractions
-                    that Salt Lake City apartment living has to offer. Come join our wonderful community, here at
-                    Braxton at Trolley Square.
-                </p>
-            </div>
-
-            <div class="container topSpace">
-                <h3 class="titles topSpace">Public Schools</h3>
-                <div class="row">
-                    <div class="col s12 m4">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container topSpace">
-                <h3 class="titles topSpace">Private Schools</h3>
-                <div class="row">
-                    <div class="col s12 m4">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container topSpace">
-                <div class="row">
-
-                </div>
-            </div>
-        </section>
-    </main>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgE1ujc7vtp5bQjUsv9AtjjIwoVaxt0A8&callback=initMap">
+    </script>
+    <script src="map.js"></script>
+</main>
 {% endblock %}

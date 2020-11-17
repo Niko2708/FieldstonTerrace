@@ -30,11 +30,13 @@ def events():
 
 @app.route('/documents')
 def documents():
+    print("Hello World!")
     return render_template('documents.html')
 
 
-@app.route("/get-pdf/<filename>")
+@app.route("/get_pdf/<filename>")
 def get_pdf(filename):
+    print(filename)
     try:
         return send_from_directory(app.config["CLIENT_PDF"], filename=filename, as_attachment=True)
     except FileNotFoundError:
