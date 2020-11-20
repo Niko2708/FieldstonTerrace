@@ -10,10 +10,10 @@
 <main>
     <section class="parent" id="ApartmentEntrance" style="background-image: url('../static/img/apartment.jpg');">
         <div class="child" contenteditable>
-            <h1 class="titles">Fieldston Towers</h1>
-            <h2 class="titles">Apartments for rent in new york city</h2>
-            <button type="button" class="btn btn-secondary btn-lg buttons">
-                <a href="https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/">View Apartments <i class="fas fa-chevron-right"></i></a>
+            <h1 class="titles h1Size">Fieldston Towers</h1>
+            <h2 class="titles h2Size">Apartments for rent in new york city</h2>
+            <button type="button" class="btn btn-secondary btn-lg buttons" onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
+                View Apartments <i class="fas fa-chevron-right"></i>
             </button>
         </div>
     </section>
@@ -26,9 +26,9 @@
                 ideal
                 for those seeking the excitement of living in New York City and the comfort of living near nature.
                 Across
-                the street is Van Courtland Park, the third-largest park in NYC, with athletic fields, trails, and a
+                the street is Van Courtland Park, the third-largest park in NYC, with athletic fields, trails, and
                 public
-                golf course. To the west is Wave Hill, a public garden with views of the Hudson River and the
+                golf courses. To the west is Wave Hill, a public garden with views of the Hudson River and the
                 Palisades.<br/><br/>
 
                 Fieldston is purely residential with some shops and restaurants a short walk away along Riverdale
@@ -37,9 +37,7 @@
                 Manhattan is simple,
                 with the number 1 subway line starting at Cortland Park-242nd, several express bus lines, and the
                 Metro-North Railroad
-                trains stopping at the Riverdale section on the Hudson Line. Located in Fieldston are public and
-                private schools that
-                beat citywide averages..<br/><br/>
+                trains stopping at the Riverdale section on the Hudson Line.<br/><br/>
 
                 Fieldston Towers is the place where nature and city life meet. Our community is close to everything,
                 making it convenient
@@ -48,8 +46,8 @@
                 schedule a tour!<br/><br/>
             </p>
 
-            <button type="button" class="btn btn-secondary btn-lg buttons">
-                <a herf="https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/">Available Apartments <i class="fas fa-chevron-right"></i></a>
+            <button type="button" class="btn btn-secondary btn-lg buttons" onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
+                Available Apartments <i class="fas fa-chevron-right"></i>
             </button>
         </div>
     </section>
@@ -115,13 +113,14 @@
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/waveHill.jpg') }}"
                                      alt="Wave Hill">
                                 <div class="card-body">
-                                    <h5 class="card-title">Big Cottonwood Canyon</h5>
+                                    <h5 class="card-title">Wave Hill</h5>
                                     <p class="card-text">
-                                        Big Cottonwood Canyon is a canyon in the Wasatch Range 12 miles southeast of
-                                        Salt Lake City in the U.S. state of Utah. The 15-mile-long canyon provides
-                                        hiking, biking, picnicking, rock-climbing, camping and fishing in the summer.
-                                        Its two ski resorts, Brighton and Solitude, are popular among skiers and
-                                        snowboarders.
+                                        An urban oasis, Wave Hill’s 28 acres sit high above the Hudson River with sweeping
+                                        views and lots of open skies--an enchanting surprise for all the senses.
+                                        Here nature is the springboard for workshops and walks, talks, contemporary art,
+                                        live performances, and more--there is always something to make, to learn or simply
+                                        experience, each moment circling back to Wave Hill’s serene setting, inviting us
+                                        to connect to nature in myriad ways.
                                     </p>
                                 </div>
                             </div>
@@ -149,11 +148,11 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bronx Zoo</h5>
                                     <p class="card-text">
-                                        Trolley Square is a partially enclosed shopping center located in Salt Lake
-                                        City,
-                                        Utah, United States. It is considered to be a trendy high-end center. The
-                                        center
-                                        is near downtown Salt Lake City and the UTA TRAX light-rail system.
+                                        The animals and exhibits at the Bronx Zoo span the globe and include tiny toads
+                                        from Tanzania and big cats from the Russian Far East. With more than 700 species,
+                                        the zoo is the perfect place to inspire animal lovers of all ages. Part of our
+                                        mission is to connect visitors to wildlife and inspire them to join our conservation
+                                        work.
                                     </p>
                                 </div>
                             </div>
@@ -178,8 +177,8 @@
                         you and your family to enjoy living in this peaceful community where everyone’s needs are met,
                         including your pets.
                     </p>
-                    <button type="button" class="btn btn-secondary btn-lg buttons">
-                        <a herf="{{ url_for('documents') }}">Our Pet Policy <i class="fas fa-chevron-right"></i></a>
+                    <button type="button" class="btn btn-secondary btn-lg buttons" onclick="window.location.href='{{ url_for( 'documents') }}'">
+                       Our Pet Policy <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
                 <div class="col s12 m6">
@@ -193,8 +192,8 @@
                         The amenities offered at Fieldston Towers provide residents with all the necessities of easy
                         living and floor plans for every lifestyle
                     </p>
-                    <button type="button" class="btn btn-secondary btn-lg buttons">
-                        <a herf="{{ url_for('amenities') }}">View Amenities <i class="fas fa-chevron-right"></i></a>
+                    <button type="button" class="btn btn-secondary btn-lg buttons"  onclick="window.location.href='{{ url_for( 'amenities') }}'">
+                       View Amenities <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
             </div>

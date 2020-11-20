@@ -7,17 +7,18 @@
 {% endblock %}
 
 {% block content %}
-    <main class="background-grey">
+    <main class="background-blue">
         <div class="container topSpace">
-            <h3>Maintenance Updates</h3>
+            <h3>News Feed</h3>
             {% for post in posts %}
                 <div class="cardMaintenance">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.body }}</p>
-                            <p>{{ post.author }}</p>
-                            <p>{{ post.timestamp }}</p>
+                            <p class="card-text">Start Time: {{ post.start }}</p>
+                            <p class="card-text">End Time: {{ post.end }}</p>
+                            <p class="card-text">{{ post.date }}</p>
                         </div>
                     </div>
                 </div>

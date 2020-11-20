@@ -54,7 +54,7 @@ def maintenance_form():
     form = MaintenanceForm()
     print(form.validate_on_submit())
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.body.data, author=form.author.data)
+        post = Post(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data, date=form.date.data)
         db.session.add(post)
         db.session.commit()
         flash('Maintenance Form Successful')
