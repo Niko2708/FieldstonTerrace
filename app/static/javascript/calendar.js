@@ -1,3 +1,5 @@
+console.log("Hello World");
+
 let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
@@ -34,7 +36,6 @@ function jump() {
 }
 
 function showCalendar(month, year) {
-
     let firstDay = (new Date(year, month)).getDay();
     let daysInMonth = 32 - new Date(year, month, 32).getDate();
 

@@ -1,0 +1,22 @@
+.cardMaintenance{
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 3%;
+}
+
+#cardSpace{
+    margin-top: 25px;
+    margin-left: 50px;
+    width: 400px;
+    text-align: center;
+}
+
+#title {
+    font-family: Raleway, sans-serif;
+    letter-spacing: 6px;
+    font-weight: 400;
+    line-height: 40px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+	text-align: center;
+}

@@ -18,15 +18,14 @@
                     <p class="textStyles">{{ form.title(class="single-line") }}</p>
 
                     <h5> Event Description</h5>
-                    <p class="textStyles">{{ form.body(id='textArea') }}</p>
+                    <p class="textStyles">{{ form.body(class='textArea') }}</p>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="textStyles">Select the dates and times of the actual event.</p>
-                            <p class="textStyles">Event Start: {{ form.dateOfEvent}}</p>
-                            <p class="textStyles">Start Time: {{ form.start_at }} <span class="tab"> </span>End Time: {{ form.end_at }}</p>
-                        </div>
+                    <div class="dateTime">
+                        <p class="textStyles">Select the dates and times of the actual event.</p>
+                        <p class="textStyles">Event Start: {{ form.dateOfEvent}}</p>
+                        <p class="textStyles">Start Time: {{ form.start_at }} <span class="tab"> </span>End Time:{{ form.end_at }}</p>
                     </div>
+
                     <p>{{ form.submit(class = 'buttonStyle') }}</p>
                 </div>
             </div>

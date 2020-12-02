@@ -7,27 +7,30 @@
 {% endblock %}
 
 {% block content %}
-<main class="background-blue">
-    <div class="container topSpace">
-        <h1>Maintenance Updates</h1>
+<main class="background-blue container-fluid topSpace">
+    <div>
+        <h1 class="h1Size" id="title"> Maintenance Updates</h1>
         <div class="row">
-            <div class="col-10">
+			 <div class="col-md-3">
+				<div class="card" id="cardSpace">
+					<div class="card-body">
+						<a href="{{ url_for('maintenance_form') }}">Create a new form</a>
+					</div>
+				</div>
+            </div>
+            <div class="col-md-9">
                 {% for post in posts %}
                 <div class="cardMaintenance">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.body }}</p>
-                            <p>{{ post.author }}</p>
-                            <p class="card-text">Start Time: {{ post.start }}  End Time: {{ post.end}}</p>
+                            <p class="card-text">Start Time: {{ moment(post.start).format('LT') }}  End Time: {{ moment(post.end).format('LT') }}</p>
                             <p class="card-text">Posted: {{ moment(post.date).format('LLLL') }}</p>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-            </div>
-            <div class="col-2">
-                <a href="{{ url_for('maintenance_form') }}">Create a new form</a>
             </div>
         </div>
     </div>
@@ -35,6 +38,7 @@
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}}
+    {{ super() }}
     {{ moment.include_moment() }}
+    {{ moment.locale() }}
 {% endblock %}}

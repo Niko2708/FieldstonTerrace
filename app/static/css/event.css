@@ -9,6 +9,13 @@
     margin-top: 3%;
 }
 
+#cardSpace{
+    margin-top: 25px;
+    margin-left: 50px;
+    width: 400px;
+    text-align: center;
+}
+
 #day{
     text-align: center;
 }

@@ -7,8 +7,11 @@
 {% endblock %}
 
 {% block content %}
-<main class="background-blue">
-    <div class="container-fluid topSpace">
+<main class="background-blue container-fluid topSpace">
+    <div>
+        <h1 id="eventTitle">Upcoming Events</h1>
+        <h3 id="day"></h3>
+        
         <div class="row">
             <div class="col-md-3">
                 <div class="card" id='calendar'>
@@ -47,11 +50,15 @@
                     <div id="year"></div>
 
                 </div>
-                <a href="{{ url_for('event_form') }}">Event Form</a>
+
+                <div class="card" id="cardSpace">
+                    <div class="card-body">
+                        <a href="{{ url_for('event_form') }}">Create an Event Post</a>
+                    </div>
+                </div>
             </div>
+
             <div class="col-md-9">
-                <h1 id="eventTitle">Upcoming Events</h1>
-                <h3 id="day"></h3>
                 {% for event in events %}
                 <div class="cardMaintenance">
                     <div class="card">
@@ -75,9 +82,10 @@
         </div>
     </div>
 </main>
+
 {% endblock %}
 
-{%block script%}
+{%block scripts%}
     {{ super() }}
     <script src="{{ url_for('static', filename='javascript/calendar.js') }}"></script>
     {{ moment.include_moment() }}

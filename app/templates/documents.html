@@ -3,19 +3,23 @@
 {% block title %}Documents{% endblock %}
 
 {% block custom_styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/documents.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/documents.css') }}">
 {% endblock %}
 
 {% block content %}
-    <main>
-        <h1>Download File</h1>
-        <div class="container">
-            <a href="/get_pdf/FBC_House_Rules.pdf">
-                <button class='btn btn-default'>Fieldston Tower House Rules</button>
-            </a>
-            <a href="/get_pdf/FBC_Application.pdf">
-                 <button class='btn btn-default'>Fieldston Tower Application</button>
-            </a>
-        </div>
-    </main>
+<main class="background-grey topSpace container-fluid">
+    <div class="container">
+        <h1 id="title">Documents</h1>
+        <p class="textStyle" id="space">
+            For those interested in applying for a Co Op at Fieldston Towers, download and fill out the application form.
+            When you finish filling out the form, please submit it to your realtor. From there, we will review your
+            information and get back to you promptly: <a href="/get_pdf/FBC_Application.pdf">Fieldston Tower Application</a>
+        </p>
+
+        <p class="textStyle">
+            For residents and potential residents, we ask that you download and familiarize yourself with the rules: <a href="/get_pdf/FBC_House_Rules.pdf">Fieldston Tower Rules</a>
+        </p>
+
+    </div>
+</main>
 {% endblock %}

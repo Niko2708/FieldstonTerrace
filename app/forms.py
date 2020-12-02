@@ -25,7 +25,7 @@ class MaintenanceForm(FlaskForm):
     date = DateField('Date of Event:', validators=[DataRequired()])
     start_at = TimeField('Start at', validators=[DataRequired()])
     end_at = TimeField('End at', validators=[DataRequired()])
-    submit = SubmitField('submit')
+    submit = SubmitField('Submit')
 
 class EventForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
@@ -35,4 +35,4 @@ class EventForm(FlaskForm):
     location = StringField('Location')
     start_at = TimeField('Start at', validators=[DataRequired()])
     end_at = TimeField('End at', validators=[DataRequired()])
-    submit = SubmitField('submit')
+    submit = SubmitField('Submit')

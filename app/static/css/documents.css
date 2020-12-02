@@ -1,0 +1,20 @@
+#title {
+    font-family: Raleway, sans-serif;
+    letter-spacing: 6px;
+    font-weight: 400;
+    line-height: 40px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+	text-align: center;
+}
+
+#space{
+    margin-top: 20px;
+}
+
+.textStyle{
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    font-family: 'Open Sans', sans-serif;
+}
