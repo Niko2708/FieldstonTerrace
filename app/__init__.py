@@ -5,15 +5,18 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 import logging
 from logging.handlers import SMTPHandler
+from flask_moment import Moment
 import os
 
 app = Flask(__name__)
-app.config.from_object(Config)
+moment = Moment(app)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
+
 #for database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db=SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 

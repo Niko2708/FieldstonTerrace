@@ -69,3 +69,11 @@ nav{
 .card-title{
     font-family: Raleway, sans-serif !important;
 }
+
+.cardStyle{
+    height:700px
+}
+
+.tab{
+    margin-left: 2.5rem;
+}

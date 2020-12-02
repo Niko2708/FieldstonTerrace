@@ -1,13 +1,25 @@
+#loginBackground{
+    background-image: url('../img/login.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginBar{
+    width: 80%;
+    border: none;
+    background-color: #F0F0F0;
+    padding-left: 15px;
+    height: 50px;
+}
+
 #loginCard{
     width:25rem;
-    left: 35%;
 }
 
 #submit{
     text-align: center;
     padding-left: 50px;
     padding-right: 50px;
-    height: 37px;
-    font-size: 1.3em;
-    font-weight: 400;
+    font-size: 1.1em;
 }

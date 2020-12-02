@@ -19,7 +19,8 @@
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.body }}</p>
                             <p>{{ post.author }}</p>
-                            <p>{{ post.timestamp }}</p>
+                            <p class="card-text">Start Time: {{ post.start }}  End Time: {{ post.end}}</p>
+                            <p class="card-text">Posted: {{ moment(post.date).format('LLLL') }}</p>
                         </div>
                     </div>
                 </div>
@@ -32,3 +33,8 @@
     </div>
 </main>
 {% endblock %}
+
+{% block scripts %}
+    {{ super() }}}
+    {{ moment.include_moment() }}
+{% endblock %}}

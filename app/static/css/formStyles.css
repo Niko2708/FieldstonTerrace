@@ -1,0 +1,37 @@
+#textArea{
+    width: 75%;
+    height: 400px;
+    border: 1px solid black;
+}
+
+.single-line{
+    width: 75%;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.cardMaintenance{
+    margin-top:3%;
+}
+
+#cardStyle{
+    padding-left: 25px;
+    padding-top: 20px;
+    border: 1px solid black;
+    width: 75%;
+}
+
+.buttonStyle{
+    margin-top: 25px;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.textStyles{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    font-family: 'Open Sans', sans-serif;
+}

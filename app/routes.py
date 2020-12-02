@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, send_file, send_from_directory, safe_join, abort
 from app import app, db
-from app.forms import LoginForm, ApplyForm, ContactForm, MaintenanceForm, EventForm
+from app.forms import LoginForm, ApplyForm, MaintenanceForm, EventForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post, Event
 import os
@@ -52,7 +52,7 @@ def maintenance():
 @login_required
 def maintenance_form():
     form = MaintenanceForm()
-    print(form.validate_on_submit())
+
     if form.validate_on_submit():
         post = Post(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data, date=form.date.data)
         db.session.add(post)
@@ -65,7 +65,6 @@ def maintenance_form():
 @login_required
 def event_form():
     form = EventForm()
-    print(form.validate_on_submit())
     if form.validate_on_submit():
         event = Event(title=form.title.data, body=form.body.data, author=form.author.data, dateOfEvent=form.dateOfEvent.data, start=form.start_at.data, end=form.end_at.data)
         db.session.add(event)
@@ -152,29 +151,6 @@ def apply():
     # if form.validate_on_submit():
     # return redirect('/')
     return render_template('apply.html', form=form)
-
-
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    form = ContactForm()
-    if form.validate_on_submit():
-        email=form.email.data
-        name=form.firstName.data + "" +form.lastName.data
-        phone=form.phone.data
-        message=form.message.data
-
-        messageToUser="We have recieved your question and will respond soon."
-        resultOfTheForm = "Name:"+name+"\nEmail:"+email+"\nPhone Number:"+phone+"\nMessage:"+message
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login("fieldstonprojects@gmail.com", "Qwerty123!")
-        server.sendmail("fieldstonprojects@gmail.com",email,resultOfTheForm)
-        server.sendmail("fieldstonprojects@gmail.com","fieldstonprojects@gmail.com",resultOfTheForm)
-        flash('Message Sent')
-        return redirect(url_for('index'))
-
-    return render_template('contact.html', form=form)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -18,15 +18,6 @@ class ApplyForm(FlaskForm):
     applicationForm = FileField('Application Form')
     submit = SubmitField('submit')
 
-class ContactForm(FlaskForm):
-    firstName = StringField('First Name', validators=[DataRequired()])
-    lastName = StringField('Last Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    phone = StringField('Phone', validators=[DataRequired()])
-    message = TextAreaField('Message', validators=[DataRequired()])
-    subscribe = BooleanField('Subscribe if you want notification for new availability in the apartment')
-    submit = SubmitField('submit')
-
 class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
     body = TextAreaField('Body:', validators=[DataRequired()])

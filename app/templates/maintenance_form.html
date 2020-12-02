@@ -3,7 +3,7 @@
 {% block title %}Maintenance{% endblock %}
 
 {% block custom_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/maintenance.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/formStyles.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -13,30 +13,23 @@
             {{ form.hidden_tag() }}
             <div class="card container">
                 <div class="card-body">
-                    <h1>Maintenance Form</h1>
-                    <h5>Maintenance Title</h5>
-                    <p>{{ form.title(class="single-line") }}</p>
+                    <h1>Maintenance Post</h1>
+                    <h5>Title</h5>
+                    <p class="textStyles">{{ form.title(class="single-line") }}</p>
 
                     <h5> Description</h5>
-                    <p>{{ form.body(id='textArea') }}</p>
+                    <p class="textStyles">{{ form.body(id ='textArea') }}</p>
 
-                    <div class="card">
-                        <div clas="card-body">
-                            <p>Day the maintenance work will occur</p>
-                            <p>Event Start:</p>
-                            <p>{{ form.date}}</p>
-                            <p>Timeframe the maintenance will occur</p>
-                            <div class="row">
-                                <p>Start Time: {{ form.start_at }}</p>
-                                <p>End Time: {{ form.end_at }}</p>
-                            </div>
-                        </div>
+                    <div id="cardStyle">
+                        <p class="textStyles">Day the maintenance work will occur</p>
+                        <p class="textStyles">Event Start: {{ form.date}}</p>
+                        <p class="textStyles">Timeframe the maintenance will occur:</p>
+                        <p class="textStyles">Start Time: {{ form.start_at }} <span class="tab"> </span>End Time: {{ form.end_at }}</p>
                     </div>
-
-                    <p>{{ form.submit() }}</p>
+                    <p>{{ form.submit(class = 'buttonStyle') }}</p>
                 </div>
             </div>
         </form>
     </div>
 </main>
-{% endblock %}s
+{% endblock %}
