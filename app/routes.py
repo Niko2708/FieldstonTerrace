@@ -66,7 +66,7 @@ def maintenance_form():
 def event_form():
     form = EventForm()
     if form.validate_on_submit():
-        event = Event(title=form.title.data, body=form.body.data, author=form.author.data, dateOfEvent=form.dateOfEvent.data, start=form.start_at.data, end=form.end_at.data)
+        event = Event(title=form.title.data, body=form.body.data, dateOfEvent=form.dateOfEvent.data, start=form.start_at.data, end=form.end_at.data)
         db.session.add(event)
         db.session.commit()
         flash('Maintenance Form Successful')

@@ -42,10 +42,14 @@ nav{
 
 .background-blue{
     background-color: #659dbd;
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 .background-grey{
     background-color: #F0F0F0;
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 .titles {

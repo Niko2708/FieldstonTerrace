@@ -18,3 +18,9 @@
     line-height: 28px;
     font-family: 'Open Sans', sans-serif;
 }
+
+#footer{
+   position: fixed;
+   bottom:0;
+   left:0; 
+}

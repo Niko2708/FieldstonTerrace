@@ -72,8 +72,8 @@
                                 </div>
                             </div>
                             <p class="card-text">{{ event.body }}</p>
-                            <p>Start time: {{event.start_at}} End Time: {{ event.end_at }}</p>
-                            <p>{{ moment(event.dateOfEvent).format('LLLL') }}</p>
+                            <p class="card-text">Date of the Event: {{ moment(event.dateOfEvent).format('LL') }} </p>
+                            <p>Start time: {{event.start}} End Time: {{ event.end }}</p>
                         </div>
                     </div>
                 </div>
