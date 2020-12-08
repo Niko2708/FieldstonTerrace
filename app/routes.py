@@ -91,17 +91,22 @@ def neighborhood():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash('Invlaid username or password')
-            return redirect('login')
-        login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('home'))
-    return render_template('login.html', title='Sign In', form=form)
+        if user is None:
+            error = 'There is no user with that username'
+            return render_template('login.html', error = error, form = form)
+        elif not user.check_password(form.password.data):
+            error = 'Wrong password. Try again or click Forgot password to rest it'
+            return render_template('login.html', error = error, form=form)
+        else:
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for('home'))
+    return render_template('login.html', form=form)
 
 
 @app.route('/apply', methods=['GET', 'POST'])

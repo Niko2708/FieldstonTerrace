@@ -24,6 +24,10 @@
                             <h5>{{ form.password.label }}</h5>
                             {{ form.password(class="loginBar") }}<br>
                         </p>
+
+                        {% if error %}
+                            <p class=error>{{ error }}</p>
+                        {% endif %}
                         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
                         <p><a href="#">Forgot Password</a></p>
                         <p id="submit">{{ form.submit(class="submit") }}</p>
