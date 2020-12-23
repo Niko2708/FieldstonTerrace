@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm, validators
+from app.models import User
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,TextAreaField, SelectField, FileField
 from wtforms.fields.html5 import DateField, TimeField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -9,14 +10,25 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-class ApplyForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    firstName = StringField('First Name', validators=[DataRequired()])
+    lastName = StringField('First Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     phone = StringField('Phone', validators=[DataRequired()])
-    residenceType = SelectField('Residence Type', choices=[('One Bedroom'), ('Two Bedroom'), ('Three Bedroom')], validators=[DataRequired()])
-    desiredMoveInDate =SelectField('Desired Move in Data', choices=[('January'), ('February'),('March'), ('April'),('May'),('June'), ('July'),('August'),('September'),('October'),('November'),('December')], validators=[DataRequired()])
-    applicationForm = FileField('Application Form')
-    submit = SubmitField('submit')
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different username.')
+    
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
 
 class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
@@ -34,3 +46,13 @@ class EventForm(FlaskForm):
     start_at = TimeField('Start at', validators=[DataRequired()])
     end_at = TimeField('End at', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Resetcc')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')

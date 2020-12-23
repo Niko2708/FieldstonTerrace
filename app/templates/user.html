@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+        <img src="img/profile.jpg" class="img-fluid profile-photo" alt="Responsive image">
+        <h1>{{user.username}}</h1>
+    </div>
+</div>
+
+<!-- Add a sub nav bar to edit profile information, change picture, -->
+
+<!-- Posts -->
+<div class="container topSpace">
+    {% for event in events %}
+    <div class="cardMaintenance">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-9">
+                          <h3 class="card-title">{{ event.title }}</h3>
+                    </div>
+                </div>
+                <p class="card-text">{{ event.body }}</p>
+                <p class="card-text">Date of the Event: {{ moment(event.dateOfEvent).format('LL') }} </p>
+                <p>Start time: {{event.start}} End Time: {{ event.end }}</p>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</div>

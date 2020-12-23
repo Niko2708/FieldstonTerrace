@@ -1,12 +1,14 @@
 from flask import render_template, flash, redirect, url_for, request, send_file, send_from_directory, safe_join, abort
-from app import app, db
-from app.forms import LoginForm, ApplyForm, MaintenanceForm, EventForm
+from app import app, db, mail
+from app.forms import LoginForm, MaintenanceForm, EventForm, RegistrationForm, ResetPasswordRequestForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post, Event
+from app.email import send_password_reset_email
 import os
 from werkzeug.utils import secure_filename
 import smtplib
-
+from flask_mail import Message
+from app.forms import ResetPasswordForm
 
 # routes for resident users that login in
 @app.route('/home')
@@ -157,5 +159,56 @@ def apply():
     # return redirect('/')
     return render_template('apply.html', form=form)
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, firstName=form.firstName.data, lastName=form.lastName.data, email=form.email.data, phoneNumber=form.phone.data)
+        #need to add something to clean up phone number
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html', title='Reset Password', form=form)
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+    
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('500.html'), 500
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
