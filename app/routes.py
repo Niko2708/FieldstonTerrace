@@ -47,7 +47,7 @@ def get_pdf(filename):
 @app.route('/maintenance', methods=['GET','POST'])
 @login_required
 def maintenance():
-    posts = Post.query.order_by('timestamp')
+    posts = Post.query.order_by(Post.date.desc())
     return render_template('maintenance.html', posts=posts)
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])

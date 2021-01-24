@@ -25,8 +25,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.body }}</p>
-                            <p class="card-text">Start Time: {{ moment(post.start).format('LT') }}  End Time: {{ moment(post.end).format('LT') }}</p>
-                            <p class="card-text">Posted: {{ moment(post.date).format('LLLL') }}</p>
+                            <p class="card-text">Posted: {{ moment(post.timestamp).fromNow() }}</p>
                         </div>
                     </div>
                 </div>
@@ -40,5 +39,6 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
-    {{ moment.locale() }}
+    <script src="moment.js"></script>
+    <script src="moment-timezone-with-data.js"></script>
 {% endblock %}}

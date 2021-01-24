@@ -8,8 +8,18 @@ from logging.handlers import SMTPHandler
 from flask_moment import Moment
 from flask_mail import Mail, Message
 import os
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
+#Error logging and tracking using sentry.io
+sentry_sdk.init(
+    dsn="https://f025b238b1c34b4aa261c1ae646fe445@o508992.ingest.sentry.io/5602555",
+    integrations=[FlaskIntegration()],
+    traces_sample_rate=1.0
+)
 
 app = Flask(__name__)
+# A javascript library that customs time and dates
 moment = Moment(app)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
