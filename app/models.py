@@ -25,19 +25,30 @@ class User(UserMixin, db.Model):
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)
 
+    # the id is encode so that we can find the user
+    # the password_hash is encode so that when password is reset the token will no longer be valid.
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
-            {'reset_password': self.id, 'exp': time() + expires_in},
+            {'reset': self.id, 'password': self.password_hash, 'exp': time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
             id = jwt.decode(token, app.config['SECRET_KEY'],
-                            algorithms=['HS256'])['reset_password']
+                            algorithms=['HS256'])['reset']
+
+            hash = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['password']
         except:
             return
-        return User.query.get(id)
+
+        user = User.query.filter_by(id=id).first()
+
+        if user and user.password_hash == hash:
+            return User.query.get(user.id)
+        else:
+            return
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,3 +79,18 @@ class Event(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+def get_registration_token(email, expires_in=86400):
+    return jwt.encode(
+        {'register_user':email, 'exp': time() + expires_in},
+        app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+
+def verify_registration_token(token):
+    try:
+        id = jwt.decode(token, app.config['SECRET_KEY'],
+                        algorithms=['HS256'])['register_user']
+    except:
+        return
+    return User.query.get(id)

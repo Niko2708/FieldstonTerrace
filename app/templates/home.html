@@ -17,7 +17,7 @@
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.body }}</p>
                             <p class="card-text">Start Time: {{ post.start }}  End Time: {{ post.end}}</p>
-                            <p class="card-text">Posted: {{ moment(post.date).format('LLLL') }}</p>
+                            <p class="card-text">Posted: {{ moment(post.timestamp).fromNow() }}</p>
                         </div>
                     </div>
                 </div>

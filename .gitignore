@@ -1,1 +1,3 @@
-venv/*
+venv/*sendgrid.env
+sendgrid.env
+sendgrid.env

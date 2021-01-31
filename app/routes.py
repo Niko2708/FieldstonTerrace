@@ -1,14 +1,16 @@
 from flask import render_template, flash, redirect, url_for, request, send_file, send_from_directory, safe_join, abort
-from app import app, db, mail
+from app import app, db
 from app.forms import LoginForm, MaintenanceForm, EventForm, RegistrationForm, ResetPasswordRequestForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post, Event
-from app.email import send_password_reset_email
+from app.email import *
 import os
 from werkzeug.utils import secure_filename
 import smtplib
 from flask_mail import Message
 from app.forms import ResetPasswordForm
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 # routes for resident users that login in
 @app.route('/home')
@@ -27,7 +29,7 @@ def logout():
 @app.route('/events')
 @login_required
 def events():
-    events = Event.query.order_by('timestamp').limit(4)
+    events = Event.query.order_by(Event.timestamp.desc())
     return render_template('events.html',events=events)
 
 @app.route('/documents')
@@ -159,20 +161,33 @@ def apply():
     # return redirect('/')
     return render_template('apply.html', form=form)
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/registration_request', methods=['GET', 'POST'])
+def registration_request():
     if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    email='nikocolon94@gmail.com'
+    send_user_registeration_email(email)
+    flash('Check your email for the instructions to register as a user')
+    return redirect(url_for('login'))
+
+@app.route('/registration/<token>', methods=['GET', 'POST'])
+def registration(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    code = verify_registration_token(token)
+    if not user:
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, firstName=form.firstName.data, lastName=form.lastName.data, email=form.email.data, phoneNumber=form.phone.data)
-        #need to add something to clean up phone number
+        user = User(username=form.username.data, firstName=form.firstName.data, lastName=form.lastName.data,
+                    email=form.email.data, phoneNumber=form.phone.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register,html', form=form)
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
@@ -181,10 +196,14 @@ def reset_password_request():
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
+        recipent = form.email.data
+
         if user:
-            send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password')
-        return redirect(url_for('login'))
+            send_password_reset_email(user,recipent)
+        else:
+            send_unknow_user_email(recipent)
+
+        return render_template('reset_password_confirmation.html',email=recipent)
     return render_template('reset_password_request.html', title='Reset Password', form=form)
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -193,12 +212,13 @@ def reset_password(token):
         return redirect(url_for('index'))
     user = User.verify_reset_password_token(token)
     if not user:
-        return redirect(url_for('index'))
+        return redirect(url_for('reset_password_link_expired'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
         flash('Your password has been reset.')
+        send_password_change_confirmation(user,user.email)
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
     
