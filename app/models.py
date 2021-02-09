@@ -16,6 +16,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     admin = db.Column(db.Boolean, default=False)
 
+
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -50,7 +52,7 @@ class User(UserMixin, db.Model):
         else:
             return
 
-class Post(db.Model):
+class Maintenance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String)
@@ -58,7 +60,6 @@ class Post(db.Model):
     end = db.Column(db.Time)
     date = db.Column(db.DateTime)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
-    author = db.Column(db.String(60))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
@@ -70,11 +71,16 @@ class Event(db.Model):
     dateOfEvent = db.Column(db.DateTime)
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
-    author = db.Column(db.String(60))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     location = db.Column(db.String)
-    start= db.Column(db.Time)
-    end= db.Column(db.Time)
+    start = db.Column(db.Time)
+    end = db.Column(db.Time)
+
+class CommunityBoard(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 @login.user_loader
 def load_user(id):

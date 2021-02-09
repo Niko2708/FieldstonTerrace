@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block custom_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/community.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/formStyles.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="container-fluid background-blue">
+    <section class="topSpace">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="card container">
+                <div class="card-body">
+                    <p class="textStyles">{{ form.post(class='textArea') }}</p>
+                    <p>{{ form.submit(class = 'buttonStyle') }}</p>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="topSpace">
+        {% for c in community %}
+         <div class="card container">
+                <div class="card-body">
+                    {{c.post}}
+                </div>
+         </div>
+        {% endfor %}
+    </section>
+
+</main>
+{% endblock %}

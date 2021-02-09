@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request, send_file, send_from_directory, safe_join, abort
 from app import app, db
-from app.forms import LoginForm, MaintenanceForm, EventForm, RegistrationForm, ResetPasswordRequestForm
+from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Post, Event
+from app.models import User, Maintenance, Event, CommunityBoard
 from app.email import *
 import os
 from werkzeug.utils import secure_filename
@@ -16,7 +16,7 @@ from sendgrid.helpers.mail import Mail
 @app.route('/home')
 @login_required
 def home():
-    posts = Post.query.order_by('timestamp').limit(4)
+    posts = Maintenance.query.order_by('timestamp').limit(4)
     events = Event.query.order_by('timestamp').limit(4)
     return render_template('home.html', posts=posts, events=events)
 
@@ -49,7 +49,7 @@ def get_pdf(filename):
 @app.route('/maintenance', methods=['GET','POST'])
 @login_required
 def maintenance():
-    posts = Post.query.order_by(Post.date.desc())
+    posts = Maintenance.query.order_by(Maintenance.date.desc())
     return render_template('maintenance.html', posts=posts)
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
@@ -58,7 +58,7 @@ def maintenance_form():
     form = MaintenanceForm()
 
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data, date=form.date.data)
+        post = Maintenance(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data, date=form.date.data)
         db.session.add(post)
         db.session.commit()
         flash('Maintenance Form Successful')
@@ -76,6 +76,18 @@ def event_form():
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('event_form.html', form=form)
+
+@app.route('/community_board', methods=['GET', 'POST'])
+@login_required
+def community_board():
+    form = ComunnityBoardForm()
+    if form.validate_on_submit():
+        community = ComunnityBoard(post=form.post.data)
+        db.session.add(community)
+        db.session.commit()
+        flash('Post Successful')
+    community = CommunityBoard.query.all()
+    return render_template('community.html', form=form,community=community)
 
 # routes for non resident users
 @app.route('/')

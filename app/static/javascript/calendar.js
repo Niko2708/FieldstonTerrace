@@ -1,5 +1,3 @@
-console.log("Hello World");
-
 let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
@@ -71,7 +69,7 @@ function showCalendar(month, year) {
                 let cell = document.createElement("td");
                 let cellText = document.createTextNode(date);
                 if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-                    cell.classList.add("bg-info");
+                    cell.classList.add("sm-info");
                 } // color today's date
                 cell.appendChild(cellText);
                 row.appendChild(cell);
