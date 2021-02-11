@@ -49,7 +49,7 @@ def get_pdf(filename):
 @app.route('/maintenance', methods=['GET','POST'])
 @login_required
 def maintenance():
-    posts = Maintenance.query.order_by(Maintenance.date.desc())
+    posts = Maintenance.query.order_by(Maintenancec.date.desc())
     return render_template('maintenance.html', posts=posts)
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
@@ -79,9 +79,9 @@ def event_form():
 
 @app.route('/community_board', methods=['GET', 'POST'])
 def community_board():
-    form = ComunnityBoardForm()
+    form = CommunityBoardForm()
     if form.validate_on_submit():
-        community = ComunnityBoard(post=form.post.data)
+        community = CommunityBoard(body=form.post.data)
         db.session.add(community)
         db.session.commit()
         flash('Post Successful')

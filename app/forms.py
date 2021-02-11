@@ -57,6 +57,6 @@ class ResetPasswordForm(FlaskForm):
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
 
-class ComunnityBoardForm(FlaskForm):
+class CommunityBoardForm(FlaskForm):
     post = TextAreaField('Body:', validators=[DataRequired()])
     submit = SubmitField('Post')
