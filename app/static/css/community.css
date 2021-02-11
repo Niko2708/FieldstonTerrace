@@ -1,0 +1,19 @@
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: relative;
+  left: 30px;
+  z-index: 0;
+  max-width: 500px;
+  border-radius: 8px;
+}
+
+.buttonStyle{
+  width: 90%;
+  border-radius: 8px;
+}
+
+.form-container {
+  max-width: 500px;
+  padding: 10px;
+}

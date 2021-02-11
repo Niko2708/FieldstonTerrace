@@ -59,4 +59,4 @@ class ResetPasswordForm(FlaskForm):
 
 class ComunnityBoardForm(FlaskForm):
     post = TextAreaField('Body:', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Post')

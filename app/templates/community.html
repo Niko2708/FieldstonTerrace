@@ -9,10 +9,14 @@
 
 {% block content %}
 <main class="container-fluid background-blue">
-    <section class="topSpace">
-        <form action="" method="post">
+
+    <button class="open-button" onclick="openForm()">Open Form</button>
+
+    <section class="topSpace form-popup" id="myForm">
+        <form action="" method="post" class="form-container">
             {{ form.hidden_tag() }}
-            <div class="card container">
+            <div class="card">
+                <h5>Create Post</h5>
                 <div class="card-body">
                     <p class="textStyles">{{ form.post(class='textArea') }}</p>
                     <p>{{ form.submit(class = 'buttonStyle') }}</p>
@@ -31,5 +35,13 @@
         {% endfor %}
     </section>
 
+    <script>
+        function openForm(){
+            document.getElementById("myForm").style.display = "block";
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
 </main>
 {% endblock %}

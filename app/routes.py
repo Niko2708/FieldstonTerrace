@@ -78,7 +78,6 @@ def event_form():
     return render_template('event_form.html', form=form)
 
 @app.route('/community_board', methods=['GET', 'POST'])
-@login_required
 def community_board():
     form = ComunnityBoardForm()
     if form.validate_on_submit():
