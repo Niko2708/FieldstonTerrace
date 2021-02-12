@@ -20,6 +20,36 @@ def home():
     events = Event.query.order_by('timestamp').limit(4)
     return render_template('home.html', posts=posts, events=events)
 
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = CommunityBoard.query.filter_by(user_id=user.id).all()
+    return render_template('user.html', user=user, posts=posts)
+
+@app.route('/edit_profile', methods = ['GET', 'POST'])
+@login_required
+def edit_profile():
+    UsernameForm = EditUsernameForm()
+    NameForm = EditNameForm()
+
+    if UsernameForm.validate_on_submit():
+        current_user.username = UsernameForm.username.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
+    elif NameForm.validate_on_submit():
+        current_user.firstName = NameForm.firstName.data
+        current_user.lastName = NameForm.lastName.data
+        db.session.commit()
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        UsernameForm.username.data = current_user.username
+        NameForm.firstName.data = current_user.firstName
+        NameForm.lastName.data = current_user.lastName
+
+    return render_template('edit_profile.html', username=UsernameForm, name=NameForm, user=current_user)
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -85,7 +115,7 @@ def community_board():
         db.session.add(community)
         db.session.commit()
         flash('Post Successful')
-    community = CommunityBoard.query.all()
+    community = CommunityBoard.query.orderby(CommunityBoard.timestamp.desc()).all()
     return render_template('community.html', form=form,community=community)
 
 # routes for non resident users

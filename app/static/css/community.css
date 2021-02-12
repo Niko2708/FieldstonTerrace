@@ -10,11 +10,11 @@
   height: 100%; /* Full height */
 }
 
-#buttonStyle{
+.buttonStyle{
   display: flex;
   margin: auto;
   width: 90%;
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .form-container {
@@ -49,12 +49,18 @@
   text-decoration: none;
   cursor: pointer;
 }
+
 #community-post{
     font-weight: 700;
     text-align: center;
 }
 
 .card-post-style{
-    width: 80%;
+    width: 60%;
 	margin-top: 3%;
+	margin: auto;
+}
+
+.post-space{
+    margin-bottom:30px;
 }

@@ -8,8 +8,14 @@
 
 {% block content %}
 <main class="container-fluid background-blue test">
-
-    <button class="open-button" id="myBtn">Open Form</button>
+    <div class="container topSpace">
+        <div class="card card-post-style">
+            <button class="open-button buttonStyle" id="myBtn">
+                Is their anything you want to share?
+            </button>
+            <hr>
+        </div>
+    </div>
 
     <section class="topSpace form-popup container-fluid" id="myForm">
         <form action="" method="post" class="form-container">
@@ -25,12 +31,14 @@
         </form>
     </section>
 
-    <section class="topSpace container">
+    <section class="container">
         {% for c in community %}
-        <div class="card card-post-style">
-            <div class="card-body">
-                <p class="card-text">{{c.body}}</p>
-                <p class="card-text">{{c.timestamp}}</p>
+        <div class="post-space">
+            <div class="card card-post-style">
+                <div class="card-body">
+                    <p class="card-text">{{c.body}}</p>
+                    <p class="card-text">{{c.timestamp}}</p>
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -47,14 +55,14 @@
         var span = document.getElementsByClassName("close")[0];
 
       // When the user clicks the button, open the modal
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {

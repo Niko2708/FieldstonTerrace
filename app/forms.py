@@ -60,3 +60,12 @@ class ResetPasswordForm(FlaskForm):
 class CommunityBoardForm(FlaskForm):
     post = TextAreaField('Body:', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class EditUsernameForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class EditNameForm(FlaskForm):
+    firstName = StringField('First Name')
+    lastName = StringField('First Name')
+    submit = SubmitField('Submit')
