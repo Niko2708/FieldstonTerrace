@@ -48,7 +48,7 @@ def edit_profile():
         NameForm.firstName.data = current_user.firstName
         NameForm.lastName.data = current_user.lastName
 
-    return render_template('edit_profile.html', username=UsernameForm, name=NameForm, user=current_user)
+    return render_template('edit_profile.html', UsernameForm=UsernameForm, NameForm=NameForm, user=current_user)
 
 @app.route('/logout')
 @login_required
@@ -115,7 +115,7 @@ def community_board():
         db.session.add(community)
         db.session.commit()
         flash('Post Successful')
-    community = CommunityBoard.query.orderby(CommunityBoard.timestamp.desc()).all()
+    community = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
     return render_template('community.html', form=form,community=community)
 
 # routes for non resident users

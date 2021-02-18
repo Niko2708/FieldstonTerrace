@@ -23,7 +23,7 @@ app = Flask(__name__)
 moment = Moment(app)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 #for database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../app.db'

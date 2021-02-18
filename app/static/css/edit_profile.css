@@ -1,0 +1,71 @@
+.setting{
+    padding: 15px 24px;
+    border-bottom: 1px solid #CDCDCD;
+}
+
+.row.lastSetting{
+   padding-top:15px;
+   padding-left: 24px;
+   padding-right: 24px;
+}
+
+.settingCard{
+    max-width: 1023px;
+    margin: auto;
+    min-width: 743px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  text-align: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-container {
+  width: 500px;
+  max-width: 500px;
+  margin:auto;
+}
+
+.card-form-style{
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 428px;
+}
+
+.form-text-box{
+    height: 56px;
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #F0F0F0;
+    padding-left: 15px;
+    }
+
+.submit{
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 1.1em;
+}

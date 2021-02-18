@@ -63,7 +63,7 @@ class CommunityBoardForm(FlaskForm):
 
 class EditUsernameForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Save')
 
 class EditNameForm(FlaskForm):
     firstName = StringField('First Name')

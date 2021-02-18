@@ -1,13 +1,156 @@
 {% extends "base.html" %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Account Settings{% endblock %}
+
+{% block custom_styles %}
+<link href="{{ url_for('static', filename='css/edit_profile.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
-<main class="container-fluid">
+<main class="container-fluid topSpace background-blue">
+    <div class="container">
+        <div class="card .settingCard">
+            <h5>Basic Info</h5>
+            <div class="card-body">
 
-    <h1>General Account Settings</h1>
+                <div class="row setting">
+                    <div class="col-4">
+                        Photo
+                    </div>
+                    <div class="col-4">
+                        Add a Photo to Personalize your account
+                    </div>
+                    <div class="col-4">
+                        <edit/>
+                    </div>
+                </div>
 
-    <p>Username {{user.username }}</p>
+                <div class="row setting" id="Username">
+                    <div class="col-4">
+                        Username
+                    </div>
+                    <div class="col-4">
+                        {{user.username }}
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
 
+                <div class="form-popup" id="myForm">
+                    <form action="" class="form-container" method="post">
+                        {{ UsernameForm.hidden_tag() }}
+                        <div class="card card-form-style">
+                            <span class="close">&times;</span>
+                            <h5 id="community-post">Change Username</h5>
+                            {{ UsernameForm.username(class="form-text-box") }}<br>
+                            <p id="submit">{{ UsernameForm.submit(class="submit") }}</p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row setting" id="name">
+                    <div class="col-4">
+                        Name
+                    </div>
+                    <div class="col-4">
+                        {{user.firstName }} {{user.lastName}}
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="form-popup" id="nameForm">
+                    <form action="" class="form-container" method="post">
+                        {{ UsernameForm.hidden_tag() }}
+                        <div class="card card-form-style">
+                            <span class="close">&times;</span>
+                            <h5 class="community-post">Change Username</h5>
+                            {{ UsernameForm.username(class="form-text-box") }}<br>
+                            <p class="submit">{{ UsernameForm.submit(class="submit") }}</p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row lastSetting">
+                    <div class="col-4">
+                        Password
+                    </div>
+                    <div class="col-4">
+                        .......
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="topSpace">
+            <div class="card .settingCard">
+                <h5>Contact Info</h5>
+                <div class="card-body">
+                    <div class="row setting">
+                        <div class="col-4">
+                            Email
+                        </div>
+                        <div class="col-4">
+                            {{user.email}}
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="row lastSetting">
+                        <div class="col-4">
+                            Phone
+                        </div>
+                        <div class="col-4">
+                            {{user.phoneNumber}}
+                        </div>
+                        <div class="col-4">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       // Get the modal
+        var modal = document.getElementById("myForm");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("Username");
+
+        var name = document.getElementById("name");
+        var nameModel = document.getElementById("nameForm");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+          nameModels.style.display = "block";
+        }
+
+        name.onclick = function(){
+            nameModel.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
 </main>
 {% endblock %}

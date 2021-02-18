@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="container-fluid background-blue test">
+<main class="container-fluid background-blue">
     <div class="container topSpace">
         <div class="card card-post-style">
             <button class="open-button buttonStyle" id="myBtn">
@@ -64,12 +64,12 @@
           modal.style.display = "none";
         }
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
     </script>
 </main>
 {% endblock %}
