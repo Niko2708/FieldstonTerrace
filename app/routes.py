@@ -32,6 +32,7 @@ def user(username):
 def edit_profile():
     UsernameForm = EditUsernameForm()
     NameForm = EditNameForm()
+    PasswordForm = ChangePasswordForm()
 
     if UsernameForm.validate_on_submit():
         current_user.username = UsernameForm.username.data
@@ -43,12 +44,16 @@ def edit_profile():
         current_user.lastName = NameForm.lastName.data
         db.session.commit()
         return redirect(url_for('edit_profile'))
+    elif PasswordForm.validate_on_submit():
+        if current_user.check_password(PasswordForm.currentPassword.data):
+            current_user.set_password(PasswordForm.password)
+            db.session.commit()
     elif request.method == 'GET':
         UsernameForm.username.data = current_user.username
         NameForm.firstName.data = current_user.firstName
         NameForm.lastName.data = current_user.lastName
 
-    return render_template('edit_profile.html', UsernameForm=UsernameForm, NameForm=NameForm, user=current_user)
+    return render_template('edit_profile.html', PasswordForm=PasswordForm, UsernameForm=UsernameForm, NameForm=NameForm, user=current_user)
 
 @app.route('/logout')
 @login_required
@@ -146,7 +151,7 @@ def login():
             error = 'There is no user with that username'
             return render_template('login.html', error = error, form = form)
         elif not user.check_password(form.password.data):
-            error = 'Wrong password. Try again or click Forgot password to rest it'
+            error = 'Wrong password. Try again or click Forgot password to reset it'
             return render_template('login.html', error = error, form=form)
         else:
             login_user(user, remember=form.remember_me.data)

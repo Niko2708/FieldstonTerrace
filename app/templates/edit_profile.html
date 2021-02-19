@@ -63,17 +63,18 @@
 
                 <div class="form-popup" id="nameForm">
                     <form action="" class="form-container" method="post">
-                        {{ UsernameForm.hidden_tag() }}
+                        {{ NameForm.hidden_tag() }}
                         <div class="card card-form-style">
                             <span class="close">&times;</span>
                             <h5 class="community-post">Change Username</h5>
-                            {{ UsernameForm.username(class="form-text-box") }}<br>
-                            <p class="submit">{{ UsernameForm.submit(class="submit") }}</p>
+                            {{ NameForm.firstName(class="form-text-box") }}<br>
+                            {{ NameForm.lastName(class="form-text-box") }}<br>
+                            <p class="submit">{{ NameForm.submit(class="submit") }}</p>
                         </div>
                     </form>
                 </div>
 
-                <div class="row lastSetting">
+                <div class="row lastSetting" id="password">
                     <div class="col-4">
                         Password
                     </div>
@@ -83,6 +84,20 @@
                     <div class="col-4">
                         <i class="fas fa-chevron-right"></i>
                     </div>
+                </div>
+
+                <div class="form-popup" id="passwordForm">
+                    <form action="" class="form-container" method="post">
+                        {{ PasswordForm.hidden_tag() }}
+                        <div class="card card-form-style">
+                            <span class="close">&times;</span>
+                            <h5 class="community-post">Change Username</h5>
+                            {{ PasswordForm.currentPassword(class="form-text-box") }}<br>
+                            {{ PasswordForm.password(class="form-text-box") }}<br>
+                            {{ PasswordForm.password2(class="form-text-box") }}<br>
+                            <p class="submit">{{ NameForm.submit(class="submit") }}</p>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -121,34 +136,46 @@
     <script>
        // Get the modal
         var modal = document.getElementById("myForm");
-
-        // Get the button that opens the modal
         var btn = document.getElementById("Username");
 
-        var name = document.getElementById("name");
+        var nameDiv = document.getElementById("name");
         var nameModel = document.getElementById("nameForm");
 
+        var passwordDiv = document.getElementById("password");
+        var passwordModel = document.getElementById("passwordForm");
+
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        const span = document.getElementsByClassName("close");
+        console.log(span);
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
-          nameModels.style.display = "block";
+          modal.style.display = "block";
         }
 
-        name.onclick = function(){
+        nameDiv.onclick = function(){
             nameModel.style.display = "block";
         }
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
+        passwordDiv.onclick = function () {
+            passwordModel.style.display = "block";
         }
+
+        // When the user clicks on <span> (x), close the modal
+       for(var i=0;i<span.length;i++) {
+           span[i].onclick = function() {
+               nameModel.style.display = "none";
+               modal.style.display = "none";
+               passwordModel.style.display = "none";
+            }
+       }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-          if (event.target == modal) {
+          if (event.target == modal || event.target == nameModel || event.target == passwordModel) {
             modal.style.display = "none";
+            nameModel.style.display = "none";
+            passwordModel.style.display = "none";
           }
         }
     </script>
