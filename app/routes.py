@@ -13,19 +13,26 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 # routes for resident users that login in
-@app.route('/home')
+@app.route('/home', methods =['GET','POST'])
 @login_required
 def home():
-    posts = Maintenance.query.order_by('timestamp').limit(4)
-    events = Event.query.order_by('timestamp').limit(4)
-    return render_template('home.html', posts=posts, events=events)
+    image_file = url_for('static', filename='profile_pics/default.jpg')
+    form = CommunityBoardForm()
+    if form.validate_on_submit():
+        community = CommunityBoard(body=form.post.data)
+        db.session.add(community)
+        db.session.commit()
+        flash('Post Successful')
+    community = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
+    return render_template('community.html', form=form, community=community, image_file=image_file)
 
 @app.route('/user/<username>')
 @login_required
 def user(username):
+    image_file = url_for('static', filename='profile_pics/default.jpg')
     user = User.query.filter_by(username=username).first_or_404()
-    posts = CommunityBoard.query.filter_by(user_id=user.id).all()
-    return render_template('user.html', user=user, posts=posts)
+    posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
+    return render_template('user.html', user=user, posts=posts, image_file=image_file)
 
 @app.route('/edit_profile', methods = ['GET', 'POST'])
 @login_required
@@ -69,7 +76,6 @@ def events():
 
 @app.route('/documents')
 def documents():
-    print("Hello World!")
     return render_template('documents.html')
 
 
@@ -84,7 +90,7 @@ def get_pdf(filename):
 @app.route('/maintenance', methods=['GET','POST'])
 @login_required
 def maintenance():
-    posts = Maintenance.query.order_by(Maintenancec.date.desc())
+    posts = Maintenance.query.order_by(Maintenance.date.desc())
     return render_template('maintenance.html', posts=posts)
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
@@ -111,17 +117,6 @@ def event_form():
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('event_form.html', form=form)
-
-@app.route('/community_board', methods=['GET', 'POST'])
-def community_board():
-    form = CommunityBoardForm()
-    if form.validate_on_submit():
-        community = CommunityBoard(body=form.post.data)
-        db.session.add(community)
-        db.session.commit()
-        flash('Post Successful')
-    community = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
-    return render_template('community.html', form=form,community=community)
 
 # routes for non resident users
 @app.route('/')
@@ -157,55 +152,6 @@ def login():
             login_user(user, remember=form.remember_me.data)
             return redirect(url_for('home'))
     return render_template('login.html', form=form)
-
-
-@app.route('/apply', methods=['GET', 'POST'])
-def apply():
-    def allowed_pdf(filename):
-        if not "." in filename:
-            return False
-
-        ext = filename.rsplit(".", 1)
-        if ext[1].upper() in app.config["ALLOWED_EXTENSIONS"]:
-            return True
-        else:
-            return False
-
-    """""
-    def allowed_pdf_filesize(filesize):
-        if int(filesize) <= app.config["MAX_CONTENT_LENGTH"]:
-            return True
-        else:
-            return False
-    """
-    if request.method == "POST":
-        if request.files:
-            """
-            if not allowed_pdf_filesize(request.cookies["filesize"]):
-                print("Filesize exceeded maximum limit")
-                return redirect(request.url)
-            """
-
-            pdf = request.files["pdf"]
-
-            if pdf.filename == "":
-                print("No filename")
-                return redirect(request.url)
-
-            if allowed_pdf(pdf.filename):
-                filename = secure_filename(pdf.filename)
-                pdf.save(os.path.join(app.config["PDF_UPLOADS"], filename))
-                print("PDF saved")
-                return redirect(request.url)
-
-            else:
-                print("That file extensions is not allowed")
-                return redirect(request.url)
-
-    form = ApplyForm()
-    # if form.validate_on_submit():
-    # return redirect('/')
-    return render_template('apply.html', form=form)
 
 @app.route('/registration_request', methods=['GET', 'POST'])
 def registration_request():

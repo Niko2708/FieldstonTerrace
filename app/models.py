@@ -17,7 +17,6 @@ class User(UserMixin, db.Model):
     admin = db.Column(db.Boolean, default=False)
 
 
-
     def __repr__(self):
         return '<User {}>'.format(self.username)
 

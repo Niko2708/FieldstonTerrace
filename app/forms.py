@@ -33,10 +33,9 @@ class RegistrationForm(FlaskForm):
 class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
     body = TextAreaField('Body:', validators=[DataRequired()])
-    author = StringField('Name')
     date = DateField('Date of Event:', validators=[DataRequired()])
-    start_at = TimeField('Start at', validators=[DataRequired()])
-    end_at = TimeField('End at', validators=[DataRequired()])
+    start_at = TimeField('Start at')
+    end_at = TimeField('End at')
     submit = SubmitField('Submit')
 
 class EventForm(FlaskForm):

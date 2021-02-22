@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block custom_styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/community.css') }}">
@@ -9,12 +9,14 @@
 {% block content %}
 <main class="container-fluid background-blue">
     <div class="container topSpace">
-        <div class="card card-post-style">
-            <button class="open-button buttonStyle" id="myBtn">
-                Is their anything you want to share?
-            </button>
-            <hr>
-        </div>
+        <article class="media content-section">
+            <img class="rounded-circle article-img"
+                 src="{{ url_for('static', filename='profile_pics/default.jpg')}}">
+
+                <button class="open-button buttonStyle" id="myBtn">
+                    Is their anything you want to share?
+                </button>
+        </article>
     </div>
 
     <section class="topSpace form-popup container-fluid" id="myForm">
@@ -33,13 +35,19 @@
 
     <section class="container">
         {% for c in community %}
-        <div class="post-space">
-            <div class="card card-post-style">
-                <div class="card-body">
-                    <p class="card-text">{{c.body}}</p>
-                    <p class="card-text">{{c.timestamp}}</p>
+        <div id="space">
+            <article class="media content-section">
+                <img class="rounded-circle article-img"
+                     src="{{ url_for('static', filename='profile_pics/default.jpg')}}">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <a class="mr-2" href="#">{{ current_user.username }}</a>
+                        <small class="text-muted">{{ c.timestamp}}</small>
+
+                    </div>
+                    <p class="article-content">{{ c.body }}</p>
                 </div>
-            </div>
+            </article>
         </div>
         {% endfor %}
     </section>
@@ -70,6 +78,8 @@
             modal.style.display = "none";
           }
         }
+
+
     </script>
 </main>
 {% endblock %}
