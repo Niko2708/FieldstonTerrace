@@ -1,15 +1,17 @@
-#title {
-    font-family: Raleway, sans-serif;
-    letter-spacing: 6px;
-    font-weight: 400;
-    line-height: 40px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-	text-align: center;
+.parent {
+    display: grid;
+    place-items: center;
+    resize: both;
+    overflow: auto;
+    /* Create the parallax scrolling effect */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 650px;
 }
 
-#space{
-    margin-top: 20px;
+.child {
+    text-align: center;
 }
 
 .textStyle{
@@ -17,10 +19,4 @@
     font-weight: 400;
     line-height: 28px;
     font-family: 'Open Sans', sans-serif;
-}
-
-#footer{
-   position: fixed;
-   bottom:0;
-   left:0; 
 }

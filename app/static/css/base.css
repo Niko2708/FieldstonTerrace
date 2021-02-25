@@ -53,15 +53,17 @@ nav{
 }
 
 .titles {
-    font-family: Raleway, sans-serif;
+    font-family: 'Open Sans', bold;
     letter-spacing: 6px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 40px;
     text-transform: uppercase;
-    margin-bottom: 30px;
-    color: white;
 }
 
+.whiteText{
+    color:white;
+    margin-bottom: 30px;
+}
 .h1Size{
     font-size: 2.8rem;
 }
@@ -81,3 +83,12 @@ nav{
 .tab{
     margin-left: 2.5rem;
 }
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;

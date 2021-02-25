@@ -3,24 +3,28 @@
     place-items: center;
     resize: both;
     overflow: auto;
-    min-height: 480px;
     /* Create the parallax scrolling effect */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-.opacity-medium {
-    height: 100%;
-    width: 100%;
-    opacity: .55;
-    top: 0;
-    left: 0;
+    min-height: 650px;
 }
 
 .child {
     text-align: center;
 }
+
+#description{
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    font-family: 'Open Sans', sans-serif;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    }
 
 .amenitiesTable {
     width: 100%;
@@ -64,4 +68,8 @@ i {
 .textColor{
     color: black;
     opacity: 1;
+}
+
+.imgHeight{
+    height=476px;
 }

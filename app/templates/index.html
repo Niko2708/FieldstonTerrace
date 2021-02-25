@@ -10,18 +10,18 @@
 <main>
     <section class="container-fluid parent" id="ApartmentEntrance" style="background-image: url('../static/img/apartment.jpg');">
         <div class="container child" contenteditable>
-            <h1 class="titles h1Size">Fieldston Towers</h1>
-            <h2 class="titles h2Size">Co Ops for sale in new york city</h2>
-            <button type="button" class="btn btn-secondary btn-lg buttons"
+            <h1 class="titles whiteText h1Size">Fieldston Towers</h1>
+            <h2 class="titles whiteText h2Size">Co Ops for sale in new york city</h2>
+            <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
                 onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
-                View Coops <i class="fas fa-chevron-right"></i>
+                View Co Ops <i class="fas fa-chevron-right"></i>
             </button>
         </div>
     </section>
 
     <section class="container-fluid background-blue topSpace">
         <div class="container">
-            <h2 class="titles">Fieldston Towers</h2>
+            <h2 class="titles whiteText">Fieldston Towers</h2>
             <p class="descriptions">
                 Welcome to Fieldston Towers, located in the northwestern part of the Bronx. Fieldston Towers is
                 ideal
@@ -47,7 +47,7 @@
                 schedule a tour!<br /><br />
             </p>
 
-            <button type="button" class="btn btn-secondary btn-lg buttons"
+            <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
                 onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
                 Available Co Ops <i class="fas fa-chevron-right"></i>
             </button>
@@ -82,9 +82,6 @@
                 <div id="amenities" class="tab-pane active">
                     <table class="amenitiesTable">
                         <tr>
-                            <td class="amenitieCell">Pet Friendly</td>
-                        </tr>
-                        <tr>
                             <td class="amenitieCell">Live-in Super</td>
                         </tr>
                         <tr>
@@ -114,7 +111,7 @@
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/waveHill.jpg') }}"
                                     alt="Wave Hill">
                                 <div class="card-body">
-                                    <h5 class="card-title">Wave Hill</h5>
+                                    <h5 class="titles alignText">Wave Hill</h5>
                                     <p class="card-text">
                                         An urban oasis, Wave Hill’s 28 acres sit high above the Hudson River with
                                         sweeping
@@ -133,7 +130,7 @@
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/crossCounty.jpg') }}"
                                     alt="Cross Country">
                                 <div class="card-body">
-                                    <h5 class="card-title">Cross County Plaza</h5>
+                                    <h5 class="titles alignText">Cross County Plaza</h5>
                                     <p class="card-text">
                                         This open 240,000 square-foot structure has in excess of 500,000 books and
                                         different materials. It reflects and connects with the city's creative energy
@@ -149,8 +146,8 @@
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/BronxZoo.jpg') }}"
                                     alt="Bronx Zoo">
                                 <div class="card-body">
-                                    <h5 class="card-title">Bronx Zoo</h5>
-                                    <p class="card-text">
+                                    <h5 class="titles alignText">Bronx Zoo</h5>
+                                    <p class="card-text ">
                                         The animals and exhibits at the Bronx Zoo span the globe and include tiny toads
                                         from Tanzania and big cats from the Russian Far East. With more than 700
                                         species,
@@ -172,7 +169,8 @@
         <div class="container topSpace" id="policy">
             <div class="row">
                 <div class="col s12 m6">
-                    <h2 class="titles">Pet Friendly</h2>
+                    <h2 class="titles whiteText">Pet Friendly</h2>
+                    <img src="{{url_for('static', filename='img/do.jpg')}}" alt="Pet Policy">
                     <p class="descriptions">
                         Life is better when you have pets! Conveniently located near beautiful parks and trails
                         Fieldston Towers
@@ -182,13 +180,13 @@
                         you and your family to enjoy living in this peaceful community where everyone’s needs are met,
                         including your pets.
                     </p>
-                    <button type="button" class="btn btn-secondary btn-lg buttons"
+                    <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
                         onclick="window.location.href='{{ url_for( 'documents') }}'">
                         Our Pet Policy <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
                 <div class="col s12 m6">
-                    <h2 class="titles">Cooperatives</h2>
+                    <h2 class="titles whiteText">Cooperatives</h2>
                     <p class="descriptions">
                         Every Co Op at Fieldston Towers offers the space and comforting qualities you need to
                         make your apartment the home you’ve always desired. Our modern 1, 2, & 3 Bedrooms give
@@ -199,7 +197,7 @@
                         living and floor plans for every lifestyle
                     </p>
 
-                    <button type="button" class="btn btn-secondary btn-lg buttons"
+                    <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
                         onclick="window.location.href='{{ url_for( 'amenities') }}'">
                         View Amenities <i class="fas fa-chevron-right"></i>
                     </button>
