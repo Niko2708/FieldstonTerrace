@@ -8,12 +8,13 @@
 
 {% block content %}
 <main>
-    <section class="container-fluid parent" id="ApartmentEntrance" style="background-image: url('../static/img/apartment.jpg');">
+    <section class="container-fluid parent" id="ApartmentEntrance"
+             style="background-image: url('../static/img/apartment.jpg');">
         <div class="container child" contenteditable>
             <h1 class="titles whiteText h1Size">Fieldston Towers</h1>
             <h2 class="titles whiteText h2Size">Co Ops for sale in new york city</h2>
             <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
-                onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
+                    onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
                 View Co Ops <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -30,7 +31,7 @@
                 the street is Van Courtland Park, the third-largest park in NYC, with athletic fields, trails, and
                 public
                 golf courses. To the west is Wave Hill, a public garden with views of the Hudson River and the
-                Palisades.<br /><br />
+                Palisades.<br/><br/>
 
                 Fieldston is purely residential with some shops and restaurants a short walk away along Riverdale
                 and Johnson Avenues.
@@ -38,17 +39,17 @@
                 Manhattan is simple,
                 with the number 1 subway line starting at Cortland Park-242nd, several express bus lines, and the
                 Metro-North Railroad
-                trains stopping at the Riverdale section on the Hudson Line.<br /><br />
+                trains stopping at the Riverdale section on the Hudson Line.<br/><br/>
 
                 Fieldston Towers is the place where nature and city life meet. Our community is close to everything,
                 making it convenient
                 for every lifestyle. We offer 1, 2, and 3 bedroom floor plans to meet all of your needs. Call or
                 email us today to check to
-                schedule a tour!<br /><br />
+                schedule a tour!<br/><br/>
             </p>
 
             <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
-                onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
+                    onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
                 Available Co Ops <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -80,36 +81,71 @@
 
             <div class="tab-content">
                 <div id="amenities" class="tab-pane active">
-                    <table class="amenitiesTable">
-                        <tr>
-                            <td class="amenitieCell">Live-in Super</td>
-                        </tr>
-                        <tr>
-                            <td class="amenitieCell"> Community Room</td>
-                        </tr>
-                        <tr>
-                            <td class="amenitieCell">Community Backyard</td>
-                        </tr>
-                        <tr>
-                            <td class="amenitieCell">Balcony</td>
-                        </tr>
-                        <tr>
-                            <td class="amenitieCell">Parking Avaliable</td>
-                        </tr>
-                        <tr>
-                            <td class="amenitieCell">Laundry in Building</td>
-                        </tr>
-                        <tr>
-                            <td class="amenitieCell">Bike Room</td>
-                        </tr>
-                    </table>
+                    <button class="clickable">Live-in Super</button>
+                    <div class="panel">
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="accordionImages" src="{{ url_for('static', filename='img/superPaint.jpeg') }}" alt="Super">
+                            </div>
+                            <div class="col-6">
+                                <p class="panelText">Lorem ipsum dolor sit amet, vis no omnesque mnesarchum, nostrum vulputate ne pri, per ne accusam voluptatum. Ad sit vero molestie, pri autem oratio deterruisset te, quo scaevola contentiones id. Fabellas antiopam inimicus no pro, eos eu saepe viderer. Inani aliquando at cum, ei ipsum tibique qui. An eos prima impetus adipisci.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="clickable">Community Room</button>
+                    <div class="panel">
+                        <p>Lorem ipsum...</p>
+                    </div>
+                    <button class="clickable">Community Backyard</button>
+                    <div class="panel">
+                        <p>Lorem ipsum...</p>
+                    </div>
+                    <button class="clickable">Balcony</button>
+                    <div class="panel">
+                        <p>Lorem ipsum...</p>
+                    </div>
+                    <button class="clickable">Parking Avaliable</button>
+                    <div class="panel">
+                        <p>Lorem ipsum...</p>
+                    </div>
+                    <button class="clickable">Laundry in Building</button>
+                    <div class="panel">
+                        <p>Lorem ipsum...</p>
+                    </div>
+                    <button class="clickable">Bike Room</button>
+                    <div class="panel">
+                        <p>Lorem ipsum...</p>
+                    </div>
                 </div>
+
+
+                <script>
+                    var acc = document.getElementsByClassName("clickable");
+                    var i;
+
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].addEventListener("click", function () {
+                            /* Toggle between adding and removing the "active" class,
+                            to highlight the button that controls the panel */
+                            this.classList.toggle("active");
+
+                            /* Toggle between hiding and showing the active panel */
+                            var panel = this.nextElementSibling;
+                            if (panel.style.display === "block") {
+                                panel.style.display = "none";
+                            } else {
+                                panel.style.display = "block";
+                            }
+                        });
+                    }
+                </script>
+
                 <div id="menu1" class="tab-pane fade">
                     <div class="row container">
                         <div class="col s12 m4">
                             <div class="card cardStyle">
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/waveHill.jpg') }}"
-                                    alt="Wave Hill">
+                                     alt="Wave Hill">
                                 <div class="card-body">
                                     <h5 class="titles alignText">Wave Hill</h5>
                                     <p class="card-text">
@@ -128,7 +164,7 @@
                         <div class="col s12 m4">
                             <div class="card cardStyle">
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/crossCounty.jpg') }}"
-                                    alt="Cross Country">
+                                     alt="Cross Country">
                                 <div class="card-body">
                                     <h5 class="titles alignText">Cross County Plaza</h5>
                                     <p class="card-text">
@@ -144,7 +180,7 @@
                         <div class="col s12 m4">
                             <div class="card cardStyle">
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/BronxZoo.jpg') }}"
-                                    alt="Bronx Zoo">
+                                     alt="Bronx Zoo">
                                 <div class="card-body">
                                     <h5 class="titles alignText">Bronx Zoo</h5>
                                     <p class="card-text ">
@@ -181,7 +217,7 @@
                         including your pets.
                     </p>
                     <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
-                        onclick="window.location.href='{{ url_for( 'documents') }}'">
+                            onclick="window.location.href='{{ url_for( 'documents') }}'">
                         Our Pet Policy <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -198,7 +234,7 @@
                     </p>
 
                     <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
-                        onclick="window.location.href='{{ url_for( 'amenities') }}'">
+                            onclick="window.location.href='#'">
                         View Amenities <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>

@@ -43,6 +43,7 @@ i{
     padding-left: 10px;
     padding-right: 10px;
     font-weight: 400;
+    width: 193px;
     color: white;
 }
 
@@ -83,7 +84,6 @@ a.active{
     font-size: 24px;
     font-weight: 300;
     font-family: 'Open Sans', sans-serif;
-    text-align: center;
 }
 
 .card-img-top{
@@ -108,10 +108,38 @@ a.active{
     justify-content: center;
 }
 
-.buttons{
-    width: 192px;
+.clickable {
+    text-align: left;
+    cursor: pointer;
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    font-size: 15px;
+    font-family:"Open Sans", sans-serif ;
 }
 
-.alignText{
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+}
+
+alignText{
     text-align: center;
+}
+
+.accordionImages{
+    width: 500px;
+    height: 600px;
+}
+
+.panelText{
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 20px;
 }

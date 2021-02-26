@@ -60,6 +60,10 @@ nav{
     text-transform: uppercase;
 }
 
+.alignText{
+    text-align: center;
+}
+
 .whiteText{
     color:white;
     margin-bottom: 30px;
@@ -83,12 +87,3 @@ nav{
 .tab{
     margin-left: 2.5rem;
 }
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.sticky + .content {
-  padding-top: 60px;
