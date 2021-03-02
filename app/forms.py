@@ -3,6 +3,8 @@ from app.models import User
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,TextAreaField, SelectField, FileField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from flask_wtf.file import FileField, FileAllowed
+import phonenumbers
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -12,13 +14,24 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    firstName = StringField('First Name', validators=[DataRequired()])
-    lastName = StringField('First Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()] )
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('First Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    profile_pic= FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     phone = StringField('Phone', validators=[DataRequired()])
+    email_notification = BooleanField('Text Notification')
+    mobile_notification = BooleanField('Mobile Notification')
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
+
+    def validate_phone(self, phone):
+        try:
+            p = phonenumbers.parse(phone.data)
+            if not phonenumbers.is_valid_number(p):
+                raise ValueError()
+        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+            raise ValidationError('Invalid phone number')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

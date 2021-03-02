@@ -8,12 +8,18 @@ from app import app
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    firstName = db.Column(db.String(60))
-    lastName = db.Column(db.String(60))
-    phoneNumber = db.Column(db.String(11))
-    email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    first_name = db.Column(db.String(60), nullable=False)
+    last_name = db.Column(db.String(60), nullable=False)
+    phone_number = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    profile_img = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password_hash = db.Column(db.String(128), nullable=False)
+    email_notification = db.Column(db.Boolean, default=False)
+    test_notification = db.Column(db.Boolean, default=False)
+    posts = db.relationship('CommunityBoard', backref='author', lazy=True)
+    maintenances = db.relationship('Maintenance', backref='author', lazy=True)
+    events = db.relationship('Event', backref='author', lazy=True)
     admin = db.Column(db.Boolean, default=False)
 
 
@@ -53,33 +59,32 @@ class User(UserMixin, db.Model):
 
 class Maintenance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    maintenance_img = db.Column(db.String(20), nullable=False, default='default.jpg')
     title = db.Column(db.String(120))
     body = db.Column(db.String)
     start = db.Column(db.Time)
     end = db.Column(db.Time)
     date = db.Column(db.DateTime)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    event_img = db.Column(db.String(20), nullable=False, default='default.jpg')
     title = db.Column(db.String(120))
     dateOfEvent = db.Column(db.DateTime)
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    location = db.Column(db.String)
     start = db.Column(db.Time)
     end = db.Column(db.Time)
 
 class CommunityBoard(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    post_img = db.Column(db.String(20), nullable=False, default='default.jpg')
     body = db.Column(db.String)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
 
 @login.user_loader
 def load_user(id):

@@ -16,10 +16,11 @@
                     <h1 class="titles h1Size">Registration</h1>
                     <p class="textStyles">Username: {{ form.username(class="single-line") }}</p>
                     <div class="row">
-                        <p class="textStyles">First Name: {{ form.firstName(class="single-line") }}</p>
-                        <p class="textStyles">Last Name: {{ form.lastName(class="single-line") }}</p>
+                        <p class="textStyles">First Name: {{ form.first_name(class="single-line") }}</p>
+                        <p class="textStyles">Last Name: {{ form.last_name(class="single-line") }}</p>
                     </div>
                     <p class="textStyles">Email: {{ form.email(class="single-line") }}</p>
+                    <p class="textStyles">Profile Image: {{form.profile_pic()}}</p>
                     <p class="textStyles">Mobile Number: {{ form.phone(class="single-line") }}</p>
                     <p class="textStyles">Password: {{ form.password(class="single-line") }}</p>
                     <p class="textStyles">Retype Password: {{ form.password2(class="single-line") }}</p>

@@ -163,23 +163,21 @@ def registration_request():
     flash('Check your email for the instructions to register as a user')
     return redirect(url_for('login'))
 
-@app.route('/registration/<token>', methods=['GET', 'POST'])
-def registration(token):
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    code = verify_registration_token(token)
-    if not user:
-        return redirect(url_for('index'))
+
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, firstName=form.firstName.data, lastName=form.lastName.data,
-                    email=form.email.data, phoneNumber=form.phone.data)
+        user = User(username=form.username.data, first_name=form.firstName.data, last_name=form.lastName.data,
+                    email=form.email.data, phoneNumber=form.phone.data, email_notification=form.email_notification.data, test_notification=form.mobile_notification.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-    return render_template('register,html', form=form)
+    return render_template('register.html', form=form)
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
