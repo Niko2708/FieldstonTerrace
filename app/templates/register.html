@@ -9,7 +9,7 @@
 {% block content %}
 <main class="background-grey">
     <div class="container topSpace">
-        <form action="" method="post">
+        <form action="" method="POST">
             {{ form.hidden_tag() }}
             <div class="card container">
                 <div class="card-body">
@@ -23,6 +23,8 @@
                     <p class="textStyles">Profile Image: {{form.profile_pic()}}</p>
                     <p class="textStyles">Mobile Number: {{ form.phone(class="single-line") }}</p>
                     <p class="textStyles">Password: {{ form.password(class="single-line") }}</p>
+                    <p>Email notification {{form.email_notification() }}</p>
+                    <p>Text notification {{form.mobile_notification() }}</p>
                     <p class="textStyles">Retype Password: {{ form.password2(class="single-line") }}</p>
 
                     <p>{{ form.submit(class = 'buttonStyle') }}</p>
