@@ -1,14 +1,14 @@
 from flask import render_template, flash, redirect, url_for, request, send_file, send_from_directory, safe_join, abort
 from app import app, db
 from app.forms import *
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login
 from app.models import User, Maintenance, Event, CommunityBoard
 from app.email import *
 from app.forms import ResetPasswordForm
 
 # routes for resident users that login in
 @app.route('/home', methods=['GET', 'POST'])
-@login_required
+@login
 def home():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     form = CommunityBoardForm()
@@ -22,7 +22,7 @@ def home():
 
 
 @app.route('/user/<username>')
-@login_required
+@login
 def user(username):
     image_file = url_for('static', filename='profile_pics/default.jpg')
     user = User.query.filter_by(username=username).first_or_404()
@@ -31,7 +31,7 @@ def user(username):
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
-@login_required
+@login
 def edit_profile():
     UsernameForm = EditUsernameForm()
     NameForm = EditNameForm()
@@ -61,14 +61,14 @@ def edit_profile():
 
 
 @app.route('/logout')
-@login_required
+@login
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
 
 @app.route('/events')
-@login_required
+@login
 def events():
     events = Event.query.order_by(Event.timestamp.desc())
     return render_template('events.html', events=events)
@@ -89,14 +89,14 @@ def get_pdf(filename):
 
 
 @app.route('/maintenance', methods=['GET', 'POST'])
-@login_required
+@login
 def maintenance():
     posts = Maintenance.query.order_by(Maintenance.date.desc())
     return render_template('maintenance.html', posts=posts)
 
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
-@login_required
+@login
 def maintenance_form():
     form = MaintenanceForm()
 
@@ -111,7 +111,7 @@ def maintenance_form():
 
 
 @app.route('/event_form', methods=['GET', 'POST'])
-@login_required
+@login
 def event_form():
     form = EventForm()
     if form.validate_on_submit():

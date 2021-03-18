@@ -1,33 +1,85 @@
-{% extends "base.html" %}
+{% extends "base_login.html" %}
 
 {% block title %}Home{% endblock %}
 
 {% block custom_styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
 
 {% block content %}
-    <main class="background-blue">
-        <div class="container topSpace">
-            <h3>News Feed</h3>
-            {% for post in posts %}
-                <div class="cardMaintenance">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ post.title }}</h5>
-                            <p class="card-text">{{ post.body }}</p>
-                            <p class="card-text">Start Time: {{ post.start }}  End Time: {{ post.end}}</p>
-                            <p class="card-text">Posted: {{ moment(post.timestamp).fromNow() }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+<main class="background-blue">
+    <h3>News Feed</h3>
 
-    </main>
+    <article class="media content-section">
+            <img class="rounded-circle article-img"
+                 src="{{ url_for('static', filename='profile_pics/default.jpg')}}">
+
+                <button class="open-button buttonStyle" id="myBtn">
+                    Is their anything you want to share?
+                </button>
+        </article>
+
+    <section class="topSpace form-popup container-fluid" id="myForm">
+        <form action="" method="post" class="form-container">
+            {{ form.hidden_tag() }}
+            <div class="card card-form-style">
+                <span class="close">&times;</span>
+                <h5 id="community-post">Create Post</h5>
+                <hr>
+                <p class="textStyles">{{ form.post(class='textArea') }}</p>
+                <p>Picture Attachment Button</p>
+                <p id="test">{{ form.submit(class = 'buttonStyle') }}</p>
+            </div>
+        </form>
+    </section>
+
+    {% for post in posts %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ community.author }}</a>
+                <small class="text-muted">{{ community.timestamp }}</small>
+            </div>
+            <!--<h2><a class="article-title" href="#">{{ community.title }}</a></h2>-->
+            <p class="article-content">{{ community.post_img}}</p>
+            <p class="article-content">{{ community.body }}</p>
+        </div>
+    </article>
+    {% endfor %}
+
+    <script>
+        var test = document.getElementsByClassName("test");
+
+        var btn = document.getElementById("myBtn");
+
+        var modal = document.getElementById("myForm");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+
+
+    </script>
+</main>
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+{{ super() }}
+{{ moment.include_moment() }}
 {% endblock %}
