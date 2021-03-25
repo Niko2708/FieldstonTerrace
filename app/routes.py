@@ -1,28 +1,28 @@
 from flask import render_template, flash, redirect, url_for, request, send_file, send_from_directory, safe_join, abort
 from app import app, db
 from app.forms import *
-from flask_login import current_user, login_user, logout_user, login
+from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Maintenance, Event, CommunityBoard
 from app.email import *
 from app.forms import ResetPasswordForm
 
 # routes for resident users that login in
 @app.route('/home', methods=['GET', 'POST'])
-@login
+@login_required
 def home():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     form = CommunityBoardForm()
     if form.validate_on_submit():
-        community = CommunityBoard(body=form.post.data)
-        db.session.add(community)
+        posts = CommunityBoard(body=form.post.data)
+        db.session.add(posts)
         db.session.commit()
         flash('Post Successful')
-    community = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
-    return render_template('community.html', form=form, community=community, image_file=image_file)
+    posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
+    return render_template('home.html', form=form, posts=posts, image_file=image_file)
 
 
 @app.route('/user/<username>')
-@login
+@login_required
 def user(username):
     image_file = url_for('static', filename='profile_pics/default.jpg')
     user = User.query.filter_by(username=username).first_or_404()
@@ -31,7 +31,7 @@ def user(username):
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
-@login
+@login_required
 def edit_profile():
     UsernameForm = EditUsernameForm()
     NameForm = EditNameForm()
@@ -61,14 +61,14 @@ def edit_profile():
 
 
 @app.route('/logout')
-@login
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
 
 @app.route('/events')
-@login
+@login_required
 def events():
     events = Event.query.order_by(Event.timestamp.desc())
     return render_template('events.html', events=events)
@@ -89,14 +89,14 @@ def get_pdf(filename):
 
 
 @app.route('/maintenance', methods=['GET', 'POST'])
-@login
+@login_required
 def maintenance():
     posts = Maintenance.query.order_by(Maintenance.date.desc())
     return render_template('maintenance.html', posts=posts)
 
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
-@login
+@login_required
 def maintenance_form():
     form = MaintenanceForm()
 
@@ -111,7 +111,7 @@ def maintenance_form():
 
 
 @app.route('/event_form', methods=['GET', 'POST'])
-@login
+@login_required
 def event_form():
     form = EventForm()
     if form.validate_on_submit():

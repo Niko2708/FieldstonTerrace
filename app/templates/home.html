@@ -1,10 +1,5 @@
 {% extends "base_login.html" %}
-
 {% block title %}Home{% endblock %}
-
-{% block custom_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-{% endblock %}
 
 {% block content %}
 <main class="background-blue">
@@ -37,12 +32,12 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2" href="#">{{ community.author }}</a>
-                <small class="text-muted">{{ community.timestamp }}</small>
+                <a class="mr-2" href="#">{{ post.author }}</a>
+                <small class="text-muted">{{ post.timestamp }}</small>
             </div>
-            <!--<h2><a class="article-title" href="#">{{ community.title }}</a></h2>-->
-            <p class="article-content">{{ community.post_img}}</p>
-            <p class="article-content">{{ community.body }}</p>
+            <!--<h2><a class="article-title" href="#"></a></h2>-->
+            <p class="article-content">{{ post.post_img}}</p>
+            <p class="article-content">{{ post.body }}</p>
         </div>
     </article>
     {% endfor %}
@@ -77,7 +72,7 @@
 
     </script>
 </main>
-{% endblock %}
+{% endblock content %}
 
 {% block scripts %}
 {{ super() }}
