@@ -78,6 +78,7 @@ class ChangePasswordForm(FlaskForm):
 
 class CommunityBoardForm(FlaskForm):
     post = TextAreaField('Body:', validators=[DataRequired()])
+    post_pic = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png', 'pdf'])])
     submit = SubmitField('Post')
 
 class EditUsernameForm(FlaskForm):

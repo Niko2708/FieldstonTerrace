@@ -43,8 +43,8 @@ def edit_profile():
         flash('Your changes have been saved.')
         return redirect(url_for('edit_profile'))
     elif NameForm.validate_on_submit():
-        current_user.firstName = NameForm.firstName.data
-        current_user.lastName = NameForm.lastName.data
+        current_user.firstName = NameForm.first_name.data
+        current_user.lastName = NameForm.last_name.data
         db.session.commit()
         return redirect(url_for('edit_profile'))
     elif PasswordForm.validate_on_submit():
@@ -53,8 +53,8 @@ def edit_profile():
             db.session.commit()
     elif request.method == 'GET':
         UsernameForm.username.data = current_user.username
-        NameForm.firstName.data = current_user.firstName
-        NameForm.lastName.data = current_user.lastName
+        NameForm.firstName.data = current_user.first_name
+        NameForm.lastName.data = current_user.last_name
 
     return render_template('edit_profile.html', PasswordForm=PasswordForm, UsernameForm=UsernameForm, NameForm=NameForm,
                            user=current_user)
