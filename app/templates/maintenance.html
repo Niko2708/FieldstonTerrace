@@ -1,44 +1,58 @@
-{% extends "base.html" %}
-
-{% block title %}Home{% endblock %}
-
-{% block custom_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/maintenance.css') }}">
-{% endblock %}
+{% extends "base_login.html" %}
+{% block title %}Maintenance{% endblock %}
 
 {% block content %}
-<main class="background-blue container-fluid topSpace">
-    <div>
-        <h1 class="h1Size" id="title"> Maintenance Updates</h1>
-        <div class="row">
-			 <div class="col-md-3">
-				<div class="card" id="cardSpace">
-					<div class="card-body">
-						<a href="{{ url_for('maintenance_form') }}">Create a new form</a>
-					</div>
-				</div>
-            </div>
-            <div class="col-md-9">
-                {% for post in posts %}
-                <div class="cardMaintenance">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ post.title }}</h5>
-                            <p class="card-text">{{ post.body }}</p>
-                            <p class="card-text">Posted: {{ moment(post.timestamp).fromNow() }}</p>
-                        </div>
-                    </div>
+
+{% for post in maintenance_post %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <img class="rounded-circle article-img"
+                 src="{{ url_for('static', filename='profile_pics/default.jpg')}}">
+            <a href="#">{{ post.author.username }}</a>
+            <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
+        </div>
+        <!--<h2><a class="article-title" href="#"></a></h2>-->
+        <p class="article-content">{{ post.title}}</p>
+        <p class="article-content">{{ post.body }}</p>
+        {% if post.author == current_user %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('maintenance_update', post_id=post.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+                    data-target="#deleteModalMaintenance">
+                Delete
+            </button>
+        </div>
+        {% endif %}
+    </div>
+    <div class="modal fade" id="deleteModalMaintenance" tabindex="-1" role="dialog"
+         aria-labelledby="deleteModalLabelMaintenance"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabelMaintenance">Delete Post?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                {% endfor %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="{{ url_for('delete_maintenance', post_id=post.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</main>
+</article>
+{% endfor %}
+
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
-    <script src="moment.js"></script>
-    <script src="moment-timezone-with-data.js"></script>
+{{ super() }}
+{{ moment.include_moment() }}
+<script src="moment.js"></script>
+<script src="moment-timezone-with-data.js"></script>
 {% endblock %}}
