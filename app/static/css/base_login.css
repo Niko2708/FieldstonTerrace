@@ -46,9 +46,10 @@ a.article-title:hover {
 }
 
 .article-img {
-  height: 65px;
-  width: 65px;
+  height: 45px;
+  width: 45px;
   margin-right: 16px;
+  margin-bottom: 8px;
 }
 
 .article-metadata {
@@ -129,4 +130,12 @@ a.article-title:hover {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+nav{
+    background-color: #263238;
+}
+
+.nav-link{
+    color: white;
 }

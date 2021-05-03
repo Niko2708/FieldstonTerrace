@@ -1,13 +1,12 @@
-{% extends "base.html" %}
-
-{% block title %}Maintenance{% endblock %}
+{% extends "base_login.html" %}
+{% block title %}Events {% endblock %}
 
 {% block custom_styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/event.css') }}">
 {% endblock %}
 
 {% block content %}
-<main class="background-blue container-fluid topSpace">
+<main>
     <div class="container">
         <h1 id="eventTitle">Upcoming Events</h1>
         <h3 id="day"></h3>

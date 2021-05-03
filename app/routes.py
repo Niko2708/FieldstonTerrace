@@ -13,12 +13,82 @@ def home():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     form = CommunityBoardForm()
     if form.validate_on_submit():
-        posts = CommunityBoard(body=form.post.data)
+        posts = CommunityBoard(title=form.title.data, body=form.post.data, post_img=form.post_img.data, author=current_user)
         db.session.add(posts)
         db.session.commit()
         flash('Post Successful')
     posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
-    return render_template('home.html', form=form, posts=posts, image_file=image_file)
+    maintenance_post = Maintenance.query.order_by(Maintenance.timestamp.desc()).all()
+    return render_template('home.html', form=form, posts=posts,maintenance_post=maintenance_post, image_file=image_file)
+
+@app.route("/maintenance/<int:post_id>/delete", methods=['POST'])
+@login_required
+def delete_maintenance(post_id):
+    post = Maintenance.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('home'))
+
+@app.route("/maintenance/<int:post_id>/update", methods=['GET', 'POST'])
+@login_required
+def maintenance_update(post_id):
+    post = Maintenance.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = MaintenanceForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        post.start = form.start_at.data
+        post.end = form.end_at.data
+        post.date = form.date.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('home'))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.body.data = post.body
+        form.start_at.data = post.start
+        form.end_at.data = post.end
+        form.date.data = post.date
+    return render_template('maintenance_form.html', title='Update Post',
+                           form=form, legend='Update Post')
+
+@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = CommunityBoard.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('home'))
+
+@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = CommunityBoard.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = CommunityBoardForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        post.post_img = form.post_img.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('home'))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.post.data = post.body
+        form.post_img.data = post.post_img
+    return render_template('create_post.html', title='Update Post',
+                           form=form, legend='Update Post')
+
 
 
 @app.route('/user/<username>')
@@ -91,8 +161,8 @@ def get_pdf(filename):
 @app.route('/maintenance', methods=['GET', 'POST'])
 @login_required
 def maintenance():
-    posts = Maintenance.query.order_by(Maintenance.date.desc())
-    return render_template('maintenance.html', posts=posts)
+    maintenance_post = Maintenance.query.order_by(Maintenance.date.desc())
+    return render_template('maintenance.html', maintenance_post=maintenance_post)
 
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
@@ -102,7 +172,7 @@ def maintenance_form():
 
     if form.validate_on_submit():
         post = Maintenance(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data,
-                           date=form.date.data)
+                           date=form.date.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Maintenance Form Successful')

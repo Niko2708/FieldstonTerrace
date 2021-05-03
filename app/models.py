@@ -81,7 +81,8 @@ class Event(db.Model):
 
 class CommunityBoard(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    post_img = db.Column(db.String(20), nullable=False, default='default.jpg')
+    title = db.Column(db.String)
+    post_img = db.Column(db.String(20), nullable=True)
     body = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
