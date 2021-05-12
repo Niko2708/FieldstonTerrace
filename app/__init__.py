@@ -10,6 +10,7 @@ from flask_mail import Mail, Message
 import os
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
+from flask_bootstrap import Bootstrap
 
 #Error logging and tracking using sentry.io
 sentry_sdk.init(
@@ -21,6 +22,7 @@ sentry_sdk.init(
 app = Flask(__name__)
 # A javascript library that customs time and dates
 moment = Moment(app)
+Bootstrap(app)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config["TEMPLATES_AUTO_RELOAD"] = True

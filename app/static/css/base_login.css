@@ -108,7 +108,6 @@ a.article-title:hover {
 .card-form-style{
     padding-left: 15px;
     padding-right: 15px;
-    height: 428px;
 }
 
 .textArea{
@@ -138,4 +137,8 @@ nav{
 
 .nav-link{
     color: white;
+}
+
+.maintenance-color{
+    color: red;
 }

@@ -77,7 +77,7 @@ def update_post(post_id):
     form = CommunityBoardForm()
     if form.validate_on_submit():
         post.title = form.title.data
-        post.body = form.body.data
+        post.body = form.post.data
         post.post_img = form.post_img.data
         db.session.commit()
         flash('Your post has been updated!', 'success')

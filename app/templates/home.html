@@ -20,10 +20,10 @@
             <div class="card card-form-style">
                 <span class="close">&times;</span>
                 <h5>Title</h5>
-                <p class="textStyles">{{ form.title(class='textArea') }}</p>
+                <p class="textStyles">{{ form.title(class="form-control form-control-lg is-invalid") }}</p>
                 <h5 id="community-post">Create Post</h5>
                 <hr>
-                <p class="textStyles">{{ form.post(class='textArea') }}</p>
+                <p class="textStyles">{{ form.post(class='class="form-control form-control-lg is-invalid"') }}</p>
                 <p>Picture Attachment Button{{ form.post_img() }}</p>
                 <p id="test">{{ form.submit(class = 'buttonStyle') }}</p>
             </div>
@@ -34,13 +34,11 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <img class="rounded-circle article-img"
-                     src="{{ url_for('static', filename='profile_pics/default.jpg')}}">
-                <a href="{{url_for('user', username=post.author.username)}}">{{ post.author.username }}</a>
+                <h5 class="maintenance-color">{{ post.title}}</h5>
                 <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
             </div>
             <!--<h2><a class="article-title" href="#"></a></h2>-->
-            <p class="article-content">{{ post.title}}</p>
+
             <p class="article-content">{{ post.body }}</p>
             {% if post.author == current_user %}
             <div>
