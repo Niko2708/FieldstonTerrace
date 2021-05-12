@@ -1,36 +1,31 @@
-{% extends "base.html" %}
+{% extends 'phone_base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
 
-{% block title %}Sign up{% endblock %}
-
-{% block custom_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/formStyles.css') }}">
-{% endblock %}
+{% block title %}Registration{% endblock %}
 
 {% block content %}
-<main class="background-grey">
-    <div class="container topSpace">
-        <form action="" method="POST">
-            {{ form.hidden_tag() }}
-            <div class="card container">
-                <div class="card-body">
-                    <h1 class="titles h1Size">Registration</h1>
-                    <p class="textStyles">Username: {{ form.username(class="single-line") }}</p>
-                    <div class="row">
-                        <p class="textStyles">First Name: {{ form.first_name(class="single-line") }}</p>
-                        <p class="textStyles">Last Name: {{ form.last_name(class="single-line") }}</p>
-                    </div>
-                    <p class="textStyles">Email: {{ form.email(class="single-line") }}</p>
-                    <p class="textStyles">Profile Image: {{form.profile_pic()}}</p>
-                    <p class="textStyles">Mobile Number: {{ form.phone(class="single-line") }}</p>
-                    <p class="textStyles">Password: {{ form.password(class="single-line") }}</p>
-                    <p>Email notification {{form.email_notification() }}</p>
-                    <p>Text notification {{form.mobile_notification() }}</p>
-                    <p class="textStyles">Retype Password: {{ form.password2(class="single-line") }}</p>
+<div class="container topSpace">
+    <h1 class="topSpace ">Sign Up</h1>
+    {{ render_form(form) }}
+</div>
+{% endblock %}
 
-                    <p>{{ form.submit(class = 'buttonStyle') }}</p>
-                </div>
-            </div>
-        </form>
-    </div>
-</main>
+{% block scripts %}
+{{ super() }}
+<script>
+    var wtf_phone_field = document.getElementById('phone');
+    wtf_phone_field.style.position = 'absolute';
+    wtf_phone_field.style.top = '-9999px';
+    wtf_phone_field.style.left = '-9999px';
+    wtf_phone_field.parentElement.insertAdjacentHTML('beforeend', '<div><input type="tel" id="_phone"></div>');
+    var fancy_phone_field = document.getElementById('_phone');
+    var fancy_phone_iti = window.intlTelInput(fancy_phone_field, {
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+    });
+    fancy_phone_iti.setNumber(wtf_phone_field.value);
+    fancy_phone_field.addEventListener('blur', function() {
+        wtf_phone_field.value = fancy_phone_iti.getNumber();
+    });
+</script>
 {% endblock %}
