@@ -106,28 +106,35 @@ def edit_profile():
     UsernameForm = EditUsernameForm()
     NameForm = EditNameForm()
     PasswordForm = ChangePasswordForm()
+    EmailForm = ChangeEmailForm()
+    PhoneForm = ChangePhoneForm()
 
     if UsernameForm.validate_on_submit():
         current_user.username = UsernameForm.username.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
     elif NameForm.validate_on_submit():
         current_user.firstName = NameForm.first_name.data
         current_user.lastName = NameForm.last_name.data
         db.session.commit()
-        return redirect(url_for('edit_profile'))
     elif PasswordForm.validate_on_submit():
         if current_user.check_password(PasswordForm.currentPassword.data):
             current_user.set_password(PasswordForm.password)
             db.session.commit()
+    elif EmailForm.validate_on_submit():
+        current_user.email = EmailForm.email.data
+        db.session.commit()
+    elif request.method == 'POST':
+        current_user.phone = PhoneForm.phone.data
+        db.session.commit()
     elif request.method == 'GET':
         UsernameForm.username.data = current_user.username
         NameForm.firstName.data = current_user.first_name
         NameForm.lastName.data = current_user.last_name
+        EmailForm.email.data = current_user.email
 
     return render_template('edit_profile.html', PasswordForm=PasswordForm, UsernameForm=UsernameForm, NameForm=NameForm,
-                           user=current_user)
+                           EmailForm = EmailForm, PhoneForm=PhoneForm, user=current_user)
 
 
 @app.route('/logout')

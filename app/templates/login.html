@@ -29,6 +29,7 @@
                             <p class=error>{{ error }}</p>
                         {% endif %}
                         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                        <p><a href="{{ url_for('registration') }}">Sign up</a></p>
                         <p><a href="{{ url_for('reset_password_request') }}">Forgot Password</a></p>
                         <p id="submit">{{ form.submit(class="submit") }}</p>
                     </form>

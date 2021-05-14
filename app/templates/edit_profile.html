@@ -1,9 +1,12 @@
-{% extends "base.html" %}
+{% extends "base_login.html" %}
 
 {% block title %}Account Settings{% endblock %}
 
 {% block custom_styles %}
 <link href="{{ url_for('static', filename='css/edit_profile.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -105,7 +108,7 @@
             <div class="card .settingCard">
                 <div class="card-body">
                     <h5 class="card-title">Contact Info</h5>
-                    <div class="row setting">
+                    <div class="row setting" id="email">
                         <div class="col-4">
                             Email
                         </div>
@@ -116,7 +119,20 @@
                             <a href="#">Edit</a>
                         </div>
                     </div>
-                    <div class="row lastSetting">
+
+                    <div class="form-popup" id="emailForm">
+                        <form action="" class="form-container" method="post">
+                            {{ PasswordForm.hidden_tag() }}
+                            <div class="card card-form-style">
+                                <span class="close">&times;</span>
+                                <h5 class="community-post">Email</h5>
+                                <p> Current Email {{ EmailForm.email(class="form-text-box") }}</p>
+                                <p class="submit">{{ EmailForm.submit(class="submit") }}</p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row lastSetting" id="phones">
                         <div class="col-4">
                             Phone
                         </div>
@@ -127,6 +143,22 @@
                             <i class="fas fa-chevron-right"></i>
                         </div>
                     </div>
+
+                    <div class="form-popup" id="PhoneForm">
+                        <form id="login" onsubmit="process(event)">
+                           <p>Enter your phone number:</p>
+                           <input id="phone" type="tel" name="phone" />
+                           <input type="submit" class="btn" value="Verify" />
+                        </form>
+                    </div>
+
+                    <script>
+                       const phoneInputField = document.querySelector("#phone");
+                       const phoneInput = window.intlTelInput(phoneInputField, {
+                         utilsScript:
+                           "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+                       });
+                    </script>
                 </div>
             </div>
         </div>
@@ -142,6 +174,12 @@
 
         var passwordDiv = document.getElementById("password");
         var passwordModel = document.getElementById("passwordForm");
+
+        var emailDiv = document.getElementById("email");
+        var emailModel = document.getElementById("emailForm");
+
+        var emailDiv = document.getElementById("phones");
+        var emailModel = document.getElementById("phoneForm");
 
         // Get the <span> element that closes the modal
         const span = document.getElementsByClassName("close");
@@ -160,12 +198,22 @@
             passwordModel.style.display = "block";
         }
 
+        emailDiv.onclick = function () {
+            emailModel.style.display = "block";
+        }
+
+        phoneDiv.onclick = function () {
+            phoneModel.style.display = "block";
+        }
+
         // When the user clicks on <span> (x), close the modal
        for(var i=0;i<span.length;i++) {
            span[i].onclick = function() {
                nameModel.style.display = "none";
                modal.style.display = "none";
                passwordModel.style.display = "none";
+               emailModel.style.display = "none";
+               phoneModel.style.display = "none";
             }
        }
 
@@ -175,6 +223,8 @@
             modal.style.display = "none";
             nameModel.style.display = "none";
             passwordModel.style.display = "none";
+            emailModel.style.display = "none";
+            phoneModel.style.display = "none";
           }
         }
     </script>

@@ -34,11 +34,11 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <h5 class="maintenance-color">{{ post.title}}</h5>
+                <h5 class="">{{ post.title}}</h5>
                 <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
             </div>
             <!--<h2><a class="article-title" href="#"></a></h2>-->
-
+            <p class="article-content">Date of Work: {{ post.date }}  Time of Work: {{post.start}} - {{post.end}}</p>
             <p class="article-content">{{ post.body }}</p>
             {% if post.author == current_user %}
             <div>

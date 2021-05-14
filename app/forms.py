@@ -92,3 +92,19 @@ class EditNameForm(FlaskForm):
     firstName = StringField('First Name')
     lastName = StringField('First Name')
     submit = SubmitField('Submit')
+
+class ChangeEmailForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class ChangePhoneForm(FlaskForm):
+    phone = phone = StringField('Phone', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+    def validate_phone(self, phone):
+        try:
+            p = phonenumbers.parse(phone.data)
+            if not phonenumbers.is_valid_number(p):
+                raise ValueError()
+        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+            raise ValidationError('Invalid phone number')
