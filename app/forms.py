@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm, validators
 from app.models import User
+from sqlalchemy import func
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,TextAreaField, SelectField, FileField
 from wtforms.fields.html5 import DateField, TimeField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from flask_wtf.file import FileField, FileAllowed
 import phonenumbers
 
@@ -15,13 +16,13 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     profile_pic= FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
-    phone = StringField('Phone', validators=[DataRequired()])
+    phone = StringField('Phone')
     email_notification = BooleanField('Text Notification', default=False)
     mobile_notification = BooleanField('Mobile Notification', default=False)
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=14)])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
@@ -30,18 +31,25 @@ class RegistrationForm(FlaskForm):
             p = phonenumbers.parse(phone.data)
             if not phonenumbers.is_valid_number(p):
                 raise ValueError()
+            user = User.query.filter_by(phone_number=phone.data).first()
+            if user is not None:
+                raise ValidationError('Phone number is already associated with an account.')
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             raise ValidationError('Invalid phone number')
 
     def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
+        user = User.query.filter(func.lower(User.username) == func.lower(username.data)).first()
         if user is not None:
             raise ValidationError('Please use a different username.')
-    
+
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address.')
+
+    def validate_password(self, password):
+        if len(password.data) >= 7 and len(password.data) <= 20:
+            raise ValidationError('Password needs to be between 7 and 20 characters')
 
 class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])

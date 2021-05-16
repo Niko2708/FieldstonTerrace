@@ -134,6 +134,7 @@ alignText{
 .accordionImages{
     max-width: 500px;
     max-height: 600px;
+    height: 375px;
 }
 
 .panelText{
