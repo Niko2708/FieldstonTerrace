@@ -22,6 +22,7 @@
             </div>
             {% endif %}
         </div>
+
         <div class="modal fade" id="deleteModalMaintenance" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabelMaintenance"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -45,10 +46,3 @@
     {% endfor %}
 
 {% endblock %}
-
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-<script src="moment.js"></script>
-<script src="moment-timezone-with-data.js"></script>
-{% endblock %}}

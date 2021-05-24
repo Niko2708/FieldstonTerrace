@@ -10,11 +10,11 @@
 <main>
     <section class="container-fluid parent" id="ApartmentEntrance"
              style="background-image: url('../static/img/apartment.jpg');">
-        <div class="container child" contenteditable>
+        <div class="container child">
             <h1 class="titles whiteText h1Size">Fieldston Towers</h1>
             <h2 class="titles whiteText h2Size">Co Ops for sale in new york city</h2>
             <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
-                    onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
+                    onclick="window.location.href='{{ url_for( 'amenities') }}'";>
                 View Co Ops <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -49,7 +49,7 @@
             </p>
 
             <button type="button" class="btn btn-secondary btn-lg buttons buttonSize"
-                    onclick="location.href='https://www.apartments.com/fieldston-terrace-bronx-ny/mknebwh/'">
+                    onclick="window.location.href='{{ url_for( 'amenities') }}'";>
                 Available Co Ops <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -337,7 +337,7 @@
                     </p>
 
                     <button type="button" class="btn btn-secondary btn-lg buttons buttonSpacing"
-                            onclick="window.location.href='#'">
+                            onclick="window.location.href='{{ url_for( 'amenities') }}'">
                         View Amenities <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>

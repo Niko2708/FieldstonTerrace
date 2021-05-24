@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm, validators
 from app.models import User
 from sqlalchemy import func
-from wtforms import StringField, PasswordField, BooleanField, SubmitField,TextAreaField, SelectField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField,TextAreaField, SelectField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from flask_wtf.file import FileField, FileAllowed
@@ -47,9 +47,11 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
-    def validate_password(self, password):
-        if len(password.data) >= 7 and len(password.data) <= 20:
-            raise ValidationError('Password needs to be between 7 and 20 characters')
+class CommunityBoardForm(FlaskForm):
+    title = TextAreaField('Title', validators=[DataRequired()])
+    post = TextAreaField('Body:', validators=[DataRequired()])
+    post_img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Post')
 
 class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
@@ -85,12 +87,6 @@ class ChangePasswordForm(FlaskForm):
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
-
-class CommunityBoardForm(FlaskForm):
-    title = TextAreaField('Title', validators=[DataRequired()])
-    post = TextAreaField('Body:', validators=[DataRequired()])
-    post_img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Post')
 
 class EditUsernameForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

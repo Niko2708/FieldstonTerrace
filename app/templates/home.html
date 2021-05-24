@@ -19,11 +19,31 @@
             {{ form.hidden_tag() }}
             <div class="card card-form-style">
                 <span class="close">&times;</span>
-                <h5>Title</h5>
-                <p class="textStyles">{{ form.title(class="form-control form-control-lg is-invalid") }}</p>
-                <h5 id="community-post">Post</h5>
+                <div class="form-group">
+                    <h5>{{ form.title.label(class="form-control-label") }}</h5>
+                    {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
                 <hr>
-                <p class="textStyles">{{ form.post(class='class="form-control form-control-lg is-invalid"') }}</p>
+                <h5>{{ form.post.label(class="form-control-label") }}</h5>
+                    {% if form.post.errors %}
+                    {{ form.post(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.post.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.post(class="form-control form-control-lg") }}
+                    {% endif %}
                 <p>Picture Attachment Button{{ form.post_img() }}</p>
                 <p id="test">{{ form.submit(class = 'buttonStyle') }}</p>
             </div>
@@ -38,18 +58,21 @@
                 <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
             </div>
             <!--<h2><a class="article-title" href="#"></a></h2>-->
-            <p class="article-content">Date of Work: {{ post.date }}  Time of Work: {{post.start}} - {{post.end}}</p>
+            <p class="article-content">Date of Work: {{ post.date }} Time of Work: {{post.start}} - {{post.end}}</p>
             <p class="article-content">{{ post.body }}</p>
             {% if post.author == current_user %}
             <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('maintenance_update', post_id=post.id) }}">Update</a>
-                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModalMaintenance">
+                <a class="btn btn-secondary btn-sm mt-1 mb-1"
+                   href="{{ url_for('maintenance_update', post_id=post.id) }}">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+                        data-target="#deleteModalMaintenance">
                     Delete
                 </button>
             </div>
             {% endif %}
         </div>
-        <div class="modal fade" id="deleteModalMaintenance" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabelMaintenance"
+        <div class="modal fade" id="deleteModalMaintenance" tabindex="-1" role="dialog"
+             aria-labelledby="deleteModalLabelMaintenance"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -83,7 +106,7 @@
             <!--<h2><a class="article-title" href="#"></a></h2>-->
             <p class="article-content">{{ post.title}}</p>
             {% if post.post_img != None %}
-                <p class="article-content">{{ post.post_img}}</p>
+            <p class="article-content">{{ post.post_img}}</p>
             {% endif %}
             <p class="article-content">{{ post.body }}</p>
             {% if post.author == current_user %}
@@ -144,6 +167,7 @@
             modal.style.display = "none";
           }
         }
+
 
     </script>
 </main>
