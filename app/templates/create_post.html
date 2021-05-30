@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="content-section">
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{ legend }}</legend>
@@ -33,6 +33,7 @@
                     {{ form.post(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+             <p>Picture Attachment Button{{ form.post_img() }}</p>
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

@@ -10,11 +10,11 @@
 <main class="container">
     <!-- Header -->
     <div class="media">
-        <img class="rounded-circle account-img" src="{{ image_file }}">
+        <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + user.profile_img)}}">
 
         <div class="media-body">
-            <h2 class="account-heading">{{ current_user.username }}</h2>
-            <p class="text-secondary">{{ current_user.email }}</p>
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
         </div>
 
         {% if user == current_user %}
@@ -22,17 +22,12 @@
         {% endif %}
     </div>
 
-
-    <!-- Add a sub nav bar to edit profile information, change picture, -->
-
-    <!-- Posts -->
-
     {% for post in posts %}
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
                 <img class="rounded-circle article-img"
-                     src="{{ url_for('static', filename='profile_pics/default.jpg')}}">
+                     src="{{ url_for('static', filename='profile_pics/' + post.author.profile_img)}}">
                 <a href="#">{{ post.author.username }}</a>
                 <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
             </div>

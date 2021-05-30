@@ -4,7 +4,8 @@ from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Maintenance, Event, CommunityBoard
 from app.email import *
-from app.forms import ResetPasswordForm
+import os
+import secrets
 
 # routes for resident users that login in
 @app.route('/home', methods=['GET', 'POST'])
@@ -13,7 +14,11 @@ def home():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     form = CommunityBoardForm()
     if form.validate_on_submit():
-        posts = CommunityBoard(title=form.title.data, body=form.post.data, post_img=form.post_img.data, author=current_user)
+        picture_file=None
+        if form.post_img.data:
+            picture_file = save_picture(form.post_img.data, 1)
+
+        posts = CommunityBoard(title=form.title.data, body=form.post.data, post_img=picture_file, author=current_user)
         db.session.add(posts)
         db.session.commit()
         flash('Post Successful')
@@ -42,6 +47,9 @@ def maintenance_update(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.body = form.body.data
+        if form.img.data:
+            picture_file = save_picture(form.img.data,3)
+            post.img = picture_file
         post.start = form.start_at.data
         post.end = form.end_at.data
         post.date = form.date.data
@@ -78,7 +86,9 @@ def update_post(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.body = form.post.data
-        post.post_img = form.post_img.data
+        if form.post_img.data:
+            picture_file = save_picture(form.post_img.data,1)
+            post.post_img = picture_file
         db.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('home'))
@@ -96,7 +106,7 @@ def update_post(post_id):
 def user(username):
     image_file = url_for('static', filename='profile_pics/default.jpg')
     user = User.query.filter_by(username=username).first_or_404()
-    posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
+    posts = CommunityBoard.query.filter_by(user_id=user.id)
     return render_template('user.html', user=user, posts=posts, image_file=image_file)
 
 
@@ -104,18 +114,34 @@ def user(username):
 @login_required
 def edit_profile():
     UsernameForm = EditUsernameForm()
+    PictureForm = ChangeProfilePicture()
     NameForm = EditNameForm()
     PasswordForm = ChangePasswordForm()
     EmailForm = ChangeEmailForm()
     PhoneForm = ChangePhoneForm()
 
+    print("On page")
+
+    if PictureForm.validate_on_submit():
+        print("In Picture Form")
+        print(PictureForm.profile_img.data)
+        if PictureForm.profile_img.data:
+            print("In Pictore Submitted")
+            picture_file = save_picture(PictureForm.profile_img.data,0)
+            current_user.profile_img = picture_file
+            print(picture_file)
+            db.session.commit()
+
     if UsernameForm.validate_on_submit():
+        print("Change Name")
         current_user.username = UsernameForm.username.data
         db.session.commit()
         flash('Your changes have been saved.')
     elif NameForm.validate_on_submit():
-        current_user.firstName = NameForm.first_name.data
-        current_user.lastName = NameForm.last_name.data
+        print(NameForm.firstName.data)
+        print(NameForm.lastName.data)
+        current_user.first_name = NameForm.firstName.data
+        current_user.last_name = NameForm.lastName.data
         db.session.commit()
     elif PasswordForm.validate_on_submit():
         if current_user.check_password(PasswordForm.currentPassword.data):
@@ -124,9 +150,6 @@ def edit_profile():
     elif EmailForm.validate_on_submit():
         current_user.email = EmailForm.email.data
         db.session.commit()
-    elif request.method == 'POST':
-        current_user.phone = PhoneForm.phone.data
-        db.session.commit()
     elif request.method == 'GET':
         UsernameForm.username.data = current_user.username
         NameForm.firstName.data = current_user.first_name
@@ -134,7 +157,7 @@ def edit_profile():
         EmailForm.email.data = current_user.email
 
     return render_template('edit_profile.html', PasswordForm=PasswordForm, UsernameForm=UsernameForm, NameForm=NameForm,
-                           EmailForm = EmailForm, PhoneForm=PhoneForm, user=current_user)
+                           EmailForm=EmailForm, PhoneForm=PhoneForm, user=current_user, PictureForm=PictureForm)
 
 
 @app.route('/logout')
@@ -148,7 +171,7 @@ def logout():
 @login_required
 def events():
     events = Event.query.order_by(Event.timestamp.desc())
-    return render_template('events.html', events=events)
+    return render_template('events', events=events)
 
 
 @app.route('/documents')
@@ -178,8 +201,13 @@ def maintenance_form():
     form = MaintenanceForm()
 
     if form.validate_on_submit():
+        picture_file = None
+        if form.img.data:
+            picture_file = save_picture(form.img.data, 3)
+        print(picture_file)
+        print(form.img.data)
         post = Maintenance(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data,
-                           date=form.date.data, author=current_user)
+                           date=form.date.data, author=current_user, maintenance_img=picture_file)
         db.session.add(post)
         db.session.commit()
         flash('Maintenance Form Successful')
@@ -192,8 +220,11 @@ def maintenance_form():
 def event_form():
     form = EventForm()
     if form.validate_on_submit():
+        picture_file = None
+        if form.img.data:
+            picture_file = save_picture(form.post_img.data, 2)
         event = Event(title=form.title.data, body=form.body.data, dateOfEvent=form.dateOfEvent.data,
-                      start=form.start_at.data, end=form.end_at.data)
+                      start=form.start_at.data, end=form.end_at.data, img=picture_file)
         db.session.add(event)
         db.session.commit()
         flash('Maintenance Form Successful')
@@ -247,17 +278,21 @@ def registration_request():
     flash('Check your email for the instructions to register as a user')
     return redirect(url_for('login'))
 
-def save_picture(form_picture):
+def save_picture(form_picture, type):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
 
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
+    if type == 0:
+        picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    elif type == 1:
+        picture_path = os.path.join(app.root_path, 'static/post_pic', picture_fn)
+    elif type == 2:
+        picture_path = os.path.join(app.root_path, 'static/event_pic', picture_fn)
+    elif type == 3:
+        picture_path = os.path.join(app.root_path, 'static/maintenance_pic', picture_fn)
 
+    form_picture.save(picture_path)
     return picture_fn
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -268,8 +303,11 @@ def registration():
     form = RegistrationForm()
 
     if form.validate_on_submit():
+        if form.profile_pic.data:
+            picture_file = save_picture(form.profile_pic.data)
+            print(picture_file)
         user = User(username=form.username.data, first_name=form.first_name.data, last_name = form.last_name.data,
-                    phone_number = form.phone.data, email=form.email.data, profile_img=form.profile_pic.data,
+                    phone_number = form.phone.data, email=form.email.data, profile_img=picture_file,
                     email_notification=form.email_notification.data, test_notification=form.mobile_notification.data)
         user.set_password(form.password.data)
 

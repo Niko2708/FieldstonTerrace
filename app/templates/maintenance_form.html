@@ -4,22 +4,45 @@
 {% block content %}
 <main>
     <div class="container topSpace">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class="card container">
                 <div class="card-body">
                     <h1>Maintenance Post</h1>
-                    <h5>Title</h5>
-                    <p class="textStyles">{{ form.title(class="form-control form-control-lg is-invalid") }}</p>
-
-                    <h5> Description</h5>
-                    <p class="textStyles">{{ form.body(class="form-control form-control-lg") }}</p>
+                    <div class="form-group">
+                        <h5>{{ form.title.label(class="form-control-label") }}</h5>
+                        {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <h5>{{ form.body.label(class="form-control-label") }}</h5>
+                    {% if form.body.errors %}
+                    {{ form.body(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.body.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.body(class="form-control form-control-lg") }}
+                    {% endif %}
+                    <br>
+                    <p>Picture Attachment Button{{ form.img() }}</p>
 
                     <div class="dateTime">
                         <p class="textStyles">Day the maintenance work will occur</p>
                         <p class="textStyles">Event Start: {{ form.date}}</p>
                         <p class="textStyles">Timeframe the maintenance will occur:</p>
-                        <p class="textStyles">Start Time: {{ form.start_at }} <span class="tab"> </span>End Time: {{ form.end_at }}</p>
+                        <p class="textStyles">Start Time: {{ form.start_at }} <span class="tab"> </span>End Time: {{
+                            form.end_at }}</p>
                     </div>
                     <p>{{ form.submit(class = 'buttonStyle') }}</p>
                 </div>

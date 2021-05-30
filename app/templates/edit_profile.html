@@ -15,7 +15,7 @@
         <div class="card .settingCard">
             <div class="card-body">
                 <h5 class="card-title">Basic Info</h5>
-                <div class="row setting">
+                <div class="row setting" id="Photo">
                     <div class="col-4">
                         Photo
                     </div>
@@ -25,6 +25,24 @@
                     <div class="col-4 links">
                         <a href="#">Edit</a>
                     </div>
+                </div>
+
+                <div class="form-popup" id="PhotoForm">
+                    <form action="" class="form-container" enctype="multipart/form-data" method="post">
+                        <span class="close" onclick="closePictureForm()">&times;</span>
+                        <div class="card card-form-style">
+                            <h5>Change Photo</h5>
+                            {{ PictureForm.hidden_tag() }}
+                            {{ PictureForm.profile_img.label() }}
+                            {{ PictureForm.profile_img() }}
+                            {% if PictureForm.profile_img.errors %}
+                                {% for error in PictureForm.profile_img.errors %}
+                                    <span class="text-danger">{{ error }}</span></br>
+                                {% endfor %}
+                            {% endif %}
+                            <p>{{ PictureForm.submit(class="submit") }}</p>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="row setting" id="Username">
@@ -43,7 +61,7 @@
                     <form action="" class="form-container" method="post">
                         {{ UsernameForm.hidden_tag() }}
                         <div class="card card-form-style">
-                            <span class="close">&times;</span>
+                            <span class="close" onclick="closeUserNameForm()">&times;</span>
                             <h5 id="community-post">Change Username</h5>
                             {{ UsernameForm.username(class="form-text-box") }}<br>
                             <p id="submit">{{ UsernameForm.submit(class="submit") }}</p>
@@ -67,10 +85,10 @@
                     <form action="" class="form-container" method="post">
                         {{ NameForm.hidden_tag() }}
                         <div class="card card-form-style">
-                            <span class="close">&times;</span>
+                            <span class="close" onclick="closeNameForm()">&times;</span>
                             <h5 class="community-post">Change Name</h5>
-                            <p>First Name    {{ NameForm.firstName(class="form-text-box") }}<br>
-                            <p>Last Name     {{ NameForm.lastName(class="form-text-box") }}<br>
+                            <p>First Name {{ NameForm.firstName(class="form-text-box") }}<br>
+                            <p>Last Name {{ NameForm.lastName(class="form-text-box") }}<br>
                             <p class="submit">{{ NameForm.submit(class="submit") }}</p>
                         </div>
                     </form>
@@ -146,9 +164,9 @@
 
                     <div class="form-popup" id="PhoneForm">
                         <form id="login" onsubmit="process(event)">
-                           <p>Enter your phone number:</p>
-                           <input id="phone" type="tel" name="phone" />
-                           <input type="submit" class="btn" value="Verify" />
+                            <p>Enter your phone number:</p>
+                            <input id="phone" type="tel" name="phone"/>
+                            <input type="submit" class="btn" value="Verify"/>
                         </form>
                     </div>
 
@@ -158,6 +176,9 @@
                          utilsScript:
                            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
                        });
+
+
+
                     </script>
                 </div>
             </div>
@@ -168,6 +189,9 @@
        // Get the modal
         var modal = document.getElementById("myForm");
         var btn = document.getElementById("Username");
+
+        var photoDiv = document.getElementById("Photo");
+        var photoModel = document.getElementById("PhotoForm");
 
         var nameDiv = document.getElementById("name");
         var nameModel = document.getElementById("nameForm");
@@ -190,6 +214,10 @@
           modal.style.display = "block";
         }
 
+        photoDiv.onclick = function() {
+            photoModel.style.display = "block";
+        }
+
         nameDiv.onclick = function(){
             nameModel.style.display = "block";
         }
@@ -206,16 +234,17 @@
             phoneModel.style.display = "block";
         }
 
-        // When the user clicks on <span> (x), close the modal
-       for(var i=0;i<span.length;i++) {
-           span[i].onclick = function() {
-               nameModel.style.display = "none";
-               modal.style.display = "none";
-               passwordModel.style.display = "none";
-               emailModel.style.display = "none";
-               phoneModel.style.display = "none";
-            }
-       }
+        function closeUserNameForm() {
+          document.getElementById("myForm").style.display = "none";
+        }
+
+        function closeNameForm() {
+          document.getElementById("nameForm").style.display = "none";
+        }
+
+        function closePictureForm() {
+            document.getElementById("photoForm").style.display = "none";
+        }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
@@ -227,6 +256,9 @@
             phoneModel.style.display = "none";
           }
         }
+
+
+
     </script>
 </main>
 {% endblock %}

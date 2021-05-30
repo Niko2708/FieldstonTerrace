@@ -81,16 +81,20 @@ class ResetPasswordForm(FlaskForm):
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
 
+class EditUsernameForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Save')
+
+class ChangeProfilePicture(FlaskForm):
+    profile_img = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Updated Profile Picture')
+
 class ChangePasswordForm(FlaskForm):
     currentPassword = PasswordField('Password', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        'Repeat Password', validators=[EqualTo('password')])
     submit = SubmitField('Request Password Reset')
-
-class EditUsernameForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    submit = SubmitField('Save')
 
 class EditNameForm(FlaskForm):
     firstName = StringField('First Name')

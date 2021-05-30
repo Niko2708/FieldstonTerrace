@@ -4,7 +4,7 @@
 {% block content %}
 <main>
     <div class="container topSpace">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class="card container">
                 <div class="card-body">
@@ -14,6 +14,7 @@
 
                     <h5> Event Description</h5>
                     <p class="textStyles">{{ form.body(class='textArea') }}</p>
+                    <p>Picture Attachment Button{{ form.img() }}</p>
 
                     <div class="dateTime">
                         <p class="textStyles">Select the dates and times of the actual event.</p>
