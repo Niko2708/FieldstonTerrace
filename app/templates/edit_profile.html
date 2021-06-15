@@ -27,10 +27,10 @@
                     </div>
                 </div>
 
-                <div class="form-popup" id="PhotoForm">
+                <div class="form-popup" id="photoForm">
                     <form action="" class="form-container" enctype="multipart/form-data" method="post">
-                        <span class="close" onclick="closePictureForm()">&times;</span>
                         <div class="card card-form-style">
+                            <span class="close" onclick="closePictureForm()">&times;</span>
                             <h5>Change Photo</h5>
                             {{ PictureForm.hidden_tag() }}
                             {{ PictureForm.profile_img.label() }}
@@ -110,12 +110,33 @@
                     <form action="" class="form-container" method="post">
                         {{ PasswordForm.hidden_tag() }}
                         <div class="card card-form-style">
-                            <span class="close">&times;</span>
+                            <span class="close" onclick="closePasswordForm()">&times;</span>
                             <h5 class="community-post">Change Password</h5>
-                            <p> Current Password {{ PasswordForm.currentPassword(class="form-text-box") }}</p>
-                            <p> New Password {{ PasswordForm.password(class="form-text-box") }}<br>
-                            <p> Confirm New Password {{ PasswordForm.password2(class="form-text-box") }}<br>
-                            <p class="submit">{{ NameForm.submit(class="submit") }}</p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p> Current Password: </p>
+                                </div>
+                                <div class="col-6">
+                                      <p>{{ PasswordForm.currentPassword(class="form-text-box") }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p> New Password: </p>
+                                </div>
+                                <div class="col-6">
+                                    <p>{{ PasswordForm.password(class="form-text-box") }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p> Confirm New Password: </p>
+                                </div>
+                                <div class="col-6">
+                                    <p>{{ PasswordForm.password2(class="form-text-box") }}</p>
+                                </div>
+                            </div>
+                            <p class="submit">{{ PasswordForm.submit(class="submit") }}</p>
                         </div>
                     </form>
                 </div>
@@ -191,7 +212,7 @@
         var btn = document.getElementById("Username");
 
         var photoDiv = document.getElementById("Photo");
-        var photoModel = document.getElementById("PhotoForm");
+        var photoModel = document.getElementById("photoForm");
 
         var nameDiv = document.getElementById("name");
         var nameModel = document.getElementById("nameForm");
@@ -246,14 +267,19 @@
             document.getElementById("photoForm").style.display = "none";
         }
 
+        function closePasswordForm() {
+            document.getElementById("passwordForm").style.display = "none";
+        }
+
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-          if (event.target == modal || event.target == nameModel || event.target == passwordModel) {
+          if (event.target == modal || event.target == nameModel || event.target == passwordModel || event.target == photoModel) {
             modal.style.display = "none";
             nameModel.style.display = "none";
             passwordModel.style.display = "none";
             emailModel.style.display = "none";
             phoneModel.style.display = "none";
+            photoModel.style.display = "none";
           }
         }
 

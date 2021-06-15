@@ -9,12 +9,34 @@
             <div class="card container">
                 <div class="card-body">
                     <h1>Event Post</h1>
-                    <h5>Title</h5>
-                    <p class="textStyles">{{ form.title(class="single-line") }}</p>
+                    <div class="form-group">
+                        <h5>{{ form.title.label(class="form-control-label") }}</h5>
+                        {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <h5>{{ form.body.label(class="form-control-label") }}</h5>
+                    {% if form.body.errors %}
+                    {{ form.body(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.body.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.body(class="form-control form-control-lg") }}
+                    {% endif %}
+                    <br>
 
-                    <h5> Event Description</h5>
-                    <p class="textStyles">{{ form.body(class='textArea') }}</p>
-                    <p>Picture Attachment Button{{ form.img() }}</p>
+                    <p>Picture Attachment Button {{ form.img() }}</p>
 
                     <div class="dateTime">
                         <p class="textStyles">Select the dates and times of the actual event.</p>

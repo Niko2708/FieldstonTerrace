@@ -62,7 +62,7 @@
             {% if post.maintenance_img != None %}
                 <img  src="{{ url_for('static', filename='maintenance_pic/' + post.maintenance_img) }}">
             {% endif %}
-            <p class="article-content">{{ post.body }}</p>
+            <p class="article-content f">{{ post.body }}</p>
             {% if post.author == current_user %}
             <div>
                 <a class="btn btn-secondary btn-sm mt-1 mb-1"
@@ -103,7 +103,7 @@
             <div class="article-metadata">
                 <img class="rounded-circle article-img"
                      src="{{ url_for('static', filename='profile_pics/' + post.author.profile_img) }}">
-                <a href="#">{{ post.author.username }}</a>
+                <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a>
                 <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
             </div>
             <!--<h2><a class="article-title" href="#"></a></h2>-->

@@ -10,12 +10,30 @@ import os
 sender = 'fieldstontowers@gmail.com'
 
 
+def send_maintenence_post(users, post):
+    for user in users:
+        if user.email_notification:
+            test = Mail(
+                from_email=sender,
+                to_emails=user.email,
+                subject=post.title,
+                html_content=render_template('email/maintenance_email.html', post=post))
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                response = sg.send(test)
+                print(response.status_code)
+                print(response.body)
+                print(response.headers)
+            except Exception as e:
+                print(e.test)
+
+
 def send_password_change_confirmation(user, recipient):
     message = Mail(
         from_email=sender,
         to_emails=recipient,
-        subject= 'Password Change Confirmation',
-        html_content= render_template('email/password_change.html', user=user))
+        subject='Password Change Confirmation',
+        html_content=render_template('email/password_change.html', user=user))
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
@@ -52,7 +70,7 @@ def get_registration_token(expires_in=86400):
 def verify_registration_token(token):
     try:
         code = jwt.decode(token, app.config['SECRET_KEY'],
-                        algorithms=['HS256'])['register_user']
+                          algorithms=['HS256'])['register_user']
     except:
         return
     return code
@@ -74,6 +92,7 @@ def send_user_registeration_email(to_email):
         print(response.headers)
     except Exception as e:
         print(e.message)
+
 
 def send_unknow_user_email(recipient):
     message = Mail(

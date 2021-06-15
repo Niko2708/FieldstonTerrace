@@ -86,7 +86,7 @@ class EditUsernameForm(FlaskForm):
     submit = SubmitField('Save')
 
 class ChangeProfilePicture(FlaskForm):
-    profile_img = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    profile_img = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png','jpeg'])])
     submit = SubmitField('Updated Profile Picture')
 
 class ChangePasswordForm(FlaskForm):

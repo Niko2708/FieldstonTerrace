@@ -104,10 +104,9 @@ def update_post(post_id):
 @app.route('/user/<username>')
 @login_required
 def user(username):
-    image_file = url_for('static', filename='profile_pics/default.jpg')
     user = User.query.filter_by(username=username).first_or_404()
-    posts = CommunityBoard.query.filter_by(user_id=user.id)
-    return render_template('user.html', user=user, posts=posts, image_file=image_file)
+    posts = CommunityBoard.query.filter_by(user_id=user.id).order_by(CommunityBoard.timestamp.desc()).all()
+    return render_template('user.html', user=user, posts=posts)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -171,7 +170,7 @@ def logout():
 @login_required
 def events():
     events = Event.query.order_by(Event.timestamp.desc())
-    return render_template('events', events=events)
+    return render_template('events.html', events=events)
 
 
 @app.route('/documents')
@@ -204,12 +203,11 @@ def maintenance_form():
         picture_file = None
         if form.img.data:
             picture_file = save_picture(form.img.data, 3)
-        print(picture_file)
-        print(form.img.data)
         post = Maintenance(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data,
                            date=form.date.data, author=current_user, maintenance_img=picture_file)
         db.session.add(post)
         db.session.commit()
+        send_maintinence_post(User.query.all(),post)
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('maintenance_form.html', title='Maintenance Report', form=form)
