@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm, validators
 from app.models import User
 from sqlalchemy import func
+from flask_login import current_user
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,TextAreaField, SelectField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
@@ -92,21 +93,27 @@ class ChangeProfilePicture(FlaskForm):
 class ChangePasswordForm(FlaskForm):
     currentPassword = PasswordField('Password', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat Password', validators=[EqualTo('password')])
+    password2 = PasswordField('Repeat Password', validators=[EqualTo('password')])
     submit = SubmitField('Request Password Reset')
 
 class EditNameForm(FlaskForm):
     firstName = StringField('First Name')
-    lastName = StringField('First Name')
+    lastName = StringField('Last Name')
     submit = SubmitField('Submit')
 
 class ChangeEmailForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
-class ChangePhoneForm(FlaskForm):
-    phone = phone = StringField('Phone', validators=[DataRequired()])
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
+
+class ChangeContactForm(FlaskForm):
+    phone = StringField('Phone')
+    email_notification = BooleanField('Text Notification')
+    mobile_notification = BooleanField('Mobile Notification')
     submit = SubmitField('Submit')
 
     def validate_phone(self, phone):

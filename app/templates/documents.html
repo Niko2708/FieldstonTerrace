@@ -1,26 +1,22 @@
-{% extends "base.html" %}
+{% extends "base_login.html" %}
 
 {% block title %}Documents{% endblock %}
-
-{% block custom_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/documents.css') }}">
-{% endblock %}
 
 {% block content %}
 <main class="background-grey container-fluid">
     <h1 class="titles h1Size">Documents</h1>
 
     <div class="container topSpace">
-        <p class="textStyle" id="space">
-            For those interested in applying for a Co Op at Fieldston Towers, download and fill out the application form.
-            When you finish filling out the form, please submit it to your realtor. From there, we will review your
-            information and get back to you promptly: <a href="/get_pdf/FBC_Application.pdf">Fieldston Tower Application</a>
-        </p>
+        <article class="media content-section">
+            <div class="media-body">
+            <p class="article-content">
+                For those interested in applying for a Co Op at Fieldston Towers, download and fill out the application form.  When you finish filling out the form, please submit it to your realtor. From there, we will review your information and get back to you promptly: <a href="/get_pdf/FBC_Application.pdf">Fieldston Tower Application</a>
+            </p>
 
-        <p class="textStyle">
-            For residents and potential residents, we ask that you download and familiarize yourself with the rules: <a href="/get_pdf/FBC_House_Rules.pdf">Fieldston Tower Rules</a>
-        </p>
-
+            <p class="article-content">
+                For residents and potential residents, we ask that you download and familiarize yourself with the rules: <a href="/get_pdf/FBC_House_Rules.pdf">Fieldston Tower Rules</a>
+            </p>
+        </article>
     </div>
 </main>
 {% endblock %}

@@ -10,8 +10,10 @@ import os
 sender = 'fieldstontowers@gmail.com'
 
 
-def send_maintenence_post(users, post):
+def send_maintenance_post(users, post):
     for user in users:
+        print(user.username)
+        print(user.email_notification)
         if user.email_notification:
             test = Mail(
                 from_email=sender,
@@ -25,7 +27,7 @@ def send_maintenence_post(users, post):
                 print(response.body)
                 print(response.headers)
             except Exception as e:
-                print(e.test)
+                print(e)
 
 
 def send_password_change_confirmation(user, recipient):
@@ -41,7 +43,7 @@ def send_password_change_confirmation(user, recipient):
         print(response.body)
         print(response.headers)
     except Exception as e:
-        print(e.message)
+        print(e)
 
 
 def send_password_reset_email(user, to_email):
@@ -58,7 +60,7 @@ def send_password_reset_email(user, to_email):
         print(response.body)
         print(response.headers)
     except Exception as e:
-        print(e.message)
+        print(e)
 
 
 def get_registration_token(expires_in=86400):

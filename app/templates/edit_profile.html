@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-popup" id="myForm">
-                    <form action="" class="form-container" method="post">
+                    <form action="" class="form-container" method="POST">
                         {{ UsernameForm.hidden_tag() }}
                         <div class="card card-form-style">
                             <span class="close" onclick="closeUserNameForm()">&times;</span>
@@ -81,19 +81,6 @@
                     </div>
                 </div>
 
-                <div class="form-popup" id="nameForm">
-                    <form action="" class="form-container" method="post">
-                        {{ NameForm.hidden_tag() }}
-                        <div class="card card-form-style">
-                            <span class="close" onclick="closeNameForm()">&times;</span>
-                            <h5 class="community-post">Change Name</h5>
-                            <p>First Name {{ NameForm.firstName(class="form-text-box") }}<br>
-                            <p>Last Name {{ NameForm.lastName(class="form-text-box") }}<br>
-                            <p class="submit">{{ NameForm.submit(class="submit") }}</p>
-                        </div>
-                    </form>
-                </div>
-
                 <div class="row lastSetting" id="password">
                     <div class="col-4">
                         Password
@@ -102,44 +89,11 @@
                         .......
                     </div>
                     <div class="col-4 links">
-                        <a href="#">Edit</a>
+                        <a href="{{url_for('change_password')}}">Edit</a>
                     </div>
                 </div>
 
-                <div class="form-popup" id="passwordForm">
-                    <form action="" class="form-container" method="post">
-                        {{ PasswordForm.hidden_tag() }}
-                        <div class="card card-form-style">
-                            <span class="close" onclick="closePasswordForm()">&times;</span>
-                            <h5 class="community-post">Change Password</h5>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p> Current Password: </p>
-                                </div>
-                                <div class="col-6">
-                                      <p>{{ PasswordForm.currentPassword(class="form-text-box") }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p> New Password: </p>
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ PasswordForm.password(class="form-text-box") }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p> Confirm New Password: </p>
-                                </div>
-                                <div class="col-6">
-                                    <p>{{ PasswordForm.password2(class="form-text-box") }}</p>
-                                </div>
-                            </div>
-                            <p class="submit">{{ PasswordForm.submit(class="submit") }}</p>
-                        </div>
-                    </form>
-                </div>
+
             </div>
         </div>
 
@@ -155,7 +109,7 @@
                             {{user.email}}
                         </div>
                         <div class="col-4 links">
-                            <a href="#">Edit</a>
+                            <a href="{{url_for('change_email')}}">Edit</a>
                         </div>
                     </div>
 
@@ -173,13 +127,13 @@
 
                     <div class="row lastSetting" id="phones">
                         <div class="col-4">
-                            Phone
+                            Phone and Notifications
                         </div>
                         <div class="col-4">
-                            {{user.phoneNumber}}
+                            {{user.phone_number}}
                         </div>
                         <div class="col-4">
-                            <i class="fas fa-chevron-right"></i>
+                            <a href="{{url_for('change_contact')}}">Edit</a>
                         </div>
                     </div>
 
@@ -190,17 +144,6 @@
                             <input type="submit" class="btn" value="Verify"/>
                         </form>
                     </div>
-
-                    <script>
-                       const phoneInputField = document.querySelector("#phone");
-                       const phoneInput = window.intlTelInput(phoneInputField, {
-                         utilsScript:
-                           "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-                       });
-
-
-
-                    </script>
                 </div>
             </div>
         </div>

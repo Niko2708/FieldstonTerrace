@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     profile_img = db.Column(db.String(20), default='default.jpg')
     password_hash = db.Column(db.String(128), nullable=False)
     email_notification = db.Column(db.Boolean, default=False)
-    test_notification = db.Column(db.Boolean, default=False)
+    text_notification = db.Column(db.Boolean, default=False)
     posts = db.relationship('CommunityBoard', backref='author', lazy=True)
     maintenances = db.relationship('Maintenance', backref='author', lazy=True)
     events = db.relationship('Event', backref='author', lazy=True)

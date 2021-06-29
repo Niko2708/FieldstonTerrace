@@ -62,7 +62,7 @@
             {% if post.maintenance_img != None %}
                 <img  src="{{ url_for('static', filename='maintenance_pic/' + post.maintenance_img) }}">
             {% endif %}
-            <p class="article-content f">{{ post.body }}</p>
+            <p class="article-content">{{ post.body }}</p>
             {% if post.author == current_user %}
             <div>
                 <a class="btn btn-secondary btn-sm mt-1 mb-1"

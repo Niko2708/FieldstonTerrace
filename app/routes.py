@@ -7,6 +7,7 @@ from app.email import *
 import os
 import secrets
 
+
 # routes for resident users that login in
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
@@ -14,7 +15,7 @@ def home():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     form = CommunityBoardForm()
     if form.validate_on_submit():
-        picture_file=None
+        picture_file = None
         if form.post_img.data:
             picture_file = save_picture(form.post_img.data, 1)
 
@@ -24,7 +25,9 @@ def home():
         flash('Post Successful')
     posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
     maintenance_post = Maintenance.query.order_by(Maintenance.timestamp.desc()).all()
-    return render_template('home.html', form=form, posts=posts,maintenance_post=maintenance_post, image_file=image_file)
+    return render_template('home.html', form=form, posts=posts, maintenance_post=maintenance_post,
+                           image_file=image_file)
+
 
 @app.route("/maintenance/<int:post_id>/delete", methods=['POST'])
 @login_required
@@ -37,6 +40,7 @@ def delete_maintenance(post_id):
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
 
+
 @app.route("/maintenance/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
 def maintenance_update(post_id):
@@ -48,7 +52,7 @@ def maintenance_update(post_id):
         post.title = form.title.data
         post.body = form.body.data
         if form.img.data:
-            picture_file = save_picture(form.img.data,3)
+            picture_file = save_picture(form.img.data, 3)
             post.img = picture_file
         post.start = form.start_at.data
         post.end = form.end_at.data
@@ -65,6 +69,7 @@ def maintenance_update(post_id):
     return render_template('maintenance_form.html', title='Update Post',
                            form=form, legend='Update Post')
 
+
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
 def delete_post(post_id):
@@ -75,6 +80,7 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
+
 
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
@@ -87,7 +93,7 @@ def update_post(post_id):
         post.title = form.title.data
         post.body = form.post.data
         if form.post_img.data:
-            picture_file = save_picture(form.post_img.data,1)
+            picture_file = save_picture(form.post_img.data, 1)
             post.post_img = picture_file
         db.session.commit()
         flash('Your post has been updated!', 'success')
@@ -100,13 +106,57 @@ def update_post(post_id):
                            form=form, legend='Update Post')
 
 
-
 @app.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = CommunityBoard.query.filter_by(user_id=user.id).order_by(CommunityBoard.timestamp.desc()).all()
     return render_template('user.html', user=user, posts=posts)
+
+@app.route('/edit_profile/change_email', methods=['GET', 'POST'])
+@login_required
+def change_email():
+    form = ChangeEmailForm()
+
+    if form.validate_on_submit():
+        current_user.email = form.email.data
+        db.session.commit()
+        render_template('/edit_profile.html')
+    elif request.method == 'GET':
+        form.email.data = current_user.email
+    return render_template('editForm/email_edit.html', form=form)
+
+@app.route('/edit_profile/change_contact_info', methods=['GET', 'POST'])
+@login_required
+def change_contact():
+    form = ChangeContactForm()
+
+    if form.validate_on_submit():
+        current_user.phone_number = form.phone.data
+        current_user.email_notification = form.email_notification.data
+        current_user.text_notification = form.mobile_notification.data
+        db.session.commit()
+    elif request.method == 'GET':
+        form.phone.data = current_user.phone_number
+        form.email_notification.data = current_user.email_notification
+        form.mobile_notification.data = current_user.text_notification
+    return render_template('editForm/contact.html', form=form)
+
+
+@app.route('/edit_profile/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    PasswordForm = ChangePasswordForm()
+
+    if PasswordForm.validate_on_submit():
+        if current_user.check_password(PasswordForm.currentPassword.data):
+            current_user.set_password(PasswordForm.password.data)
+            db.session.commit()
+        elif not current_user.check_password(PasswordForm.password.data):
+            error = 'Wrong password'
+            return render_template('editForm/password.html', error=error, PasswordForm=PasswordForm)
+
+    return render_template('editForm/password_edit.html', PasswordForm=PasswordForm)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -117,21 +167,15 @@ def edit_profile():
     NameForm = EditNameForm()
     PasswordForm = ChangePasswordForm()
     EmailForm = ChangeEmailForm()
-    PhoneForm = ChangePhoneForm()
-
-    print("On page")
 
     if PictureForm.validate_on_submit():
-        print("In Picture Form")
-        print(PictureForm.profile_img.data)
         if PictureForm.profile_img.data:
             print("In Pictore Submitted")
-            picture_file = save_picture(PictureForm.profile_img.data,0)
+            picture_file = save_picture(PictureForm.profile_img.data, 0)
             current_user.profile_img = picture_file
             print(picture_file)
             db.session.commit()
-
-    if UsernameForm.validate_on_submit():
+    elif UsernameForm.validate_on_submit():
         print("Change Name")
         current_user.username = UsernameForm.username.data
         db.session.commit()
@@ -143,6 +187,7 @@ def edit_profile():
         current_user.last_name = NameForm.lastName.data
         db.session.commit()
     elif PasswordForm.validate_on_submit():
+        print("Password Form")
         if current_user.check_password(PasswordForm.currentPassword.data):
             current_user.set_password(PasswordForm.password)
             db.session.commit()
@@ -156,7 +201,7 @@ def edit_profile():
         EmailForm.email.data = current_user.email
 
     return render_template('edit_profile.html', PasswordForm=PasswordForm, UsernameForm=UsernameForm, NameForm=NameForm,
-                           EmailForm=EmailForm, PhoneForm=PhoneForm, user=current_user, PictureForm=PictureForm)
+                           EmailForm=EmailForm, user=current_user, PictureForm=PictureForm)
 
 
 @app.route('/logout')
@@ -207,7 +252,7 @@ def maintenance_form():
                            date=form.date.data, author=current_user, maintenance_img=picture_file)
         db.session.add(post)
         db.session.commit()
-        send_maintinence_post(User.query.all(),post)
+        send_maintenance_post(User.query.all(), post)
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('maintenance_form.html', title='Maintenance Report', form=form)
@@ -276,6 +321,7 @@ def registration_request():
     flash('Check your email for the instructions to register as a user')
     return redirect(url_for('login'))
 
+
 def save_picture(form_picture, type):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -293,6 +339,7 @@ def save_picture(form_picture, type):
     form_picture.save(picture_path)
     return picture_fn
 
+
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if current_user.is_authenticated:
@@ -304,8 +351,8 @@ def registration():
         if form.profile_pic.data:
             picture_file = save_picture(form.profile_pic.data)
             print(picture_file)
-        user = User(username=form.username.data, first_name=form.first_name.data, last_name = form.last_name.data,
-                    phone_number = form.phone.data, email=form.email.data, profile_img=picture_file,
+        user = User(username=form.username.data, first_name=form.first_name.data, last_name=form.last_name.data,
+                    phone_number=form.phone.data, email=form.email.data, profile_img=picture_file,
                     email_notification=form.email_notification.data, test_notification=form.mobile_notification.data)
         user.set_password(form.password.data)
 
@@ -316,6 +363,7 @@ def registration():
         print(form.errors)
 
     return render_template('register.html', form=form)
+
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
