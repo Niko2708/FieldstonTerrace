@@ -1,0 +1,15 @@
+{% extends "base_login.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}Change Contact{% endblock %}
+
+{% block content %}
+<div class="container topSpace">
+    <div class="card">
+        <div class="card-body">
+            <h1>Change Name</h1>
+            {{ render_form(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

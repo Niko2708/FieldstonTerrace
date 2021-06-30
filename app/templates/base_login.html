@@ -68,18 +68,24 @@
         <div class="col-md-9">
             {% block content %}{% endblock %}
         </div>
-        <div class="col-md-3">
-            <div class="content-section">
-                <h3>Post Menu</h3>
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-light"> <a href="{{url_for('maintenance')}}">Maintenance Posts</a></li>
-                    <li class="list-group-item list-group-item-light" > <a href="{{url_for('maintenance_form')}}">Create a Maintenance Post</a></li>
-                    <li class="list-group-item list-group-item-light"><a href="{{url_for('events')}}">Upcoming Events</a></li>
-                    <li class="list-group-item list-group-item-light"><a href="{{url_for('event_form')}}">Create Event Post</a></li>
-                </ul>
-                </p>
+        {% if current_user.is_authenticated %}
+            <div class="col-md-3">
+                <div class="content-section">
+                    <h3>Post Menu</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light"><a href="{{url_for('maintenance')}}">Maintenance
+                            Posts</a></li>
+                        <li class="list-group-item list-group-item-light"><a href="{{url_for('maintenance_form')}}">Create a
+                            Maintenance Post</a></li>
+                        <li class="list-group-item list-group-item-light"><a href="{{url_for('events')}}">Upcoming
+                            Events</a></li>
+                        <li class="list-group-item list-group-item-light"><a href="{{url_for('event_form')}}">Create Event
+                            Post</a></li>
+                    </ul>
+                    </p>
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 </main>
 

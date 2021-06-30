@@ -121,7 +121,7 @@ def change_email():
     if form.validate_on_submit():
         current_user.email = form.email.data
         db.session.commit()
-        render_template('/edit_profile.html')
+        return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
         form.email.data = current_user.email
     return render_template('editForm/email_edit.html', form=form)
@@ -136,12 +136,12 @@ def change_contact():
         current_user.email_notification = form.email_notification.data
         current_user.text_notification = form.mobile_notification.data
         db.session.commit()
+        return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
         form.phone.data = current_user.phone_number
         form.email_notification.data = current_user.email_notification
         form.mobile_notification.data = current_user.text_notification
     return render_template('editForm/contact.html', form=form)
-
 
 @app.route('/edit_profile/change_password', methods=['GET', 'POST'])
 @login_required
@@ -152,57 +152,59 @@ def change_password():
         if current_user.check_password(PasswordForm.currentPassword.data):
             current_user.set_password(PasswordForm.password.data)
             db.session.commit()
+            return redirect(url_for('edit_profile'))
         elif not current_user.check_password(PasswordForm.password.data):
             error = 'Wrong password'
             return render_template('editForm/password.html', error=error, PasswordForm=PasswordForm)
 
     return render_template('editForm/password_edit.html', PasswordForm=PasswordForm)
 
+@app.route('/edit_profile/change_photo', methods=['GET', 'POST'])
+@login_required
+def change_photo():
+    form = ChangeProfilePicture()
+    if form.validate_on_submit():
+        if form.profile_img.data:
+            picture_file = save_picture(form.profile_img.data, 0)
+            current_user.profile_img = picture_file
+            db.session.commit()
+        return redirect(url_for('edit_profile'))
+    return render_template('editForm/photo.html', form=form)
+
+
+@app.route('/edit_profile/change_name', methods=['GET', 'POST'])
+@login_required
+def change_name():
+    form = EditNameForm()
+    if form.validate_on_submit():
+        current_user.first_name = form.firstName.data
+        current_user.last_name = form.lastName.data
+        db.session.commit()
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.firstName.data = current_user.first_name
+        form.lastName.data = current_user.last_name
+
+    return render_template('editForm/name_edit.html', form=form)
+
+@app.route('/edit_profile/username', methods=['GET', 'POST'])
+@login_required
+def change_username():
+    form = EditUsernameForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        db.session.commit()
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+
+    return render_template('editForm/username_edit.html', form=form)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    UsernameForm = EditUsernameForm()
-    PictureForm = ChangeProfilePicture()
-    NameForm = EditNameForm()
-    PasswordForm = ChangePasswordForm()
-    EmailForm = ChangeEmailForm()
-
-    if PictureForm.validate_on_submit():
-        if PictureForm.profile_img.data:
-            print("In Pictore Submitted")
-            picture_file = save_picture(PictureForm.profile_img.data, 0)
-            current_user.profile_img = picture_file
-            print(picture_file)
-            db.session.commit()
-    elif UsernameForm.validate_on_submit():
-        print("Change Name")
-        current_user.username = UsernameForm.username.data
-        db.session.commit()
-        flash('Your changes have been saved.')
-    elif NameForm.validate_on_submit():
-        print(NameForm.firstName.data)
-        print(NameForm.lastName.data)
-        current_user.first_name = NameForm.firstName.data
-        current_user.last_name = NameForm.lastName.data
-        db.session.commit()
-    elif PasswordForm.validate_on_submit():
-        print("Password Form")
-        if current_user.check_password(PasswordForm.currentPassword.data):
-            current_user.set_password(PasswordForm.password)
-            db.session.commit()
-    elif EmailForm.validate_on_submit():
-        current_user.email = EmailForm.email.data
-        db.session.commit()
-    elif request.method == 'GET':
-        UsernameForm.username.data = current_user.username
-        NameForm.firstName.data = current_user.first_name
-        NameForm.lastName.data = current_user.last_name
-        EmailForm.email.data = current_user.email
-
-    return render_template('edit_profile.html', PasswordForm=PasswordForm, UsernameForm=UsernameForm, NameForm=NameForm,
-                           EmailForm=EmailForm, user=current_user, PictureForm=PictureForm)
-
+    user=current_user
+    return render_template('edit_profile.html', user=user)
 
 @app.route('/logout')
 @login_required
@@ -284,12 +286,6 @@ def index():
 @app.route('/amenities')
 def amenities():
     return render_template('amenities.html')
-
-
-@app.route('/neighborhood')
-def neighborhood():
-    return render_template('neighborhood.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

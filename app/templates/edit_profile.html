@@ -23,26 +23,8 @@
                         Add a Photo to Personalize your account
                     </div>
                     <div class="col-4 links">
-                        <a href="#">Edit</a>
+                        <a href="{{url_for('change_photo')}}">Edit</a>
                     </div>
-                </div>
-
-                <div class="form-popup" id="photoForm">
-                    <form action="" class="form-container" enctype="multipart/form-data" method="post">
-                        <div class="card card-form-style">
-                            <span class="close" onclick="closePictureForm()">&times;</span>
-                            <h5>Change Photo</h5>
-                            {{ PictureForm.hidden_tag() }}
-                            {{ PictureForm.profile_img.label() }}
-                            {{ PictureForm.profile_img() }}
-                            {% if PictureForm.profile_img.errors %}
-                                {% for error in PictureForm.profile_img.errors %}
-                                    <span class="text-danger">{{ error }}</span></br>
-                                {% endfor %}
-                            {% endif %}
-                            <p>{{ PictureForm.submit(class="submit") }}</p>
-                        </div>
-                    </form>
                 </div>
 
                 <div class="row setting" id="Username">
@@ -53,20 +35,8 @@
                         {{user.username }}
                     </div>
                     <div class="col-4 links">
-                        <a href="#">Edit</a>
+                        <a href="{{url_for('change_username')}}">Edit</a>
                     </div>
-                </div>
-
-                <div class="form-popup" id="myForm">
-                    <form action="" class="form-container" method="POST">
-                        {{ UsernameForm.hidden_tag() }}
-                        <div class="card card-form-style">
-                            <span class="close" onclick="closeUserNameForm()">&times;</span>
-                            <h5 id="community-post">Change Username</h5>
-                            {{ UsernameForm.username(class="form-text-box") }}<br>
-                            <p id="submit">{{ UsernameForm.submit(class="submit") }}</p>
-                        </div>
-                    </form>
                 </div>
 
                 <div class="row setting" id="name">
@@ -77,7 +47,7 @@
                         {{user.first_name }} {{user.last_name}}
                     </div>
                     <div class="col-4 links">
-                        <a href="#">Edit</a>
+                        <a href="{{url_for('change_name')}}">Edit</a>
                     </div>
                 </div>
 
@@ -92,8 +62,6 @@
                         <a href="{{url_for('change_password')}}">Edit</a>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
@@ -112,19 +80,6 @@
                             <a href="{{url_for('change_email')}}">Edit</a>
                         </div>
                     </div>
-
-                    <div class="form-popup" id="emailForm">
-                        <form action="" class="form-container" method="post">
-                            {{ PasswordForm.hidden_tag() }}
-                            <div class="card card-form-style">
-                                <span class="close">&times;</span>
-                                <h5 class="community-post">Email</h5>
-                                <p> Current Email {{ EmailForm.email(class="form-text-box") }}</p>
-                                <p class="submit">{{ EmailForm.submit(class="submit") }}</p>
-                            </div>
-                        </form>
-                    </div>
-
                     <div class="row lastSetting" id="phones">
                         <div class="col-4">
                             Phone and Notifications
@@ -136,98 +91,9 @@
                             <a href="{{url_for('change_contact')}}">Edit</a>
                         </div>
                     </div>
-
-                    <div class="form-popup" id="PhoneForm">
-                        <form id="login" onsubmit="process(event)">
-                            <p>Enter your phone number:</p>
-                            <input id="phone" type="tel" name="phone"/>
-                            <input type="submit" class="btn" value="Verify"/>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-       // Get the modal
-        var modal = document.getElementById("myForm");
-        var btn = document.getElementById("Username");
-
-        var photoDiv = document.getElementById("Photo");
-        var photoModel = document.getElementById("photoForm");
-
-        var nameDiv = document.getElementById("name");
-        var nameModel = document.getElementById("nameForm");
-
-        var passwordDiv = document.getElementById("password");
-        var passwordModel = document.getElementById("passwordForm");
-
-        var emailDiv = document.getElementById("email");
-        var emailModel = document.getElementById("emailForm");
-
-        var emailDiv = document.getElementById("phones");
-        var emailModel = document.getElementById("phoneForm");
-
-        // Get the <span> element that closes the modal
-        const span = document.getElementsByClassName("close");
-        console.log(span);
-
-        // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }
-
-        photoDiv.onclick = function() {
-            photoModel.style.display = "block";
-        }
-
-        nameDiv.onclick = function(){
-            nameModel.style.display = "block";
-        }
-
-        passwordDiv.onclick = function () {
-            passwordModel.style.display = "block";
-        }
-
-        emailDiv.onclick = function () {
-            emailModel.style.display = "block";
-        }
-
-        phoneDiv.onclick = function () {
-            phoneModel.style.display = "block";
-        }
-
-        function closeUserNameForm() {
-          document.getElementById("myForm").style.display = "none";
-        }
-
-        function closeNameForm() {
-          document.getElementById("nameForm").style.display = "none";
-        }
-
-        function closePictureForm() {
-            document.getElementById("photoForm").style.display = "none";
-        }
-
-        function closePasswordForm() {
-            document.getElementById("passwordForm").style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal || event.target == nameModel || event.target == passwordModel || event.target == photoModel) {
-            modal.style.display = "none";
-            nameModel.style.display = "none";
-            passwordModel.style.display = "none";
-            emailModel.style.display = "none";
-            phoneModel.style.display = "none";
-            photoModel.style.display = "none";
-          }
-        }
-
-
-
-    </script>
 </main>
 {% endblock %}
