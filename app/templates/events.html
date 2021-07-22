@@ -1,10 +1,6 @@
 {% extends "base_login.html" %}
 {% block title %}Events {% endblock %}
 
-{% block custom_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/event.css') }}">
-{% endblock %}
-
 {% block content %}
 {% for post in events %}
 <article class="media content-section">
@@ -15,31 +11,34 @@
         </div>
         <!--<h2><a class="article-title" href="#"></a></h2>-->
         <p class="article-content">Date of Work: {{ post.date }} Time of Work: {{post.start}} - {{post.end}}</p>
+        {% if post.evnet_img != None %}
+            <img class="responsive-img" src="{{ url_for('static', filename='event_pic/' + post.event_img) }}">
+        {% endif %}
         <p class="article-content">{{ post.body }}</p>
         {% if post.author == current_user %}
         <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('maintenance_update', post_id=post.id) }}">Update</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('event_update', event_id=post.id) }}">Update</a>
             <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
-                    data-target="#deleteModalMaintenance">
+                    data-target="#deleteModalEvent">
                 Delete
             </button>
         </div>
         {% endif %}
     </div>
-    <div class="modal fade" id="deleteModalMaintenance" tabindex="-1" role="dialog"
+    <div class="modal fade" id="deleteModalEvent" tabindex="-1" role="dialog"
          aria-labelledby="deleteModalLabelMaintenance"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabelMaintenance">Delete Post?</h5>
+                    <h5 class="modal-title" id="deleteModalLabelEvent">Delete Post?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <form action="{{ url_for('delete_maintenance', post_id=post.id) }}" method="POST">
+                    <form action="{{ url_for('delete_event', event_id=post.id) }}" method="POST">
                         <input class="btn btn-danger" type="submit" value="Delete">
                     </form>
                 </div>
@@ -49,10 +48,4 @@
 </article>
 {% endfor %}
 
-{% endblock %}
-
-{%block scripts%}
-{{ super() }}
-<script src="{{ url_for('static', filename='javascript/calendar.js') }}"></script>
-{{ moment.include_moment() }}
 {% endblock %}

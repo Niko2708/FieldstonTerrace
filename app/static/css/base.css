@@ -4,6 +4,9 @@ nav{
 
 .nav-link{
     color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 #footer{
@@ -68,6 +71,7 @@ nav{
     color:white;
     margin-bottom: 30px;
 }
+
 .h1Size{
     font-size: 2.8rem;
 }
@@ -80,10 +84,11 @@ nav{
     font-family: Raleway, sans-serif !important;
 }
 
-.cardStyle{
-    height:700px
-}
-
 .tab{
     margin-left: 2.5rem;
+}
+
+.responsive-img{
+    height: auto;
+    width: 100%;
 }

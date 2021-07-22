@@ -4,6 +4,7 @@ from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Maintenance, Event, CommunityBoard
 from app.email import *
+from app.text import send_maintenance_text
 import os
 import secrets
 
@@ -12,7 +13,7 @@ import secrets
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-    image_file = url_for('static', filename='profile_pics/default.jpg')
+    image_file = url_for('static', filename='profile_pics/default.jpeg')
     form = CommunityBoardForm()
     if form.validate_on_submit():
         picture_file = None
@@ -24,8 +25,9 @@ def home():
         db.session.commit()
         flash('Post Successful')
     posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
-    maintenance_post = Maintenance.query.order_by(Maintenance.timestamp.desc()).all()
-    return render_template('home.html', form=form, posts=posts, maintenance_post=maintenance_post,
+    maintenance_posts = Maintenance.query.order_by(Maintenance.timestamp.desc()).limit(2).all()
+
+    return render_template('home.html', form=form, posts=posts, maintenance_posts=maintenance_posts,
                            image_file=image_file)
 
 
@@ -33,8 +35,17 @@ def home():
 @login_required
 def delete_maintenance(post_id):
     post = Maintenance.query.get_or_404(post_id)
+
+    dirname = os.path.dirname(__file__)
+    path = dirname + '/static/maintenance_pic/' + str(post.maintenance_img)
+
+
     if post.author != current_user:
         abort(403)
+
+    if os.path.exists(path):
+        os.remove(path)
+
     db.session.delete(post)
     db.session.commit()
     flash('Your post has been deleted!', 'success')
@@ -52,8 +63,15 @@ def maintenance_update(post_id):
         post.title = form.title.data
         post.body = form.body.data
         if form.img.data:
+            if post.maintenance_img != None:
+                dirname = os.path.dirname(__file__)
+                path = dirname + '/static/maintenance_pic/' + str(post.maintenance_img)
+
+                if os.path.exists(path):
+                    os.remove(path)
+
             picture_file = save_picture(form.img.data, 3)
-            post.img = picture_file
+            post.maintenance_img = picture_file
         post.start = form.start_at.data
         post.end = form.end_at.data
         post.date = form.date.data
@@ -74,8 +92,15 @@ def maintenance_update(post_id):
 @login_required
 def delete_post(post_id):
     post = CommunityBoard.query.get_or_404(post_id)
+    dirname = os.path.dirname(__file__)
+    path = dirname + '/static/post_pic/' + str(post.post_img)
+
     if post.author != current_user:
         abort(403)
+
+    if os.path.exists(path):
+        os.remove(path)
+
     db.session.delete(post)
     db.session.commit()
     flash('Your post has been deleted!', 'success')
@@ -93,6 +118,13 @@ def update_post(post_id):
         post.title = form.title.data
         post.body = form.post.data
         if form.post_img.data:
+            if post.post_img != None:
+                dirname = os.path.dirname(__file__)
+                path = dirname + '/static/post_pic/' + str(post.post_img)
+
+                if os.path.exists(path):
+                    os.remove(path)
+
             picture_file = save_picture(form.post_img.data, 1)
             post.post_img = picture_file
         db.session.commit()
@@ -106,12 +138,71 @@ def update_post(post_id):
                            form=form, legend='Update Post')
 
 
+@app.route("/event/<int:event_id>/delete", methods=['POST'])
+@login_required
+def delete_event(event_id):
+    post = Event.query.get_or_404(event_id)
+    dirname = os.path.dirname(__file__)
+    path = dirname + '/static/event_pic/' + str(post.event_img)
+
+    if post.author != current_user:
+        abort(403)
+
+    if os.path.exists(path):
+        os.remove(path)
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route("/event/<int:event_id>/update", methods=['GET', 'POST'])
+@login_required
+def event_update(event_id):
+    post = Event.query.get_or_404(event_id)
+
+    if post.author != current_user:
+        abort(403)
+
+    form = EventForm()
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        if form.img.data:
+            if post.event_img != None:
+                dirname = os.path.dirname(__file__)
+                path = dirname + '/static/event_pic/' + str(post.event_img)
+
+                if os.path.exists(path):
+                    os.remove(path)
+            picture_file = save_picture(form.img.data, 2)
+            post.event_img = picture_file
+        post.start = form.start_at.data
+        post.end = form.end_at.data
+        post.date = form.dateOfEvent.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('events'))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.body.data = post.body
+        form.img.data = post.event_img
+        form.start_at.data = post.start
+        form.end_at.data = post.end
+        form.dateOfEvent.data = post.dateOfEvent
+    return render_template('event_form.html', title='Update Post',
+                           form=form, legend='Update Post')
+
+
 @app.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = CommunityBoard.query.filter_by(user_id=user.id).order_by(CommunityBoard.timestamp.desc()).all()
     return render_template('user.html', user=user, posts=posts)
+
 
 @app.route('/edit_profile/change_email', methods=['GET', 'POST'])
 @login_required
@@ -125,6 +216,7 @@ def change_email():
     elif request.method == 'GET':
         form.email.data = current_user.email
     return render_template('editForm/email_edit.html', form=form)
+
 
 @app.route('/edit_profile/change_contact_info', methods=['GET', 'POST'])
 @login_required
@@ -143,6 +235,7 @@ def change_contact():
         form.mobile_notification.data = current_user.text_notification
     return render_template('editForm/contact.html', form=form)
 
+
 @app.route('/edit_profile/change_password', methods=['GET', 'POST'])
 @login_required
 def change_password():
@@ -159,12 +252,19 @@ def change_password():
 
     return render_template('editForm/password_edit.html', PasswordForm=PasswordForm)
 
+
 @app.route('/edit_profile/change_photo', methods=['GET', 'POST'])
 @login_required
 def change_photo():
     form = ChangeProfilePicture()
     if form.validate_on_submit():
         if form.profile_img.data:
+            if current_user.profile_img != None:
+                dirname = os.path.dirname(__file__)
+                path = dirname + '/static/profile_pic/' + str(current_user.profile_img)
+
+                if os.path.exists(path):
+                    os.remove(path)
             picture_file = save_picture(form.profile_img.data, 0)
             current_user.profile_img = picture_file
             db.session.commit()
@@ -187,6 +287,7 @@ def change_name():
 
     return render_template('editForm/name_edit.html', form=form)
 
+
 @app.route('/edit_profile/username', methods=['GET', 'POST'])
 @login_required
 def change_username():
@@ -200,11 +301,13 @@ def change_username():
 
     return render_template('editForm/username_edit.html', form=form)
 
+
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    user=current_user
+    user = current_user
     return render_template('edit_profile.html', user=user)
+
 
 @app.route('/logout')
 @login_required
@@ -254,7 +357,8 @@ def maintenance_form():
                            date=form.date.data, author=current_user, maintenance_img=picture_file)
         db.session.add(post)
         db.session.commit()
-        send_maintenance_post(User.query.all(), post)
+        send_maintenance_email(User.query.all(), post)
+        send_maintenance_text(User.query.all(), post)
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('maintenance_form.html', title='Maintenance Report', form=form)
@@ -264,16 +368,18 @@ def maintenance_form():
 @login_required
 def event_form():
     form = EventForm()
+
     if form.validate_on_submit():
         picture_file = None
         if form.img.data:
-            picture_file = save_picture(form.post_img.data, 2)
+            picture_file = save_picture(form.img.data, 2)
+
         event = Event(title=form.title.data, body=form.body.data, dateOfEvent=form.dateOfEvent.data,
-                      start=form.start_at.data, end=form.end_at.data, img=picture_file)
+                      start=form.start_at.data, author=current_user, end=form.end_at.data, event_img=picture_file)
         db.session.add(event)
         db.session.commit()
         flash('Maintenance Form Successful')
-        return redirect(url_for('home'))
+        return redirect(url_for('events'))
     return render_template('event_form.html', form=form)
 
 
@@ -286,6 +392,7 @@ def index():
 @app.route('/amenities')
 def amenities():
     return render_template('amenities.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

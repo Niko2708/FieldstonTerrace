@@ -10,10 +10,8 @@ import os
 sender = 'fieldstontowers@gmail.com'
 
 
-def send_maintenance_post(users, post):
+def send_maintenance_email(users, post):
     for user in users:
-        print(user.username)
-        print(user.email_notification)
         if user.email_notification:
             test = Mail(
                 from_email=sender,

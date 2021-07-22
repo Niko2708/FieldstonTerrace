@@ -146,3 +146,17 @@ nav{
 .topSpace{
     padding:5% 0;
 }
+
+.links{
+    text-align: center;
+}
+
+.responsive-img{
+    height: auto;
+    width: 100%;
+}
+
+.menu{
+  position: fixed; /* Make it stick/fixed */
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}

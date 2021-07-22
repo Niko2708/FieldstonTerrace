@@ -13,7 +13,7 @@
 
             <p class="article-content">Date of Work: {{ post.date }}  Time of Work: {{post.start}} - {{post.end}}</p>
             {% if post.maintenance_img != None %}
-                <img  src="{{ url_for('static', filename='maintenance_pic/' + post.maintenance_img) }}">
+                <img class="responsive-img" src="{{ url_for('static', filename='maintenance_pic/' + post.maintenance_img) }}">
             {% endif %}
             <p class="article-content">{{ post.body }}</p>
             {% if post.author == current_user %}

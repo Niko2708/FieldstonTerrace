@@ -59,7 +59,7 @@ class User(UserMixin, db.Model):
 
 class Maintenance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    maintenance_img = db.Column(db.String(20), nullable=False, default='default.jpg')
+    maintenance_img = db.Column(db.String(20))
     title = db.Column(db.String(120))
     body = db.Column(db.String)
     start = db.Column(db.Time)

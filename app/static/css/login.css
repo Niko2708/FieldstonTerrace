@@ -6,7 +6,7 @@
 }
 
 .loginBar{
-    width: 80%;
+    width: 100%;
     border: none;
     background-color: #F0F0F0;
     padding-left: 15px;
@@ -15,6 +15,10 @@
 
 #loginCard{
     width:25rem;
+}
+
+.space{
+    margin-top: 7%;
 }
 
 #submit{

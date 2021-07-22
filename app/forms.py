@@ -51,13 +51,13 @@ class RegistrationForm(FlaskForm):
 class CommunityBoardForm(FlaskForm):
     title = TextAreaField('Title', validators=[DataRequired()])
     post = TextAreaField('Body:', validators=[DataRequired()])
-    post_img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png'])])
+    post_img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png','pdf'])])
     submit = SubmitField('Post')
 
 class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
     body = TextAreaField('Body:', validators=[DataRequired()])
-    img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png'])])
+    img = FileField('Post pic', validators=[FileAllowed(['jpeg', 'png', 'jpg'])])
     date = DateField('Date of Event:', validators=[DataRequired()])
     start_at = TimeField('Start at')
     end_at = TimeField('End at')
@@ -66,7 +66,7 @@ class MaintenanceForm(FlaskForm):
 class EventForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
     body = TextAreaField('Body:', validators=[DataRequired()])
-    img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png'])])
+    img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     dateOfEvent = DateField('Date of Event:', validators=[DataRequired()])
     start_at = TimeField('Start at', validators=[DataRequired()])
     end_at = TimeField('End at', validators=[DataRequired()])
