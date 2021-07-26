@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    profile_pic= FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    profile_pic= FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png','jpeg'])])
     phone = StringField('Phone')
     email_notification = BooleanField('Text Notification', default=False)
     mobile_notification = BooleanField('Mobile Notification', default=False)
@@ -32,9 +32,6 @@ class RegistrationForm(FlaskForm):
             p = phonenumbers.parse(phone.data)
             if not phonenumbers.is_valid_number(p):
                 raise ValueError()
-            user = User.query.filter_by(phone_number=phone.data).first()
-            if user is not None:
-                raise ValidationError('Phone number is already associated with an account.')
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             raise ValidationError('Invalid phone number')
 

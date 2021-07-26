@@ -14,6 +14,8 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+{{ super() }}
 <script>
     var wtf_phone_field = document.getElementById('phone');
     wtf_phone_field.style.position = 'absolute';
@@ -30,3 +32,4 @@
         wtf_phone_field.value = fancy_phone_iti.getNumber();
     });
 </script>
+{% endblock %}

@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(60), nullable=False)
     phone_number = db.Column(db.String())
     email = db.Column(db.String(120), unique=True, nullable=False)
-    profile_img = db.Column(db.String(20), default='default.jpg')
+    profile_img = db.Column(db.String(20), default='default.jpeg')
     password_hash = db.Column(db.String(128), nullable=False)
     email_notification = db.Column(db.Boolean, default=False)
     text_notification = db.Column(db.Boolean, default=False)

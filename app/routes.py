@@ -13,7 +13,6 @@ import secrets
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-    image_file = url_for('static', filename='profile_pics/default.jpeg')
     form = CommunityBoardForm()
     if form.validate_on_submit():
         picture_file = None
@@ -27,8 +26,7 @@ def home():
     posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
     maintenance_posts = Maintenance.query.order_by(Maintenance.timestamp.desc()).limit(2).all()
 
-    return render_template('home.html', form=form, posts=posts, maintenance_posts=maintenance_posts,
-                           image_file=image_file)
+    return render_template('home.html', form=form, posts=posts, maintenance_posts=maintenance_posts)
 
 
 @app.route("/maintenance/<int:post_id>/delete", methods=['POST'])
@@ -263,8 +261,9 @@ def change_photo():
                 dirname = os.path.dirname(__file__)
                 path = dirname + '/static/profile_pic/' + str(current_user.profile_img)
 
-                if os.path.exists(path):
+                if os.path.exists(path) and current_user.profile_img != 'default.jpeg':
                     os.remove(path)
+
             picture_file = save_picture(form.profile_img.data, 0)
             current_user.profile_img = picture_file
             db.session.commit()
@@ -413,18 +412,6 @@ def login():
             return redirect(url_for('home'))
     return render_template('login.html', form=form)
 
-
-@app.route('/registration_request', methods=['GET', 'POST'])
-def registration_request():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-
-    email = 'nikocolon94@gmail.com'
-    send_user_registeration_email(email)
-    flash('Check your email for the instructions to register as a user')
-    return redirect(url_for('login'))
-
-
 def save_picture(form_picture, type):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -446,17 +433,19 @@ def save_picture(form_picture, type):
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
     form = RegistrationForm()
 
     if form.validate_on_submit():
+        picture_file = 'default.jpeg'
+
         if form.profile_pic.data:
-            picture_file = save_picture(form.profile_pic.data)
-            print(picture_file)
+            picture_file = save_picture(form.profile_pic.data,0)
+
         user = User(username=form.username.data, first_name=form.first_name.data, last_name=form.last_name.data,
                     phone_number=form.phone.data, email=form.email.data, profile_img=picture_file,
-                    email_notification=form.email_notification.data, test_notification=form.mobile_notification.data)
+                    email_notification=form.email_notification.data, text_notification=form.mobile_notification.data)
         user.set_password(form.password.data)
 
         db.session.add(user)
