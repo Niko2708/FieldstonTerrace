@@ -9,9 +9,7 @@
             <h5 class="">{{ post.title}}</h5>
             <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
         </div>
-        <!--<h2><a class="article-title" href="#"></a></h2>-->
-        <p class="article-content">Date of Work: {{ post.date }} Time of Work: {{post.start}} - {{post.end}}</p>
-        {% if post.evnet_img != None %}
+        {% if post.event_img != None %}
             <img class="responsive-img" src="{{ url_for('static', filename='event_pic/' + post.event_img) }}">
         {% endif %}
         <p class="article-content">{{ post.body }}</p>

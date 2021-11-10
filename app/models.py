@@ -62,9 +62,6 @@ class Maintenance(db.Model):
     maintenance_img = db.Column(db.String(20))
     title = db.Column(db.String(120))
     body = db.Column(db.String)
-    start = db.Column(db.Time)
-    end = db.Column(db.Time)
-    date = db.Column(db.DateTime)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -72,12 +69,9 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_img = db.Column(db.String(20), nullable=False, default='default.jpg')
     title = db.Column(db.String(120))
-    dateOfEvent = db.Column(db.DateTime)
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    start = db.Column(db.Time)
-    end = db.Column(db.Time)
 
 class CommunityBoard(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -28,6 +28,21 @@ def home():
 
     return render_template('home.html', form=form, posts=posts, maintenance_posts=maintenance_posts)
 
+@app.route('/post_form', methods=['GET', 'POST'])
+@login_required
+def post_form():
+    form = CommunityBoardForm()
+    if form.validate_on_submit():
+        picture_file = None
+        if form.post_img.data:
+            picture_file = save_picture(form.post_img.data, 1)
+
+        posts = CommunityBoard(title=form.title.data, body=form.post.data, post_img=picture_file, author=current_user)
+        db.session.add(posts)
+        db.session.commit()
+        return url_for('home')
+    return render_template('create_post.html', title='Post',form=form, legend='Post')
+
 
 @app.route("/maintenance/<int:post_id>/delete", methods=['POST'])
 @login_required
@@ -70,18 +85,12 @@ def maintenance_update(post_id):
 
             picture_file = save_picture(form.img.data, 3)
             post.maintenance_img = picture_file
-        post.start = form.start_at.data
-        post.end = form.end_at.data
-        post.date = form.date.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('home'))
     elif request.method == 'GET':
         form.title.data = post.title
         form.body.data = post.body
-        form.start_at.data = post.start
-        form.end_at.data = post.end
-        form.date.data = post.date
     return render_template('maintenance_form.html', title='Update Post',
                            form=form, legend='Update Post')
 
@@ -177,9 +186,6 @@ def event_update(event_id):
                     os.remove(path)
             picture_file = save_picture(form.img.data, 2)
             post.event_img = picture_file
-        post.start = form.start_at.data
-        post.end = form.end_at.data
-        post.date = form.dateOfEvent.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('events'))
@@ -187,9 +193,6 @@ def event_update(event_id):
         form.title.data = post.title
         form.body.data = post.body
         form.img.data = post.event_img
-        form.start_at.data = post.start
-        form.end_at.data = post.end
-        form.dateOfEvent.data = post.dateOfEvent
     return render_template('event_form.html', title='Update Post',
                            form=form, legend='Update Post')
 
@@ -339,9 +342,8 @@ def get_pdf(filename):
 @app.route('/maintenance', methods=['GET', 'POST'])
 @login_required
 def maintenance():
-    maintenance_post = Maintenance.query.order_by(Maintenance.date.desc())
+    maintenance_post = Maintenance.query.order_by(Maintenance.timestamp.desc())
     return render_template('maintenance.html', maintenance_post=maintenance_post)
-
 
 @app.route('/maintenance_form', methods=['GET', 'POST'])
 @login_required
@@ -352,12 +354,11 @@ def maintenance_form():
         picture_file = None
         if form.img.data:
             picture_file = save_picture(form.img.data, 3)
-        post = Maintenance(title=form.title.data, body=form.body.data, start=form.start_at.data, end=form.end_at.data,
-                           date=form.date.data, author=current_user, maintenance_img=picture_file)
+        post = Maintenance(title=form.title.data, body=form.body.data,author=current_user, maintenance_img=picture_file)
         db.session.add(post)
         db.session.commit()
-        send_maintenance_email(User.query.all(), post)
-        send_maintenance_text(User.query.all(), post)
+        #send_maintenance_email(User.query.all(), post)
+        #send_maintenance_text(User.query.all(), post)
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('maintenance_form.html', title='Maintenance Report', form=form)
@@ -373,8 +374,7 @@ def event_form():
         if form.img.data:
             picture_file = save_picture(form.img.data, 2)
 
-        event = Event(title=form.title.data, body=form.body.data, dateOfEvent=form.dateOfEvent.data,
-                      start=form.start_at.data, author=current_user, end=form.end_at.data, event_img=picture_file)
+        event = Event(title=form.title.data, body=form.body.data, author=current_user, event_img=picture_file)
         db.session.add(event)
         db.session.commit()
         flash('Maintenance Form Successful')

@@ -9,7 +9,7 @@
         <img class="rounded-circle article-img"
              src="{{ url_for('static', filename='profile_pics/' + current_user.profile_img) }}">
 
-        <button class="open-button buttonStyle" id="myBtn">
+        <button onclick="window.location.href='{{ url_for( 'post_form') }}'" class="open-button buttonStyle">
             Is their anything you want to share?
         </button>
     </article>
@@ -54,7 +54,7 @@
     <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <h5 class="">Maintenance Update: {{ maintenance_post.title}}</h5>
+                    <h3 class="">Maintenance Update: {{ maintenance_post.title}}</h3>
                     <small class="text-muted">{{ maintenance_post.timestamp.strftime('%m-%d-%y') }}</small>
                 </div>
                 <!--<h2><a class="article-title" href="#"></a></h2>-->
@@ -99,14 +99,21 @@
     {% for post in posts %}
     <article class="media content-section">
         <div class="media-body">
-            <div class="article-metadata">
-                <img class="rounded-circle article-img"
+            <div class="article-metadata row">
+                <a  href="{{ url_for('user', username=post.author.username) }}">
+                    <img class="rounded-circle article-img"
                      src="{{ url_for('static', filename='profile_pics/' + post.author.profile_img) }}">
-                <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a>
-                <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
+                </a>
+                <div class="col-3">
+                    <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a>
+                    <br>
+                    <small class="text-muted">{{ post.timestamp.strftime('%m-%d-%y') }}</small>
+                </div>
+                <div class="col-8">
+                    <h3> {{ post.title}}</h3>
+                </div>
             </div>
             <!--<h2><a class="article-title" href="#"></a></h2>-->
-            <p class="article-content">{{ post.title}}</p>
             {% if post.post_img != None %}
                 <img  class="responsive-img"  src="{{ url_for('static', filename='post_pic/' + post.post_img) }}">
             {% endif %}
@@ -143,39 +150,5 @@
     </article>
     {% endfor %}
 
-    <script>
-        var test = document.getElementsByClassName("test");
-
-        var btn = document.getElementById("myBtn");
-
-        var modal = document.getElementById("myForm");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-      // When the user clicks the button, open the modal
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
-
-
-    </script>
 </main>
 {% endblock content %}
-
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-{% endblock %}

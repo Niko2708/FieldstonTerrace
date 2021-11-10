@@ -74,8 +74,8 @@ a.article-title:hover {
 }
 
 .account-img {
-  height: 125px;
-  width: 125px;
+  height: 168px;
+  width: 168px;
   margin-right: 20px;
   margin-bottom: 16px;
 }
@@ -159,4 +159,10 @@ nav{
 .menu{
   position: fixed; /* Make it stick/fixed */
   transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
+
+@media screen and (max-width: 600px) {
+  .hideElement {
+    display:none
+  }
 }

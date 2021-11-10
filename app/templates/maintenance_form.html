@@ -35,15 +35,7 @@
                     {{ form.body(class="form-control form-control-lg") }}
                     {% endif %}
                     <br>
-                    <p>Picture Attachment Button{{ form.img() }}</p>
-
-                    <div class="dateTime">
-                        <p class="textStyles">Day the maintenance work will occur</p>
-                        <p class="textStyles">Event Start: {{ form.date}}</p>
-                        <p class="textStyles">Timeframe the maintenance will occur:</p>
-                        <p class="textStyles">Start Time: {{ form.start_at }} <span class="tab"> </span>End Time: {{
-                            form.end_at }}</p>
-                    </div>
+                    <p>Add Photo: {{ form.img() }}</p>
                     <p>{{ form.submit(class = 'buttonStyle') }}</p>
                 </div>
             </div>

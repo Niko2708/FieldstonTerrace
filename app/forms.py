@@ -55,18 +55,12 @@ class MaintenanceForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
     body = TextAreaField('Body:', validators=[DataRequired()])
     img = FileField('Post pic', validators=[FileAllowed(['jpeg', 'png', 'jpg'])])
-    date = DateField('Date of Event:', validators=[DataRequired()])
-    start_at = TimeField('Start at')
-    end_at = TimeField('End at')
     submit = SubmitField('Submit')
 
 class EventForm(FlaskForm):
     title = StringField('Title:', validators=[DataRequired()])
     body = TextAreaField('Body:', validators=[DataRequired()])
     img = FileField('Post pic', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
-    dateOfEvent = DateField('Date of Event:', validators=[DataRequired()])
-    start_at = TimeField('Start at', validators=[DataRequired()])
-    end_at = TimeField('End at', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class ResetPasswordRequestForm(FlaskForm):

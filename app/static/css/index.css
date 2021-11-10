@@ -152,7 +152,26 @@ alignText{
 .clickable:after {
   content: '\002B'; /* Unicode character for "plus" sign (+) */
   font-size: 18px;
-    color: #777;
+  color: #777;
   float: right;
   margin-left: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .accordionImages {
+    max-width: 400px;
+  }
+
+  .tab-content {
+    float: none;
+    width: 100%;
+  }
+
+  .hideElement {
+    display:none
+  }
+
+  .panelText{
+    width:100%
+  }
 }
