@@ -13,20 +13,10 @@ import secrets
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-    form = CommunityBoardForm()
-    if form.validate_on_submit():
-        picture_file = None
-        if form.post_img.data:
-            picture_file = save_picture(form.post_img.data, 1)
-
-        posts = CommunityBoard(title=form.title.data, body=form.post.data, post_img=picture_file, author=current_user)
-        db.session.add(posts)
-        db.session.commit()
-        flash('Post Successful')
     posts = CommunityBoard.query.order_by(CommunityBoard.timestamp.desc()).all()
     maintenance_posts = Maintenance.query.order_by(Maintenance.timestamp.desc()).limit(2).all()
 
-    return render_template('home.html', form=form, posts=posts, maintenance_posts=maintenance_posts)
+    return render_template('home.html', posts=posts, maintenance_posts=maintenance_posts)
 
 @app.route('/post_form', methods=['GET', 'POST'])
 @login_required
@@ -40,8 +30,8 @@ def post_form():
         posts = CommunityBoard(title=form.title.data, body=form.post.data, post_img=picture_file, author=current_user)
         db.session.add(posts)
         db.session.commit()
-        return url_for('home')
-    return render_template('create_post.html', title='Post',form=form, legend='Post')
+        return redirect(url_for('home'))
+    return render_template('create_post.html', title='Post', form=form, legend='Post')
 
 
 @app.route("/maintenance/<int:post_id>/delete", methods=['POST'])
@@ -357,8 +347,8 @@ def maintenance_form():
         post = Maintenance(title=form.title.data, body=form.body.data,author=current_user, maintenance_img=picture_file)
         db.session.add(post)
         db.session.commit()
-        #send_maintenance_email(User.query.all(), post)
-        #send_maintenance_text(User.query.all(), post)
+        send_maintenance_email(User.query.all(), post)
+        send_maintenance_text(User.query.all(), post)
         flash('Maintenance Form Successful')
         return redirect(url_for('home'))
     return render_template('maintenance_form.html', title='Maintenance Report', form=form)
@@ -463,7 +453,7 @@ def reset_password_request():
         return redirect(url_for('index'))
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by( form.email.data).first()
         recipent = form.email.data
 
         if user:

@@ -14,42 +14,6 @@
         </button>
     </article>
 
-    <section class="topSpace form-popup container-fluid" id="myForm">
-        <form action="" method="post" class="form-container" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <div class="card card-form-style">
-                <span class="close">&times;</span>
-                <div class="form-group">
-                    <h5>{{ form.title.label(class="form-control-label") }}</h5>
-                    {% if form.title.errors %}
-                    {{ form.title(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.title.errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.title(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <hr>
-                <h5>{{ form.post.label(class="form-control-label") }}</h5>
-                    {% if form.post.errors %}
-                    {{ form.post(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.post.errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.post(class="form-control form-control-lg") }}
-                    {% endif %}
-                <p>Picture Attachment Button{{ form.post_img() }}</p>
-                <p id="test">{{ form.submit(class = 'buttonStyle') }}</p>
-            </div>
-        </form>
-    </section>
-
     {% for maintenance_post in maintenance_posts: %}
     <article class="media content-section">
             <div class="media-body">

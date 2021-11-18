@@ -135,6 +135,10 @@ a.article-title:hover {
   cursor: pointer;
 }
 
+.media-body{
+    margin-left: 30px;
+}
+
 nav{
     background-color: #263238;
 }
